@@ -1,0 +1,18 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Escenario.cs">
+    <Files>
+      <File FileName="Sprite.cs" Line="88" Column="37" />
+      <File FileName="Escenario.cs" Line="45" Column="29" />
+      <File FileName="Nivel.cs" Line="14" Column="37" />
+      <File FileName="Servicio_SDL.cs" Line="151" Column="11" />
+      <File FileName="Kibus.cs" Line="7" Column="47" />
+      <File FileName="Menu.cs" Line="38" Column="2" />
+      <File FileName="Main.cs" Line="14" Column="27" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
