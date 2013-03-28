@@ -11,6 +11,12 @@ namespace Kibus
 		private static Sdl.SDL_Rect origen;
 		private static Fuente fuente;
 		
+		public static bool SonidoActivo
+		{
+			private set;
+		 	get;
+		}
+		
 		public static void Inicializar(short ancho, short alto, int colores,bool pantalla_completa)
 		{
 			int bpp;
@@ -65,7 +71,32 @@ namespace Kibus
 			origen = new Sdl.SDL_Rect(0 , 0, ancho, alto);
 			//Sdl.SDL_SetClipRect(pantalla, ref origen);
 			
+			#region Sonido
 			
+			if(Sdl.SDL_InitSubSystem(Sdl.SDL_INIT_AUDIO) < 0)
+			{
+				Console.WriteLine("No se pudo inicar el sistema de audio");
+				Console.WriteLine("ERROR: {0}", Sdl.SDL_GetError());
+				SonidoActivo = false;
+			}
+			else
+			{
+				SonidoActivo = true;
+			}
+			
+			if(SonidoActivo)
+			{
+				if(SdlMixer.Mix_OpenAudio(22050, Sdl.AUDIO_S16, 2, 4096) < 0)
+				{
+					Console.WriteLine("No se pudo inicar el mezclador de audio");
+					Console.WriteLine("ERROR: {0}", Sdl.SDL_GetError());
+					SonidoActivo = false;
+				}
+			}
+			
+			AlmacenSonidos.Inicializar();
+			
+			#endregion
 			
 			Console.WriteLine("SDL inicializado con exito");
 			
