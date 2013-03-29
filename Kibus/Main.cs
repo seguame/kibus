@@ -19,15 +19,15 @@ namespace Kibus
 				
 				opcion = menu.OpcionElegida;
 				
-				switch(opcion)
+				if(opcion == Menu.Opcion.SALIR)
 				{
-					case Menu.Opcion.PRACTICA_1:
-						new Escenario(opcion).Iniciar();
-						break;
-					case Menu.Opcion.SALIR:
-						Sdl.SDL_Quit();
-						break;
+					Sdl.SDL_Quit();
 				}
+				else
+				{
+					new Escenario(opcion).Iniciar();
+				}
+				
 			}while(opcion != Menu.Opcion.SALIR);
 		}
 	}

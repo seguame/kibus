@@ -52,6 +52,7 @@
     <Compile Include="Kibus.cs" />
     <Compile Include="AlmacenSonidos.cs" />
     <Compile Include="Nivel1.cs" />
+    <Compile Include="EditorNivel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

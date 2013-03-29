@@ -14,6 +14,9 @@ namespace Kibus
 				case Menu.Opcion.PRACTICA_1:
 					nivel = new Nivel1();
 					break;
+				case Menu.Opcion.CREAR_NIVEL:
+					nivel = new EditorNivel();
+					break;
 			}
 		}
 		
