@@ -22,7 +22,7 @@ namespace Kibus
 				switch(opcion)
 				{
 					case Menu.Opcion.PRACTICA_1:
-						new Escenario().Iniciar();
+						new Escenario(opcion).Iniciar();
 						break;
 					case Menu.Opcion.SALIR:
 						Sdl.SDL_Quit();

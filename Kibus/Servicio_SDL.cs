@@ -19,6 +19,7 @@ namespace Kibus
 		
 		public static void Inicializar(short ancho, short alto, int colores,bool pantalla_completa)
 		{
+			
 			int bpp;
 			int flags = Sdl.SDL_HWSURFACE | Sdl.SDL_DOUBLEBUF | Sdl.SDL_ANYFORMAT;
 			
