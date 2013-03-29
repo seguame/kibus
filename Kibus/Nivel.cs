@@ -9,6 +9,11 @@ namespace Kibus
 		protected Sprite casa;
 		protected Kibus kibus;
 		
+		protected Nivel()
+		{
+			sprites = new Sprite[10,10];
+		}
+		
 		public bool EsPosibleMover(short x, short y, short xFin, short yFin)
 		{
 			if(xFin < SDL.ancho + 64 - 201 && yFin < SDL.alto + 64 && xFin > 0 && yFin > 0)

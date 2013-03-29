@@ -10,13 +10,12 @@ namespace Kibus
 		private Stack<int> pasos;
 		bool continuar;
 		
-		public Nivel1 ()
+		public Nivel1 (): base() 
 		{
 			Random random = new Random(System.DateTime.Now.Millisecond);
 			int cantidad = random.Next(20, 80);
 			
 			Console.WriteLine(cantidad + "%");
-			sprites = new Sprite[10,10];
 			int x;
 			int y;
 			int elemento;
