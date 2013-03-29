@@ -142,7 +142,7 @@ namespace Kibus
 			}
 		}
 		
-		public void PosicionarCasa()
+		private void PosicionarCasa()
 		{
 			Sdl.SDL_Event evento;
 			Sdl.SDL_Rect rectangulo;
