@@ -46,7 +46,6 @@
     <Compile Include="Niveles\Nivel.cs" />
     <Compile Include="Niveles\Nivel1.cs" />
     <Compile Include="Niveles\Nivel2.cs" />
-    <Compile Include="Niveles\EditorNivel.cs" />
     <Compile Include="Niveles\Escenario.cs" />
     <Compile Include="Niveles\CargadorMapas.cs" />
     <Compile Include="Hardware\AlmacenSonidos.cs" />
@@ -55,6 +54,7 @@
     <Compile Include="Graficos\Imagen.cs" />
     <Compile Include="Graficos\Kibus.cs" />
     <Compile Include="Graficos\Sprite.cs" />
+    <Compile Include="Niveles\EditorMapas.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
