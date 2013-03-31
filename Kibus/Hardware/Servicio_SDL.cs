@@ -22,9 +22,11 @@
 using System;
 using Tao.Sdl;
 
-namespace Kibus
+using Graficos;
+
+namespace Esedelish
 {
-	public class SDL
+	public class Hardware
 	{
 		public static short ancho, alto;
 		private static IntPtr pantalla;
@@ -46,8 +48,8 @@ namespace Kibus
 			
 			Console.WriteLine("Inicializando SDL");
 			
-			SDL.ancho = ancho;
-			SDL.alto = alto;
+			Hardware.ancho = ancho;
+			Hardware.alto = alto;
 			
 			if(pantalla_completa)
 			{
@@ -122,9 +124,9 @@ namespace Kibus
 			
 			Console.WriteLine("SDL inicializado con exito");
 			
-			Sprite boton = new Sprite("Boton/boton.png");
+			Sprite boton = new Sprite("Assets/Botones/boton.png");
 			
-			fuente = new Fuente("Fonts/FreeSansBold.ttf", 14);
+			fuente = new Fuente("Assets/Fuentes/FreeSansBold.ttf", 14);
 			CambiarColorTexto(0,0,0);
 			
 			boton.Mover(650, 100);
@@ -148,7 +150,7 @@ namespace Kibus
 			EscribirTexto("Buscar", 685, 339);
 			
 			
-			fuente = new Fuente("Fonts/FreeSansBold.ttf", 20);
+			fuente = new Fuente("Assets/Fuentes/FreeSansBold.ttf", 20);
 		}
 		
 		public static void Pausar(uint tiempo)
@@ -305,7 +307,7 @@ namespace Kibus
 		
 		public static void DibujarFondo()
 		{
-			Sprite pasto = new Sprite("GFX/pasto.jpg");
+			Sprite pasto = new Sprite("Assets/GFX/pasto.jpg");
 			
 			for(int i = 0; i < 10; i++)
 			{

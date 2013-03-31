@@ -26,9 +26,12 @@ using System.IO;
 using Tao.Sdl;
 using System.Text;
 
-namespace Kibus
+using Graficos;
+using Esedelish;
+
+namespace Niveles
 {
-	public class EditorNivel : Nivel
+	internal class EditorNivel : Nivel
 	{
 		private int[,] matriz = new int[10,10];
 		public EditorNivel() : base(){}
@@ -42,7 +45,7 @@ namespace Kibus
 			Random random = new Random(System.DateTime.Now.Millisecond);
 			int elemento;
 			elemento = random.Next(36,42);
-			Sprite obstaculo = new Sprite("GFX/"+ elemento+".png");;
+			Sprite obstaculo = new Sprite("Assets/GFX/"+ elemento+".png");;
 			
 			do
 			{
@@ -56,8 +59,8 @@ namespace Kibus
 						case Sdl.SDL_MOUSEMOTION:
 							if (evento.motion.x > 0 && evento.motion.y > 0)
 				            {
-				                rectangulo.x = (short)(((int)(10 - ((((SDL.ancho - 200) - evento.motion.x) / (float)(SDL.ancho - 200))) * 10)) * 64);
-				                rectangulo.y = (short)(((int)(10 - (((SDL.alto- evento.motion.y) / (float)SDL.alto)) * 10)) * 64);
+				                rectangulo.x = (short)(((int)(10 - ((((Hardware.ancho - 200) - evento.motion.x) / (float)(Hardware.ancho - 200))) * 10)) * 64);
+				                rectangulo.y = (short)(((int)(10 - (((Hardware.alto- evento.motion.y) / (float)Hardware.alto)) * 10)) * 64);
 								
 								try
 								{
@@ -80,7 +83,7 @@ namespace Kibus
 									sprites[rectangulo.x/64,rectangulo.y/64] = obstaculo;
 									matriz[rectangulo.x/64,rectangulo.y/64] = elemento;
 									elemento = random.Next(36,42);
-									obstaculo = new Sprite("GFX/"+ elemento+".png");;
+									obstaculo = new Sprite("Assets/GFX/"+ elemento+".png");;
 								}
 							}
 							catch (IndexOutOfRangeException)
@@ -107,10 +110,10 @@ namespace Kibus
 				}
 				Console.WriteLine("----------------------------------------------------");*/
 				
-				SDL.DibujarFondo();
+				Hardware.DibujarFondo();
 				DibujarObstaculos();
 				obstaculo.Dibujar();
-				SDL.RefrescarPantalla();
+				Hardware.RefrescarPantalla();
 				
 			}while(!terminado);
 			
@@ -120,11 +123,11 @@ namespace Kibus
 			
 			do
 			{
-				SDL.DibujarFondo();
+				Hardware.DibujarFondo();
 				DibujarObstaculos();
-				SDL.EscribirTexto("Nombre del mapa: ", 200, 300);
-				SDL.EscribirTexto(nombre, 200, 340);
-				SDL.RefrescarPantalla();
+				Hardware.EscribirTexto("Nombre del mapa: ", 200, 300);
+				Hardware.EscribirTexto(nombre, 200, 340);
+				Hardware.RefrescarPantalla();
 				
 				while(Sdl.SDL_PollEvent(out evento) > 0)
 				{

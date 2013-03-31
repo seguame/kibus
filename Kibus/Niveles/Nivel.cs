@@ -22,9 +22,12 @@
 using System;
 using Tao.Sdl;
 
-namespace Kibus
+using Graficos;
+using Esedelish;
+
+namespace Niveles
 {
-	public abstract class Nivel
+	internal abstract class Nivel
 	{
 		protected Sprite[,] sprites;
 		protected Sprite casa;
@@ -37,7 +40,7 @@ namespace Kibus
 		
 		public bool EsPosibleMover(short x, short y, short xFin, short yFin)
 		{
-			if(xFin < SDL.ancho + 64 - 201 && yFin < SDL.alto + 64 && xFin > 0 && yFin > 0)
+			if(xFin < Hardware.ancho + 64 - 201 && yFin < Hardware.alto + 64 && xFin > 0 && yFin > 0)
 			{
 				foreach(Sprite sprite in sprites)
 				{
@@ -55,13 +58,13 @@ namespace Kibus
 		
 		protected void DibujarTodo()
 		{
-			SDL.DibujarFondo();
+			Hardware.DibujarFondo();
 			
 			DibujarObstaculos();
 			kibus.Dibujar();
 			casa.Dibujar();
 			
-			SDL.RefrescarPantalla();
+			Hardware.RefrescarPantalla();
 			
 		}
 		

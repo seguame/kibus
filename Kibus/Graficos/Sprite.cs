@@ -23,7 +23,9 @@ using System;
 using System.Runtime.InteropServices;
 using Tao.Sdl;
 
-namespace Kibus
+using Esedelish;
+
+namespace Graficos
 {
 	public class Sprite
 	{
@@ -90,7 +92,7 @@ namespace Kibus
 		
 		public void Dibujar()
 		{
-			SDL.DibujarSprite(this);
+			Hardware.DibujarSprite(this);
 		}
 		
 		public bool ColisionCon(Sprite otro)

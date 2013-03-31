@@ -1,5 +1,5 @@
 //  
-//  Imagen.cs
+//  Nivel2.cs
 //  
 //  Author:
 //       Miguel Seguame Reyes <seguame@outlook.com>
@@ -18,28 +18,14 @@
 // 
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 using System;
 
-namespace Kibus
+namespace Niveles
 {
-	public class Imagen
+	internal class Nivel2
 	{
-		private IntPtr apuntadorImagen;
-		
-		public Imagen (string archivo)
+		public Nivel2 ()
 		{
-			apuntadorImagen = SDL.CargarImagen(archivo);
-		}
-		
-		public IntPtr PunteroImagen()
-		{
-			return apuntadorImagen;
-		}
-		
-		public void Dibujar(short x, short y)
-		{
-			SDL.DibujarImagen(apuntadorImagen, x ,y);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 //  
-//  AlmacenSonidos.cs
+//  Imagen.cs
 //  
 //  Author:
 //       Miguel Seguame Reyes <seguame@outlook.com>
@@ -20,27 +20,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using SdlDotNet.Audio;
 
-namespace Kibus
+using Esedelish;
+
+namespace Graficos
 {
-	public class AlmacenSonidos
+	public class Imagen
 	{
-		public static Music MusicaFondo
+		private IntPtr apuntadorImagen;
+		
+		public Imagen (string archivo)
 		{
-			private set;
-			get;
+			apuntadorImagen = Hardware.CargarImagen(archivo);
 		}
 		
-		internal static void Inicializar()
+		public IntPtr PunteroImagen()
 		{
-			if(!SDL.SonidoActivo)
-				return;
-			
-			MusicaFondo = new Music ("Sound/choco1.ogg");
-			MusicPlayer.Volume = 30;
-			MusicPlayer.Load ( MusicaFondo );
-			MusicPlayer.Play(true);
+			return apuntadorImagen;
+		}
+		
+		public void Dibujar(short x, short y)
+		{
+			Hardware.DibujarImagen(apuntadorImagen, x ,y);
 		}
 	}
 }

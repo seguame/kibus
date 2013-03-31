@@ -1,5 +1,5 @@
-//  
-//  Fuente.cs
+﻿//  
+//  Escenario.cs
 //  
 //  Author:
 //       Miguel Seguame Reyes <seguame@outlook.com>
@@ -20,22 +20,35 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Tao.Sdl;
 
-namespace Kibus
+namespace Niveles
 {
-	public class Fuente
+	public class Escenario
 	{
-		private IntPtr apuntadorFuente;
 		
-		public Fuente(string archivo, short tamaño)
-	    {
-	    	apuntadorFuente = SDL.CargarFuente(archivo, tamaño);
-	    }
-	      
-	    public  IntPtr LeerPuntero()
-	    {
-	    	return apuntadorFuente;
-	    }
+		private Nivel nivel;
+		
+		public Escenario(Menu.Opcion opcion)
+		{
+			switch(opcion)
+			{
+				case Menu.Opcion.PRACTICA_1:
+					nivel = new Nivel1();
+					break;
+				
+				case Menu.Opcion.PRACTICA_2:
+					break;
+				
+				case Menu.Opcion.CREAR_NIVEL:
+					nivel = new EditorNivel();
+					break;
+			}
+		}
+		
+		public void Iniciar()
+		{
+			nivel.Iniciar();
+		}
 	}
 }
-

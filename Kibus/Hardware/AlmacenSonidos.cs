@@ -1,5 +1,5 @@
-﻿//  
-//  Escenario.cs
+//  
+//  AlmacenSonidos.cs
 //  
 //  Author:
 //       Miguel Seguame Reyes <seguame@outlook.com>
@@ -20,35 +20,28 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Tao.Sdl;
+using SdlDotNet.Audio;
 
-namespace Kibus
+namespace Esedelish
 {
-	public class Escenario
+	public class AlmacenSonidos
 	{
-		
-		private Nivel nivel;
-		
-		public Escenario(Menu.Opcion opcion)
+		public static Music MusicaFondo
 		{
-			switch(opcion)
-			{
-				case Menu.Opcion.PRACTICA_1:
-					nivel = new Nivel1();
-					break;
-				
-				case Menu.Opcion.PRACTICA_2:
-					break;
-				
-				case Menu.Opcion.CREAR_NIVEL:
-					nivel = new EditorNivel();
-					break;
-			}
+			private set;
+			get;
 		}
 		
-		public void Iniciar()
+		internal static void Inicializar()
 		{
-			nivel.Iniciar();
+			if(!Hardware.SonidoActivo)
+				return;
+			
+			MusicaFondo = new Music ("Assets/Sonidos/choco1.ogg");
+			MusicPlayer.Volume = 30;
+			MusicPlayer.Load ( MusicaFondo );
+			MusicPlayer.Play(true);
 		}
 	}
 }
+

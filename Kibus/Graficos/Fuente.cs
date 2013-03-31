@@ -1,5 +1,5 @@
 //  
-//  Main.cs
+//  Fuente.cs
 //  
 //  Author:
 //       Miguel Seguame Reyes <seguame@outlook.com>
@@ -20,37 +20,24 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using Tao.Sdl;
 
 using Esedelish;
-using Niveles;
 
-class MainClass
+namespace Graficos
 {
-	public static void Main (string[] args)
+	public class Fuente
 	{
-		Hardware.Inicializar(840, 640, 24, false);
-		Hardware.CambiarColorTexto(255, 255, 255);
+		private IntPtr apuntadorFuente;
 		
-		Menu.Opcion opcion;
-		Menu menu = new Menu();
-			
-		do
-		{
-			menu.Mostrar();
-			
-			opcion = menu.OpcionElegida;
-			
-			if(opcion == Menu.Opcion.SALIR)
-			{
-				Sdl.SDL_Quit();
-			}
-			else
-			{
-				new Escenario(opcion).Iniciar();
-			}
-				
-		}while(opcion != Menu.Opcion.SALIR);
-
+		public Fuente(string archivo, short tamaño)
+	    {
+	    	apuntadorFuente = Hardware.CargarFuente(archivo, tamaño);
+	    }
+	      
+	    public  IntPtr LeerPuntero()
+	    {
+	    	return apuntadorFuente;
+	    }
 	}
 }
+

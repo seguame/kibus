@@ -21,11 +21,11 @@
 
 using System;
 
-namespace Kibus
+namespace Graficos
 {
 	public class Kibus: Sprite
 	{
-		public Kibus (short x, short y) :base ("GFX/personaje.png")
+		public Kibus (short x, short y) :base ("Assets/GFX/personaje.png")
 		{
 			rectangulo.x = x;
 			rectangulo.y = y;

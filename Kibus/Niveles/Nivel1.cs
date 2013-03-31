@@ -23,9 +23,12 @@ using System;
 using System.Collections.Generic;
 using Tao.Sdl;
 
-namespace Kibus
+using Graficos;
+using Esedelish;
+
+namespace Niveles
 {
-	public class Nivel1 : Nivel
+	internal class Nivel1 : Nivel
 	{
 		
 		private Stack<int> pasos;
@@ -48,7 +51,7 @@ namespace Kibus
 				elemento = random.Next(36,42);
 				if(sprites[x,y] == null)
 				{
-					sprites[x,y] = new Sprite("GFX/"+ elemento+".png");
+					sprites[x,y] = new Sprite("Assets/GFX/"+ elemento+".png");
 					sprites[x,y].Mover((short)(x * sprites[x,y].GetAncho()),(short) (y * sprites[x,y].GetAlto()));
 					cantidad--;
 				}
@@ -73,7 +76,7 @@ namespace Kibus
 				DibujarTodo();
 				ComprobarTeclas();
 				MoverElementos();
-				SDL.Pausar(30);
+				Hardware.Pausar(30);
 			}
 			
 			
@@ -81,31 +84,31 @@ namespace Kibus
 			while(pasos.Count > 0)
 			{
 				DibujarTodo();
-				SDL.EscribirTexto("Volviendo a Casa", 10, 10); 
-				SDL.RefrescarPantalla();
+				Hardware.EscribirTexto("Volviendo a Casa", 10, 10); 
+				Hardware.RefrescarPantalla();
 				Regresar();
 				MoverElementos();
-				SDL.Pausar(300);
+				Hardware.Pausar(300);
 			}
 			
 			DibujarTodo();
-			SDL.EscribirTexto("KIBUS LLEGO! \\O/",(short)(SDL.alto/2), (short)(SDL.ancho/2));
-			SDL.RefrescarPantalla();
-			while(!SDL.TeclaPulsada(Sdl.SDLK_RETURN))
+			Hardware.EscribirTexto("KIBUS LLEGO! \\O/",(short)(Hardware.alto/2), (short)(Hardware.ancho/2));
+			Hardware.RefrescarPantalla();
+			while(!Hardware.TeclaPulsada(Sdl.SDLK_RETURN))
 			{
-				SDL.Pausar(20);
+				Hardware.Pausar(20);
 			}
 		}
 		
 		private void ComprobarTeclas()
 		{
 			
-			if(SDL.TeclaPulsada(Sdl.SDLK_RETURN))
+			if(Hardware.TeclaPulsada(Sdl.SDLK_RETURN))
 			{
 				continuar = false;
 			}
 
-	        if ((SDL.TeclaPulsada(Sdl.SDLK_UP))
+	        if ((Hardware.TeclaPulsada(Sdl.SDLK_UP))
 	            && EsPosibleMover(kibus.GetX(), (short)(kibus.GetY() - kibus.GetVelocidadY()),
 	                    kibus.GetXFinal(), (short)(kibus.GetYFinal() - kibus.GetVelocidadY())))
 			{
@@ -114,7 +117,7 @@ namespace Kibus
 	            kibus.MoverArriba();
 			}
 	
-	        if ((SDL.TeclaPulsada(Sdl.SDLK_DOWN))
+	        if ((Hardware.TeclaPulsada(Sdl.SDLK_DOWN))
 	            && EsPosibleMover(kibus.GetX(),(short)(kibus.GetY() + kibus.GetVelocidadY()),
 	                   kibus.GetXFinal(), (short)(kibus.GetYFinal() + kibus.GetVelocidadY())))
 				
@@ -124,7 +127,7 @@ namespace Kibus
 	            kibus.MoverAbajo();
 			}
 	
-	        if ((SDL.TeclaPulsada(Sdl.SDLK_RIGHT))
+	        if ((Hardware.TeclaPulsada(Sdl.SDLK_RIGHT))
 	            && EsPosibleMover((short)(kibus.GetX() + kibus.GetVelocidadX()), kibus.GetY(),
 	                   (short)(kibus.GetXFinal() + kibus.GetVelocidadX()), kibus.GetYFinal()))
 			{
@@ -133,7 +136,7 @@ namespace Kibus
 	            kibus.MoverDerecha();
 			}
 	
-	        if ((SDL.TeclaPulsada(Sdl.SDLK_LEFT) )
+	        if ((Hardware.TeclaPulsada(Sdl.SDLK_LEFT) )
 	            && EsPosibleMover((short)(kibus.GetX() - kibus.GetVelocidadX()), kibus.GetY(),
 	                   (short)(kibus.GetXFinal() - kibus.GetVelocidadX()), kibus.GetYFinal()))
 			{
@@ -167,7 +170,7 @@ namespace Kibus
 		{
 			Sdl.SDL_Event evento;
 			Sdl.SDL_Rect rectangulo;
-			Sprite casa = new Sprite("GFX/casini.png");
+			Sprite casa = new Sprite("Assets/GFX/casini.png");
 			bool puesta = false;
 			
 			do
@@ -180,8 +183,8 @@ namespace Kibus
 						case Sdl.SDL_MOUSEMOTION:
 							if (evento.motion.x > 0 && evento.motion.y > 0)
 				            {
-				                rectangulo.x = (short)(((int)(10 - ((((SDL.ancho - 200) - evento.motion.x) / (float)(SDL.ancho - 200))) * 10)) * 64);
-				                rectangulo.y = (short)(((int)(10 - (((SDL.alto- evento.motion.y) / (float)SDL.alto)) * 10)) * 64);
+				                rectangulo.x = (short)(((int)(10 - ((((Hardware.ancho - 200) - evento.motion.x) / (float)(Hardware.ancho - 200))) * 10)) * 64);
+				                rectangulo.y = (short)(((int)(10 - (((Hardware.alto- evento.motion.y) / (float)Hardware.alto)) * 10)) * 64);
 								
 								try
 								{
@@ -212,10 +215,10 @@ namespace Kibus
 							break;
 					}
 				}
-				SDL.DibujarFondo();
+				Hardware.DibujarFondo();
 				DibujarObstaculos();
 				casa.Dibujar();
-				SDL.RefrescarPantalla();
+				Hardware.RefrescarPantalla();
 				
 			}while(!puesta);
 		}

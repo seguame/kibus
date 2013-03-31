@@ -40,197 +40,203 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Escenario.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Servicio_SDL.cs" />
-    <Compile Include="Fuente.cs" />
-    <Compile Include="Imagen.cs" />
     <Compile Include="Menu.cs" />
-    <Compile Include="Sprite.cs" />
-    <Compile Include="Nivel.cs" />
-    <Compile Include="Kibus.cs" />
-    <Compile Include="AlmacenSonidos.cs" />
-    <Compile Include="Nivel1.cs" />
-    <Compile Include="EditorNivel.cs" />
+    <Compile Include="Niveles\Nivel.cs" />
+    <Compile Include="Niveles\Nivel1.cs" />
+    <Compile Include="Niveles\Nivel2.cs" />
+    <Compile Include="Niveles\EditorNivel.cs" />
+    <Compile Include="Niveles\Escenario.cs" />
+    <Compile Include="Niveles\CargadorMapas.cs" />
+    <Compile Include="Hardware\AlmacenSonidos.cs" />
+    <Compile Include="Hardware\Servicio_SDL.cs" />
+    <Compile Include="Graficos\Fuente.cs" />
+    <Compile Include="Graficos\Imagen.cs" />
+    <Compile Include="Graficos\Kibus.cs" />
+    <Compile Include="Graficos\Sprite.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <None Include="GFX\1.png">
+    <None Include="Assets\Botones\boton.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\10.png">
+    <None Include="Assets\Fuentes\FreeSansBold.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\11.png">
+    <None Include="Assets\GFX\1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\12.png">
+    <None Include="Assets\GFX\10.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\13.png">
+    <None Include="Assets\GFX\11.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\14.png">
+    <None Include="Assets\GFX\12.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\15.png">
+    <None Include="Assets\GFX\13.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\16.png">
+    <None Include="Assets\GFX\14.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\17.png">
+    <None Include="Assets\GFX\15.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\18.png">
+    <None Include="Assets\GFX\16.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\19.png">
+    <None Include="Assets\GFX\17.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\2.png">
+    <None Include="Assets\GFX\18.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\20.png">
+    <None Include="Assets\GFX\19.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\21.png">
+    <None Include="Assets\GFX\2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\22.png">
+    <None Include="Assets\GFX\20.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\23.png">
+    <None Include="Assets\GFX\21.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\24.png">
+    <None Include="Assets\GFX\22.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\25.png">
+    <None Include="Assets\GFX\23.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\26.png">
+    <None Include="Assets\GFX\24.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\27.png">
+    <None Include="Assets\GFX\25.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\28.png">
+    <None Include="Assets\GFX\26.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\29.png">
+    <None Include="Assets\GFX\27.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\3.png">
+    <None Include="Assets\GFX\28.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\30.png">
+    <None Include="Assets\GFX\29.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\31.png">
+    <None Include="Assets\GFX\3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\32.png">
+    <None Include="Assets\GFX\30.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\33.png">
+    <None Include="Assets\GFX\31.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\34.png">
+    <None Include="Assets\GFX\32.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\35.png">
+    <None Include="Assets\GFX\33.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\36.png">
+    <None Include="Assets\GFX\34.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\37.png">
+    <None Include="Assets\GFX\35.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\38.png">
+    <None Include="Assets\GFX\36.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\39.png">
+    <None Include="Assets\GFX\37.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\4.png">
+    <None Include="Assets\GFX\38.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\40.png">
+    <None Include="Assets\GFX\39.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\41.png">
+    <None Include="Assets\GFX\4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\42.png">
+    <None Include="Assets\GFX\40.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\43.png">
+    <None Include="Assets\GFX\41.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\44.png">
+    <None Include="Assets\GFX\42.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\45.png">
+    <None Include="Assets\GFX\43.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\46.png">
+    <None Include="Assets\GFX\44.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\47.png">
+    <None Include="Assets\GFX\45.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\48.png">
+    <None Include="Assets\GFX\46.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\5.png">
+    <None Include="Assets\GFX\47.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\6.png">
+    <None Include="Assets\GFX\48.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\7.png">
+    <None Include="Assets\GFX\5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\8.png">
+    <None Include="Assets\GFX\6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\9.png">
+    <None Include="Assets\GFX\7.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\CGBAChocobo.png">
+    <None Include="Assets\GFX\8.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\casa.gif">
+    <None Include="Assets\GFX\9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\casini.png">
+    <None Include="Assets\GFX\CGBAChocobo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\forest_tiles_by_metalraptor-d55mq6s.png">
+    <None Include="Assets\GFX\casa.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\pasto.jpg">
+    <None Include="Assets\GFX\casini.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\personaje.png">
+    <None Include="Assets\GFX\forest_tiles_by_metalraptor-d55mq6s.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="GFX\presentacion.jpg">
+    <None Include="Assets\GFX\pasto.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Fonts\FreeSansBold.ttf">
+    <None Include="Assets\GFX\personaje.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Sound\choco1.ogg">
+    <None Include="Assets\GFX\presentacion.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Sonidos\choco1.ogg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Boton\boton.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Folder Include="Niveles\" />
+    <Folder Include="Hardware\" />
+    <Folder Include="Graficos\" />
+    <Folder Include="Assets\" />
   </ItemGroup>
 </Project>

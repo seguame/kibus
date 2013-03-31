@@ -22,7 +22,9 @@
 using System;
 using System.IO;
 
-namespace Kibus
+using Esedelish;
+
+namespace Niveles
 {
 	public class CargadorMapas
 	{
@@ -54,19 +56,19 @@ namespace Kibus
 		{
 			if(!hayHarchivos)
 			{
-				SDL.DibujarFondo(0,0,150);
-				SDL.EscribirTexto("Crea primero algun mapa", 50, 50);
-				SDL.RefrescarPantalla();
-				SDL.Pausar(1000);
+				Hardware.DibujarFondo(0,0,150);
+				Hardware.EscribirTexto("Crea primero algun mapa", 50, 50);
+				Hardware.RefrescarPantalla();
+				Hardware.Pausar(1000);
 				return;
 			}
 			
 			
 			do
 			{
-				SDL.DibujarFondo(0,0,150);
+				Hardware.DibujarFondo(0,0,150);
 				ListarArchivos();
-				SDL.RefrescarPantalla();
+				Hardware.RefrescarPantalla();
 			}while(true);
 		}
 		
@@ -74,7 +76,7 @@ namespace Kibus
 		{
 			for(int i = 0; i < archivos.Length; i++)
 			{
-				SDL.EscribirTexto(archivos[i], 5, (i * 30));
+				Hardware.EscribirTexto(archivos[i], 5, (i * 30));
 			}
 		}
 	}
