@@ -245,7 +245,6 @@ namespace Kibus
 		
 		public static void DibujarImagen(IntPtr imagen, short x, short y)
 		{
-			//Sdl.SDL_Rect origen = new Sdl.SDL_Rect(0,0, ancho, alto);
 			Sdl.SDL_Rect destino = new Sdl.SDL_Rect(x,y, ancho, alto);
 			Sdl.SDL_BlitSurface(imagen,ref origen, pantalla, ref destino);
 		}
@@ -258,7 +257,7 @@ namespace Kibus
 			Sdl.SDL_BlitSurface(imagen, ref origen, pantalla, ref destino);
 		}
 		
-		public static void EscribirTexto(string texto, short x, short y)
+		public static void EscribirTexto(string texto, int x, int y)
 		{
 			if(Object.ReferenceEquals(color, null))
 			{
@@ -273,7 +272,7 @@ namespace Kibus
 			}
 			
 			//Sdl.SDL_Rect origen = new Sdl.SDL_Rect(0,0, ancho, alto);
-			Sdl.SDL_Rect destino = new Sdl.SDL_Rect(x,y,ancho , alto);
+			Sdl.SDL_Rect destino = new Sdl.SDL_Rect((short)x,(short)y,ancho , alto);
 			
 			Sdl.SDL_BlitSurface(textoComoImagen, ref origen, pantalla, ref destino);
 		}
