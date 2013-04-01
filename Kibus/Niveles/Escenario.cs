@@ -38,10 +38,11 @@ namespace Niveles
 					break;
 				
 				case Menu.Opcion.PRACTICA_2:
+					nivel = new Nivel2();
 					break;
 				
 				case Menu.Opcion.CREAR_NIVEL:
-					nivel = new EditorNivel();
+					nivel = new EditorMapas();
 					break;
 			}
 		}
