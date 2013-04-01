@@ -31,6 +31,12 @@ namespace Graficos
 			rectangulo.y = y;
 		}
 		
+		public Kibus() : base ("Assets/GFX/personaje.png")
+		{
+			rectangulo.x = 0;
+			rectangulo.y = 0;
+		}
+		
 		public void MoverArriba()
 	    {
 	        rectangulo.y -= incremento_Y;
