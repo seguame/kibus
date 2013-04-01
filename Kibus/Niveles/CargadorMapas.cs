@@ -22,13 +22,17 @@
 using System;
 using System.IO;
 
+using Tao.Sdl;
+
 using Esedelish;
+using System.Collections.Generic;
 
 namespace Niveles
 {
 	public class CargadorMapas
 	{
-		public static string Mapa
+		private const string rutaMapas = "Mapas/";
+		public static int[][] Mapa
 		{
 			private set;
 			get;
@@ -40,7 +44,7 @@ namespace Niveles
 		
 		public CargadorMapas ()
 		{
-			archivos = Directory.GetFiles("Mapas/","*.txt");
+			archivos = Directory.GetFiles(rutaMapas,"*.txt");
 			
 			if(archivos.Length == 0)
 			{
@@ -54,6 +58,9 @@ namespace Niveles
 		
 		public void SeleccionarArchivo()
 		{
+			Sdl.SDL_Event evento;
+			int seleccion = -1;
+			
 			if(!hayHarchivos)
 			{
 				Hardware.DibujarFondo(0,0,150);
@@ -69,15 +76,81 @@ namespace Niveles
 				Hardware.DibujarFondo(0,0,150);
 				ListarArchivos();
 				Hardware.RefrescarPantalla();
-			}while(true);
+				
+				
+				while(Sdl.SDL_PollEvent(out evento) > 0)
+				{
+					
+					/*Temporal, servirá de momento en lo que se crea
+					 * la clase que permitira clikear sobre el texto 
+					 * para seleccionar el mapa
+					 */
+					switch(evento.type)
+					{
+						case Sdl.SDL_KEYDOWN:
+							seleccion = evento.key.keysym.sym - 48;
+							break;
+					}
+				}
+				
+				Hardware.Pausar(50);
+				
+			}while(seleccion == -1);
+			
+			MapearSeleccion(seleccion);
 		}
 		
 		private void ListarArchivos()
 		{
 			for(int i = 0; i < archivos.Length; i++)
 			{
-				Hardware.EscribirTexto(archivos[i], 5, (i * 30));
+				Hardware.EscribirTexto(i+": "+archivos[i], 5, (i * 30));
 			}
+		}
+		
+		private void MapearSeleccion(int indice)
+		{
+			char[] separadores = new char[]{','};
+			Console.WriteLine(archivos[indice]);
+			StreamReader lector = new StreamReader(archivos[indice]);
+			List<string[]> lineas = new List<string[]>();
+			string linea;
+			string[] fila;
+			
+			while((linea = lector.ReadLine()) != null)
+			{
+				fila = linea.Split(separadores);
+				lineas.Add(fila);
+			}
+			
+			ParsearMapa(lineas);
+		}
+		
+		private void ParsearMapa(List<string[]> tmp)
+		{
+			int filas = tmp.Count;
+			int columnas;
+			int[][] mapa = new int[filas][];
+			
+			try
+			{
+				for(int i = 0; i < filas; i++)
+				{
+					columnas = tmp[i].Length;
+					mapa[i] = new int[columnas];
+					
+					for(int j = 0; j < columnas; j++)
+					{
+						mapa[i][j] = Convert.ToInt32(tmp[i][j]);
+					}
+				}
+			}
+			catch(FormatException)
+			{
+				Console.WriteLine("Error cargando el mapa seleccionado");
+			}
+			
+			Mapa = mapa;
 		}
 	}
 }
