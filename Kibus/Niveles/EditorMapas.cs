@@ -31,16 +31,25 @@ using Esedelish;
 
 namespace Niveles
 {
-	internal class EditorNivel : Nivel
+	internal class EditorMapas : Nivel
 	{
 		private int[,] matriz = new int[10,10];
-		public EditorNivel() : base(){}
+		public EditorMapas() : base(){}
+		
+		public static int CASA
+		{
+			get
+			{
+				return 99;
+			}
+		}
 		
 		public override void Iniciar() 
 		{
 			Sdl.SDL_Event evento;
 			Sdl.SDL_Rect rectangulo;
 			bool terminado = false;
+			bool casaTaim = false;
 			
 			Random random = new Random(System.DateTime.Now.Millisecond);
 			int elemento;
@@ -80,10 +89,20 @@ namespace Niveles
 							{
 								if(sprites[rectangulo.x/64,rectangulo.y/64] == null)
 								{
+								
 									sprites[rectangulo.x/64,rectangulo.y/64] = obstaculo;
-									matriz[rectangulo.x/64,rectangulo.y/64] = elemento;
-									elemento = random.Next(36,42);
-									obstaculo = new Sprite("Assets/GFX/"+ elemento+".png");;
+								
+									if(casaTaim)
+									{
+										matriz[rectangulo.x/64,rectangulo.y/64] = EditorMapas.CASA;
+										terminado = true;
+									}
+									else
+									{
+										matriz[rectangulo.x/64,rectangulo.y/64] = elemento;
+										elemento = random.Next(36,42);
+										obstaculo = new Sprite("Assets/GFX/"+ elemento+".png");
+									}
 								}
 							}
 							catch (IndexOutOfRangeException)
@@ -94,21 +113,12 @@ namespace Niveles
 						case Sdl.SDL_KEYDOWN:
 							if(evento.key.keysym.sym == Sdl.SDLK_SPACE)
 							{
-								terminado = true;
+								obstaculo = new Sprite("Assets/GFX/casini.png");
+								casaTaim = true;
 							}
 							break;
 					}
 				}
-				
-				/*for(int i = 0;i < 10; i++)
-				{
-					for(int j = 0; j < 10; j++)
-					{
-						Console.Write(matriz[i,j]);
-					}
-					Console.WriteLine();
-				}
-				Console.WriteLine("----------------------------------------------------");*/
 				
 				Hardware.DibujarFondo();
 				DibujarObstaculos();
@@ -149,7 +159,6 @@ namespace Niveles
 				
 			}while(!terminado);
 			
-            ///Fill the table
 
             List<string> lineasArreglo = new List<string>();
             for(int i = 0; i < 10; i++)
