@@ -146,7 +146,7 @@ namespace Algoritmos
 					ultimaY = Yfinal;
 				}
 				
-				Console.WriteLine("Pondriamos X:{0} Y:{1}", x, y);
+				//Console.WriteLine("Pondriamos X:{0} Y:{1}", x, y);
 				//ponerLineas(x, y, x, y);
 				
 				while(y < ultimaY) //mientras Y no sea Y final
@@ -195,7 +195,7 @@ namespace Algoritmos
 					ultimaX = Xfinal;
 				}
 				
-				Console.WriteLine("Pondriamos X:{0} Y:{1}", x, y);
+				//Console.WriteLine("Pondriamos X:{0} Y:{1}", x, y);
 				//ponerLineas(x, y, x, y);
 				
 				while(x < ultimaX)

@@ -43,28 +43,22 @@ namespace Utileria
 			{
 			case Direccion.ABAJO:
 				return "Abajo";
-				break;
 			case Direccion.ABAJO_DER:
 				return "Abajo-Derecha";
-				break;
 			case Direccion.ABAJO_IZQ:
 				return "Abajo-Izquierda";
-				break;
 			case Direccion.ARRIBA:
 				return "Arriba";
-				break;
 			case Direccion.ARRIBA_DER:
 				return "Arriba-Derecha";
-				break;
 			case Direccion.ARRIBA_IZQ:
 				return "Arriba-Izquierda";
-				break;
 			case Direccion.DERECHA:
 				return "Derecha";
-				break;
 			case Direccion.IZQUIERDA:
 				return "Izquierda";
-				break;
+			default:
+				throw new NotImplementedException("No existe metodo para esa direccion");
 			}
 		}
 	}
