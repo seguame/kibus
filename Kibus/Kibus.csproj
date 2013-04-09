@@ -55,6 +55,8 @@
     <Compile Include="Graficos\Kibus.cs" />
     <Compile Include="Graficos\Sprite.cs" />
     <Compile Include="Niveles\EditorMapas.cs" />
+    <Compile Include="Algoritmos\Algoritmos.cs" />
+    <Compile Include="Utileria.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -238,5 +240,6 @@
     <Folder Include="Hardware\" />
     <Folder Include="Graficos\" />
     <Folder Include="Assets\" />
+    <Folder Include="Algoritmos\" />
   </ItemGroup>
 </Project>

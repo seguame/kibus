@@ -65,6 +65,11 @@ namespace Niveles
 			}
 			
 			PosicionarKibus();
+			
+			
+			Algoritmos.Algoritmos.CalculaLineaBresenham(kibus.GetX()/64, kibus.GetY ()/64, casa.GetX ()/64, casa.GetY()/64);
+			
+			while(true){}
 		}
 		
 		
