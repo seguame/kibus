@@ -93,7 +93,7 @@ namespace Niveles
 					}
 				}
 				
-				Hardware.Pausar(50);
+				Hardware.Pausar(300);
 				
 			}while(seleccion == -1);
 			
