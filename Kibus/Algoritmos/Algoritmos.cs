@@ -2,9 +2,9 @@
 //  Algoritmos.cs
 //  
 //  Author:
-//       seguame <>
+//       Miguel Seguame Reyes <seguame@outlook.com>
 // 
-//  Copyright (c) 2013 seguame
+//  Copyright (c) 2013 Miguel Seguame Reyes
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -28,95 +28,14 @@ namespace Algoritmos
 {
 	public class Algoritmos
 	{
-		/*
-		 * void lineaBres(int xa, int ya, int xb, int yb)
-			{
-				int x, y, dx, dy, dezplazamientoX, dezplazamientoY, p;
-				
-				dx= abs(xb-xa);
-				dy= abs(yb-ya);
-				x= xa;
-				y= ya;
-				
-				if(xa>xb)
-				{
-					dezplazamientoX= -1;
-				}
-				else
-				{
-					dezplazamientoX= 1;
-				}
-				
-				if(ya>yb)
-				{
-					dezplazamientoY= -1;
-				}
-				else
-				{
-					dezplazamientoY= 1;
-				}
-				
-				if(control_seleccionado == BORRADOR)
-				{
-					borrador(xa, ya);
-				}
-				else
-				{
-					putPixel2(xa,ya,xb,yb);
-				}
-				
-				if(dx>=dy)
-				{
-					p= dx/2;
-					while(x!=xb)
-					{
-						p= p-dy;
-						if(p<0)
-						{
-							y= y+dezplazamientoY;
-							p= p+dx;
-						}
-						x= x+dezplazamientoX;
-						if(control_seleccionado == BORRADOR)
-						{
-							borrador(xa, ya);
-						}
-						else
-						{
-							putPixel2(xa,ya,xb,yb);
-						}
-					}
-				}
-				else if(dy>dx)
-				{
-					p= dy/2;
-					while (y!=yb)
-					{
-						p= p-dx;
-						if(p<0)
-						{
-							x= x+dezplazamientoX;
-							p= p+dy;
-						}
-						y= y+dezplazamientoY;
-						if(control_seleccionado == BORRADOR)
-						{
-							borrador(xa, ya);
-						}
-						else
-						{
-							putPixel2(xa,ya,xb,yb);
-						}
-					}
-				}
-				glFlush();
-			}*/
-		
 		public static Queue<Direccion> CalculaLineaBresenham(int Xinicial, int Yinicial, int Xfinal, int Yfinal)
 		{
-			Console.WriteLine("{0} {1} {2} {3}", Xinicial, Yinicial, Xfinal, Yfinal);
+			Queue<Direccion> cola = new Queue<Direccion>();
+			Console.WriteLine("Inicio:{0} {1}\nFin:{2} {3}\n", Xinicial, Yinicial, Xfinal, Yfinal);
 			int deltaX, deltaY, x, y, ultimaX, ultimaY, p;
-			int incrementoY = 1,incrementoX = 1; //el incremento es positivo
+			int incrementoY = 1,incrementoX = 1; 
+			bool yInversa = false;
+			bool xInversa = false;
 			
 			deltaX = Math.Abs(Xinicial - Xfinal);
 			deltaY = Math.Abs(Yinicial - Yfinal);
@@ -127,29 +46,23 @@ namespace Algoritmos
 				
 				if(Yinicial > Yfinal)
 				{
-					//cambiamos los puntos
-					x       = Xfinal;
-					y       = Yfinal;
-					ultimaY = Yinicial;//Y final ahora es Y inicial
-					
-					if(Xinicial < Xfinal)//si la coord X inicial es menor que la final
-		            {
-						//tenemos que irnos hacia atras
-						incrementoX = -1;
-					}
-				}
-				else
-				{
-					//los puntos se quedan normales
-					x       = Xinicial;
-					y       = Yinicial;
-					ultimaY = Yfinal;
+					yInversa = true;
+					incrementoY = -1;
 				}
 				
-				//Console.WriteLine("Pondriamos X:{0} Y:{1}", x, y);
-				//ponerLineas(x, y, x, y);
+				if(Xinicial > Xfinal)//si la coord X inicial es menor que la final
+		        {
+					//tenemos que irnos hacia atras
+					incrementoX = -1;
+					xInversa = true;
+				}
 				
-				while(y < ultimaY) //mientras Y no sea Y final
+				x       = Xinicial;
+				y       = Yinicial;
+				ultimaY = Yfinal;
+				
+				
+				while(yInversa ? y >= ultimaY : y <= ultimaY) //mientras Y no sea Y final
 		        {
 					y += incrementoY; //vamos incrementando Y
 					
@@ -157,7 +70,9 @@ namespace Algoritmos
 		            {
 						p += 2 * deltaX;
 						Console.WriteLine("Pondriamos X:{0} Y:{1}", x, y - incrementoY);
-						//ponerLineas(x, y - incrementoY, x, y);
+						Console.WriteLine(DireccionUtils.DeterminarDireccion(x, y, x, y - incrementoY, xInversa, yInversa));
+						cola.Enqueue(DireccionUtils.DeterminarDireccion(x, y, x, y - incrementoY, xInversa, yInversa));
+						
 					}
 					else //sino, incrementamos X
 		            {
@@ -165,8 +80,11 @@ namespace Algoritmos
 						p += 2 *(deltaX - deltaY);
 						
 						Console.WriteLine("Pondriamos X:{0} Y:{1}", x - incrementoX, y - incrementoY);
-						//ponerLineas(x - incrementoX, y - incrementoY, x, y);
+						Console.WriteLine(DireccionUtils.DeterminarDireccion(x, y, x - incrementoX , y - incrementoY, xInversa, yInversa));
+						cola.Enqueue(DireccionUtils.DeterminarDireccion(x, y, x - incrementoX , y - incrementoY, xInversa, yInversa));
 					}
+					
+					Console.WriteLine();
 				}
 			}
 			else  //0 <= m < 1
@@ -175,38 +93,33 @@ namespace Algoritmos
 				
 				if(Xinicial > Xfinal)
 				{
-					//cambiamos los puntos
-					x       = Xfinal;
-					y       = Yfinal;
-					ultimaX = Xinicial;
-					
-					
-					if(Yinicial < Yfinal)
-					{
-						//tenemos que graficar hacia abajo
-						incrementoY = -1;
-					}
+					incrementoX = -1;
+					xInversa = true;
 				}
-				else
+				
+				if(Yinicial > Yfinal)
 				{
-					//los puntos se quedan normales
-					x       = Xinicial;
-					y       = Yinicial;
-					ultimaX = Xfinal;
+					//tenemos que graficar hacia abajo
+					incrementoY = -1;
+					yInversa = true;
 				}
 				
-				//Console.WriteLine("Pondriamos X:{0} Y:{1}", x, y);
-				//ponerLineas(x, y, x, y);
+				x       = Xinicial;
+				y       = Yinicial;
+				ultimaX = Xfinal;
 				
-				while(x < ultimaX)
+				while(xInversa? x >= ultimaX : x <= ultimaX)
 				{
 					x += incrementoX;
 					
 					if (p < 0)//si 'p' es negativo solo incrementamos X
 		            {
 						p += 2 * deltaY;
+						
 						Console.WriteLine("Pondriamos X:{0} Y:{1}", x - incrementoX, y);
-						//ponerLineas(x - incrementoX, y, x, y);
+						Console.WriteLine(DireccionUtils.DeterminarDireccion(x, y, x - incrementoX, y, xInversa, yInversa));
+						cola.Enqueue(DireccionUtils.DeterminarDireccion(x, y, x - incrementoX, y, xInversa, yInversa));
+						
 					}
 					else
 					{
@@ -215,12 +128,18 @@ namespace Algoritmos
 						p += 2 * (deltaY - deltaX);
 						
 						Console.WriteLine("Pondriamos X:{0} Y:{1}", x - incrementoX, y - incrementoY);
-						//ponerLineas(x - incrementoX, y - incrementoY, x, y);
+						Console.WriteLine(DireccionUtils.DeterminarDireccion(x, y, x -incrementoX, y - incrementoY, xInversa, yInversa));
+						cola.Enqueue(DireccionUtils.DeterminarDireccion(x, y, x -incrementoX, y - incrementoY, xInversa, yInversa));
+						
 					}
+					
+					Console.WriteLine();
 				}
 			}
 			
-			return null;
+			cola.Dequeue();// El primero no nos sirve
+			
+			return cola;
 		}
 	}
 }

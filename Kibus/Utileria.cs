@@ -2,9 +2,9 @@
 //  Utileria.cs
 //  
 //  Author:
-//       seguame <>
+//       Miguel Seguame Reyes <seguame@outlook.com>
 // 
-//  Copyright (c) 2013 seguame
+//  Copyright (c) 2013 Miguel Seguame Reyes
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -32,34 +32,27 @@ namespace Utileria
 		ARRIBA_IZQ,
 		ARRIBA_DER,
 		ABAJO_IZQ,
-		ABAJO_DER
+		ABAJO_DER,
+		MISINGNO
 	};
 	
-	public static class Extencion
+	public static class DireccionUtils
 	{
-		public static string ToString(this Direccion direccion)
+		public static Direccion DeterminarDireccion(int nuevaX, int nuevaY, int viejaX, int viejaY,bool xInversa, bool yInversa)
 		{
-			switch(direccion)
-			{
-			case Direccion.ABAJO:
-				return "Abajo";
-			case Direccion.ABAJO_DER:
-				return "Abajo-Derecha";
-			case Direccion.ABAJO_IZQ:
-				return "Abajo-Izquierda";
-			case Direccion.ARRIBA:
-				return "Arriba";
-			case Direccion.ARRIBA_DER:
-				return "Arriba-Derecha";
-			case Direccion.ARRIBA_IZQ:
-				return "Arriba-Izquierda";
-			case Direccion.DERECHA:
-				return "Derecha";
-			case Direccion.IZQUIERDA:
-				return "Izquierda";
-			default:
-				throw new NotImplementedException("No existe metodo para esa direccion");
-			}
+			//Primero las direcciones compuestas
+			if(viejaX > nuevaX && viejaY < nuevaY){ Console.WriteLine("vX:{0} > nX:{2} | vY:{1} < nY:{3}  {4} {5}", viejaX, viejaY, nuevaX, nuevaY, xInversa, yInversa); return Direccion.ABAJO_IZQ;}
+			if(viejaX < nuevaX && viejaY < nuevaY){ Console.WriteLine("vX:{0} < nX:{2} | vY:{1} < nY:{3}  {4} {5}", viejaX, viejaY, nuevaX, nuevaY, xInversa, yInversa); return Direccion.ABAJO_DER;}
+			if(viejaX > nuevaX && viejaY > nuevaY){ Console.WriteLine("vX:{0} > nX:{2} | vY:{1} > nY:{3}  {4} {5}", viejaX, viejaY, nuevaX, nuevaY, xInversa, yInversa); return Direccion.ARRIBA_IZQ;}
+			if(viejaX < nuevaX && viejaY > nuevaY){ Console.WriteLine("vX:{0} < nX:{2} | vY:{1} > nY:{3}  {4} {5}", viejaX, viejaY, nuevaX, nuevaY, xInversa, yInversa); return Direccion.ARRIBA_DER;}
+			
+			//Y ya pues las normales
+			if(viejaX < nuevaX){ Console.WriteLine("vX:{0} < nX:{1} {2}", viejaX, nuevaX, xInversa); return Direccion.DERECHA; }
+			if(viejaX > nuevaX){ Console.WriteLine("vX:{0} > nX:{1} {2}", viejaX, nuevaX, xInversa); return Direccion.IZQUIERDA; }
+			if(viejaY < nuevaY){ Console.WriteLine("vY:{0} < nY:{1} {2}", viejaY, nuevaY, yInversa); return Direccion.ABAJO; }
+			if(viejaY > nuevaY){ Console.WriteLine("vX:{0} > nX:{1} {2}", viejaY, nuevaY, yInversa); return Direccion.ARRIBA; }
+			
+			return Direccion.MISINGNO;
 		}
 	}
 }
