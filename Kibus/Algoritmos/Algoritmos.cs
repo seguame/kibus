@@ -26,7 +26,7 @@ using Utileria;
 
 namespace Algoritmos
 {
-	public class Algoritmos
+	public class Algoritmo
 	{
 		public static Queue<Direccion> CalculaLineaBresenham(int Xinicial, int Yinicial, int Xfinal, int Yfinal)
 		{
