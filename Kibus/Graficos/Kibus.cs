@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using Utileria;
 
 namespace Graficos
 {
@@ -37,25 +38,82 @@ namespace Graficos
 			rectangulo.y = 0;
 		}
 		
-		public void MoverArriba()
+		public void Mover(Direccion direccion)
+		{
+			switch(direccion)
+			{
+				case Direccion.ARRIBA:
+					MoverArriba();
+					break;
+				case Direccion.ABAJO:
+					MoverAbajo();
+					break;
+				case Direccion.ABAJO_DER:
+					MoverAbajo_Derecha();
+					break;
+				case Direccion.ABAJO_IZQ:
+					MoverAbajo_Izquierda();
+					break;
+				case Direccion.ARRIBA_DER:
+					MoverArriba_Derecha();
+					break;
+				case Direccion.ARRIBA_IZQ:
+					MoverArriba_Izquierda();
+					break;
+				case Direccion.DERECHA:
+					MoverDerecha();
+					break;
+				case Direccion.IZQUIERDA:
+					MoverIzquierda();
+					break;
+				default:
+					throw new NotImplementedException("Movimiendo no definido");
+			}
+		}
+		
+		private void MoverArriba()
 	    {
 	        rectangulo.y -= incremento_Y;
 	    }
 	
-	    public void MoverAbajo()
+	    private void MoverAbajo()
 	    {
 	        rectangulo.y += incremento_Y;
 	    }
 	
-	    public  void MoverDerecha()
+	    private  void MoverDerecha()
 	    {
 	        rectangulo.x += incremento_X;
 	    }
 
-	    public  void MoverIquierda()
+	    private  void MoverIzquierda()
 	    {
 	        rectangulo.x -= incremento_X;
 	    }
+		
+		private void MoverArriba_Derecha()
+		{
+			rectangulo.y -= incremento_Y;
+			rectangulo.x += incremento_X;
+		}
+		
+		private void MoverArriba_Izquierda()
+		{
+			rectangulo.y -= incremento_Y;
+			rectangulo.x -= incremento_X;
+		}
+		
+		private void MoverAbajo_Derecha()
+		{
+			rectangulo.y += incremento_Y;
+			rectangulo.x += incremento_X;
+		}
+		
+		private void MoverAbajo_Izquierda()
+		{
+			rectangulo.y += incremento_Y;
+			rectangulo.x -= incremento_X;
+		}
 	}
 }
 

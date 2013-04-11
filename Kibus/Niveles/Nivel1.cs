@@ -25,6 +25,7 @@ using Tao.Sdl;
 
 using Graficos;
 using Esedelish;
+using Utileria;
 
 namespace Niveles
 {
@@ -114,7 +115,7 @@ namespace Niveles
 			{
 				//Console.WriteLine("Arriba");
 				pasos.Push(Sdl.SDLK_DOWN);
-	            kibus.MoverArriba();
+	            kibus.Mover(Direccion.ARRIBA);
 			}
 	
 	        if ((Hardware.TeclaPulsada(Sdl.SDLK_DOWN))
@@ -124,7 +125,7 @@ namespace Niveles
 			{
 				//Console.WriteLine("Abajo");
 				pasos.Push(Sdl.SDLK_UP);
-	            kibus.MoverAbajo();
+	            kibus.Mover(Direccion.ABAJO);
 			}
 	
 	        if ((Hardware.TeclaPulsada(Sdl.SDLK_RIGHT))
@@ -133,7 +134,7 @@ namespace Niveles
 			{
 				//Console.WriteLine("Derecha");
 				pasos.Push(Sdl.SDLK_LEFT);
-	            kibus.MoverDerecha();
+	            kibus.Mover(Direccion.DERECHA);
 			}
 	
 	        if ((Hardware.TeclaPulsada(Sdl.SDLK_LEFT) )
@@ -142,7 +143,7 @@ namespace Niveles
 			{
 				//Console.WriteLine("Izquierda");
 				pasos.Push(Sdl.SDLK_RIGHT);
-	            kibus.MoverIquierda();
+	           kibus.Mover(Direccion.IZQUIERDA);
 			}
 
 		}
@@ -152,16 +153,16 @@ namespace Niveles
 			switch(pasos.Pop())
 			{
 				case Sdl.SDLK_UP:
-					kibus.MoverArriba();
+					kibus.Mover(Direccion.ARRIBA);
 					break;
 				case Sdl.SDLK_DOWN:
-					kibus.MoverAbajo();
+					kibus.Mover(Direccion.ABAJO);
 					break;
 				case Sdl.SDLK_LEFT:
-					kibus.MoverIquierda();
+					kibus.Mover(Direccion.IZQUIERDA);
 					break;
 				case Sdl.SDLK_RIGHT:
-					kibus.MoverDerecha();
+					kibus.Mover(Direccion.DERECHA);
 					break;
 			}
 		}
