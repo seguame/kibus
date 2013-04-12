@@ -26,6 +26,7 @@ using Graficos;
 using Esedelish;
 using System.Collections.Generic;
 using Utileria;
+using Algoritmos;
 
 namespace Niveles
 {
@@ -67,14 +68,24 @@ namespace Niveles
 			}
 			
 			PosicionarKibus();
-			
-			
-			Queue<Direccion> cola = Algoritmos.Algoritmos.CalculaLineaBresenham(kibus.GetX()/64, kibus.GetY ()/64, casa.GetX ()/64, casa.GetY()/64);
-			
-			
-			while(true){}
+
+			BuscarCasa();
 		}
-		
+
+		private void BuscarCasa()
+		{
+			Queue<Direccion> cola = Algoritmo.CalculaLineaBresenham(kibus.GetX()/64, kibus.GetY ()/64, casa.GetX ()/64, casa.GetY()/64);
+
+			while(cola.Count != 0)
+			{
+				DibujarTodo();
+				Hardware.EscribirTexto("Buscando Casa", 10, 10); 
+				Hardware.RefrescarPantalla();
+				kibus.Mover(cola.Dequeue());
+				MoverElementos();
+				Hardware.Pausar(300);
+			}
+		}
 		
 		private void PosicionarKibus()
 		{
