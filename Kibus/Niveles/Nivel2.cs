@@ -47,8 +47,6 @@ namespace Niveles
 			{
 				for(int j = 0; j < 10; j++)
 				{
-					//TODO:
-					//No tener que mover el sprite a esa posicion manualmente
 					if(mapa[i][j] == EditorMapas.CASA)
 					{
 						Console.WriteLine("Casa en {0},{1}", i, j);
