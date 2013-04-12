@@ -113,7 +113,6 @@ namespace Niveles
 	            && EsPosibleMover(kibus.GetX(), (short)(kibus.GetY() - kibus.GetVelocidadY()),
 	                    kibus.GetXFinal(), (short)(kibus.GetYFinal() - kibus.GetVelocidadY())))
 			{
-				//Console.WriteLine("Arriba");
 				pasos.Push(Sdl.SDLK_DOWN);
 	            kibus.Mover(Direccion.ARRIBA);
 			}
@@ -123,7 +122,6 @@ namespace Niveles
 	                   kibus.GetXFinal(), (short)(kibus.GetYFinal() + kibus.GetVelocidadY())))
 				
 			{
-				//Console.WriteLine("Abajo");
 				pasos.Push(Sdl.SDLK_UP);
 	            kibus.Mover(Direccion.ABAJO);
 			}
@@ -132,7 +130,6 @@ namespace Niveles
 	            && EsPosibleMover((short)(kibus.GetX() + kibus.GetVelocidadX()), kibus.GetY(),
 	                   (short)(kibus.GetXFinal() + kibus.GetVelocidadX()), kibus.GetYFinal()))
 			{
-				//Console.WriteLine("Derecha");
 				pasos.Push(Sdl.SDLK_LEFT);
 	            kibus.Mover(Direccion.DERECHA);
 			}
@@ -141,7 +138,6 @@ namespace Niveles
 	            && EsPosibleMover((short)(kibus.GetX() - kibus.GetVelocidadX()), kibus.GetY(),
 	                   (short)(kibus.GetXFinal() - kibus.GetVelocidadX()), kibus.GetYFinal()))
 			{
-				//Console.WriteLine("Izquierda");
 				pasos.Push(Sdl.SDLK_RIGHT);
 	           kibus.Mover(Direccion.IZQUIERDA);
 			}

@@ -111,19 +111,53 @@ namespace Niveles
 		private void MapearSeleccion(int indice)
 		{
 			char[] separadores = new char[]{','};
-			Console.WriteLine(archivos[indice]);
-			StreamReader lector = new StreamReader(archivos[indice]);
-			List<string[]> lineas = new List<string[]>();
-			string linea;
-			string[] fila;
 			
-			while((linea = lector.ReadLine()) != null)
+			try
 			{
-				fila = linea.Split(separadores);
-				lineas.Add(fila);
+				StreamReader lector = new StreamReader(archivos[indice]);
+				List<string[]> lineas = new List<string[]>();
+				string linea;
+				string[] fila;
+				
+				while((linea = lector.ReadLine()) != null)
+				{
+					fila = linea.Split(separadores);
+					lineas.Add(fila);
+				}
+				
+				ParsearMapa(lineas);
 			}
-			
-			ParsearMapa(lineas);
+			catch (IndexOutOfRangeException)
+			{
+				Random random = new Random(System.DateTime.Now.Millisecond);
+				int cantidad = 50;
+				
+				int[][] mapa = new int[10][];
+				
+				for(int i = 0; i < 10; i++)
+				{
+					mapa[i] = new int[10];
+				}
+				
+				int x;
+				int y;
+				int elemento;
+				
+				while(cantidad > 0)
+				{
+					x = random.Next(10);
+					y = random.Next(10);
+					elemento = random.Next(36,42);
+					if(mapa[x][y] == 0)
+					{
+						mapa[x][y] = elemento;
+						cantidad--;
+					}
+					           
+				}
+				
+				Mapa = mapa;
+			}
 		}
 		
 		private void ParsearMapa(List<string[]> tmp)

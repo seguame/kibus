@@ -44,7 +44,7 @@ namespace Niveles
 			{
 				foreach(Sprite sprite in sprites)
 				{
-					if(sprite != null &&  sprite.ColisionCon(x, y, xFin, yFin))
+					if(sprite != null &&  sprite != casa && sprite.ColisionCon(x, y, xFin, yFin))
 					{
 						return false;
 					}
