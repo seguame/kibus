@@ -44,16 +44,7 @@ namespace Niveles
 		
 		public CargadorMapas ()
 		{
-			archivos = Directory.GetFiles(rutaMapas,"*.txt");
-			
-			if(archivos.Length == 0)
-			{
-				hayHarchivos = false;
-			}
-			else
-			{
-				hayHarchivos = true;
-			}
+			LeerCarpetaMapas();
 		}
 		
 		public void SeleccionarArchivo()
@@ -67,7 +58,9 @@ namespace Niveles
 				Hardware.EscribirTexto("Crea primero algun mapa", 50, 50);
 				Hardware.RefrescarPantalla();
 				Hardware.Pausar(1000);
-				return;
+
+				new EditorMapas().Iniciar();
+				LeerCarpetaMapas();
 			}
 			
 			
@@ -98,6 +91,20 @@ namespace Niveles
 			}while(seleccion == -1);
 			
 			MapearSeleccion(seleccion);
+		}
+
+		private void LeerCarpetaMapas()
+		{
+			archivos = Directory.GetFiles(rutaMapas,"*.txt");
+			
+			if(archivos.Length == 0)
+			{
+				hayHarchivos = false;
+			}
+			else
+			{
+				hayHarchivos = true;
+			}
 		}
 		
 		private void ListarArchivos()

@@ -51,6 +51,5 @@ class MainClass
 			}
 				
 		}while(opcion != Menu.Opcion.SALIR);
-
 	}
 }

@@ -79,7 +79,7 @@ namespace Niveles
 			while(cola.Count != 0)
 			{
 				DibujarTodo();
-				Hardware.EscribirTexto("Buscando Casa", 10, 10); 
+				Hardware.EscribirTexto("Buscando Casa", 641, 10); 
 				Hardware.RefrescarPantalla();
 				
 				direccion = cola.Dequeue();
@@ -107,7 +107,7 @@ namespace Niveles
 					Console.WriteLine("Elegido nuevo camino");
 				}
 				
-				MoverElementos();
+				//MoverElementos();
 				Hardware.Pausar(200);
 			}
 		}
@@ -141,8 +141,8 @@ namespace Niveles
 					return EsPosibleMover(
 										(short)(kibus.GetX() + kibus.GetVelocidadX()), 
 										(short)(kibus.GetY() - kibus.GetVelocidadY()),
-	                   					(short)(kibus.GetXFinal() - kibus.GetVelocidadX()), 
-										(short)(kibus.GetYFinal() + kibus.GetVelocidadY()));
+	                   					(short)(kibus.GetXFinal() + kibus.GetVelocidadX()), 
+										(short)(kibus.GetYFinal() - kibus.GetVelocidadY()));
 				
 				case Direccion.ARRIBA_DER:
 					return EsPosibleMover(
