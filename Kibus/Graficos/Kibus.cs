@@ -26,6 +26,37 @@ namespace Graficos
 {
 	public class Kibus: Sprite
 	{
+		public int OnToyX
+		{
+			get
+			{
+				return rectangulo.x / 64;
+			}
+		}
+		
+		public int OnToyY
+		{
+			get
+			{
+				return rectangulo.y / 64;
+			}
+		}
+		
+		public int OnTabaX
+		{
+			get
+			{
+				return OnToyX - 1;
+			}
+		}
+		
+		public int OnTabaY
+		{
+			get
+			{
+				return OnToyY - 1;
+			}
+		}
 		public Kibus (short x, short y) :base ("Assets/GFX/personaje.png")
 		{
 			rectangulo.x = x;

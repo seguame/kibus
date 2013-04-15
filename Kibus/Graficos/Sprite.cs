@@ -39,7 +39,21 @@ namespace Graficos
 	    protected Imagen[] secuencia;
 	    protected byte fotogramaActual;
 	    protected bool animado = false;
+		protected bool visible = true;
 	    protected Sdl.SDL_Rect rectangulo;
+		
+		public bool Visible
+		{
+			set 
+			{
+				visible = value;
+			}
+			
+			get
+			{
+				return visible;
+			}
+		}
 		
 		
 		public Sprite (string archivo)
@@ -92,7 +106,10 @@ namespace Graficos
 		
 		public void Dibujar()
 		{
-			Hardware.DibujarSprite(this);
+			if(Visible)
+			{
+				Hardware.DibujarSprite(this);
+			}
 		}
 		
 		public bool ColisionCon(Sprite otro)

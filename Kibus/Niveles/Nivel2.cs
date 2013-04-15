@@ -72,6 +72,8 @@ namespace Niveles
 
 		private void BuscarCasa()
 		{
+			int[,] mapa = new int[10,10];
+			
 			Random random = new Random(System.DateTime.Now.Millisecond);
 			Queue<Direccion> cola = Algoritmo.CalculaLineaBresenham(kibus.GetX()/64, kibus.GetY ()/64, casa.GetX ()/64, casa.GetY()/64);
 			Direccion direccion;
@@ -107,7 +109,12 @@ namespace Niveles
 					Console.WriteLine("Elegido nuevo camino");
 				}
 				
-				//MoverElementos();
+				if(++mapa[kibus.OnTabaX, kibus.OnTabaY] == 5)
+				{
+					sprites[kibus.OnTabaX, kibus.OnTabaY] = new Sprite("Assets/GFX/30.png");
+					sprites[kibus.OnTabaX, kibus.OnTabaY].Visible = false;
+				}
+				
 				Hardware.Pausar(200);
 			}
 		}
