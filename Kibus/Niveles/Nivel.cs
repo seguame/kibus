@@ -40,7 +40,7 @@ namespace Niveles
 		
 		public bool EsPosibleMover(short x, short y, short xFin, short yFin)
 		{
-			if(xFin < Hardware.ancho + 64 - 201 && yFin < Hardware.alto + 64 && xFin > 0 && yFin > 0)
+			if(xFin < Hardware.Ancho + 63 && yFin < Hardware.Alto + 64 && xFin > 0 && yFin > 0)
 			{
 				foreach(Sprite sprite in sprites)
 				{

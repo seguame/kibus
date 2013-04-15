@@ -93,7 +93,7 @@ namespace Niveles
 			}
 			
 			DibujarTodo();
-			Hardware.EscribirTexto("KIBUS LLEGO! \\O/",(short)(Hardware.alto/2), (short)(Hardware.ancho/2));
+			Hardware.EscribirTexto("KIBUS LLEGO! \\O/",(short)(Hardware.Alto/2), (short)(Hardware.Ancho/2));
 			Hardware.RefrescarPantalla();
 			while(!Hardware.TeclaPulsada(Sdl.SDLK_RETURN))
 			{
@@ -180,8 +180,8 @@ namespace Niveles
 						case Sdl.SDL_MOUSEMOTION:
 							if (evento.motion.x > 0 && evento.motion.y > 0)
 				            {
-				                rectangulo.x = (short)(((int)(10 - ((((Hardware.ancho - 200) - evento.motion.x) / (float)(Hardware.ancho - 200))) * 10)) * 64);
-				                rectangulo.y = (short)(((int)(10 - (((Hardware.alto- evento.motion.y) / (float)Hardware.alto)) * 10)) * 64);
+				                rectangulo.x = (short)(((int)(10 - ((((Hardware.Ancho) - evento.motion.x) / (float)(Hardware.Ancho))) * 10)) * 64);
+				                rectangulo.y = (short)(((int)(10 - (((Hardware.Alto- evento.motion.y) / (float)Hardware.Alto)) * 10)) * 64);
 								
 								try
 								{

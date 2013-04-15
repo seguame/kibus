@@ -68,8 +68,8 @@ namespace Niveles
 						case Sdl.SDL_MOUSEMOTION:
 							if (evento.motion.x > 0 && evento.motion.y > 0)
 				            {
-				                rectangulo.x = (short)(((int)(10 - ((((Hardware.ancho - 200) - evento.motion.x) / (float)(Hardware.ancho - 200))) * 10)) * 64);
-				                rectangulo.y = (short)(((int)(10 - (((Hardware.alto- evento.motion.y) / (float)Hardware.alto)) * 10)) * 64);
+				                rectangulo.x = (short)(((int)(10 - ((((Hardware.Ancho) - evento.motion.x) / (float)(Hardware.Ancho))) * 10)) * 64);
+				                rectangulo.y = (short)(((int)(10 - (((Hardware.Alto- evento.motion.y) / (float)Hardware.Alto)) * 10)) * 64);
 								
 								try
 								{

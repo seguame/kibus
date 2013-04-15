@@ -28,11 +28,12 @@ namespace Esedelish
 {
 	public class Hardware
 	{
-		public static short ancho, alto;
 		private static IntPtr pantalla;
 		private static Sdl.SDL_Color color; 
 		private static Sdl.SDL_Rect origen;
 		private static Fuente fuente;
+		private static short ancho;
+		private static short alto;
 		
 		public static bool SonidoActivo
 		{
@@ -40,15 +41,34 @@ namespace Esedelish
 		 	get;
 		}
 		
+		public static short BarraHerramientas
+		{
+			private set;
+			get;
+		}
+		
+		public static short Ancho
+		{
+			private set { ancho = value ;}
+			get { return (short)(ancho - BarraHerramientas);}
+		}
+		
+		public static short Alto
+		{
+			private set { alto = value ;}
+			get { return alto;}
+		}
+		
 		public static void Inicializar(short ancho, short alto, int colores,bool pantalla_completa)
 		{
+			BarraHerramientas = 200;
 			
 			int bpp;
 			int flags = Sdl.SDL_HWSURFACE | Sdl.SDL_DOUBLEBUF | Sdl.SDL_ANYFORMAT;
 			
 			Console.WriteLine("Inicializando SDL");
 			
-			Hardware.ancho = ancho;
+			Hardware.Ancho = ancho;
 			Hardware.alto = alto;
 			
 			if(pantalla_completa)
@@ -78,7 +98,6 @@ namespace Esedelish
 			
 			
 			pantalla = Sdl.SDL_SetVideoMode(ancho, alto, bpp, flags);
-			ancho -= 200;
 			#endregion
 			
 			#region Fuentes
