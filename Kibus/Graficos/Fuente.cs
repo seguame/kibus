@@ -27,16 +27,15 @@ namespace Graficos
 {
 	public class Fuente
 	{
-		private IntPtr apuntadorFuente;
+		public IntPtr ApuntadorFuente
+		{
+			private set;
+			get;
+		}
 		
 		public Fuente(string archivo, short tamaño)
 	    {
-	    	apuntadorFuente = Hardware.CargarFuente(archivo, tamaño);
-	    }
-	      
-	    public  IntPtr LeerPuntero()
-	    {
-	    	return apuntadorFuente;
+	    	ApuntadorFuente = Hardware.CargarFuente(archivo, tamaño);
 	    }
 	}
 }

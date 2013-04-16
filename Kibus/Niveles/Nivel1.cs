@@ -53,7 +53,7 @@ namespace Niveles
 				if(sprites[x,y] == null)
 				{
 					sprites[x,y] = new Sprite("Assets/GFX/"+ elemento+".png");
-					sprites[x,y].Mover((short)(x * sprites[x,y].GetAncho()),(short) (y * sprites[x,y].GetAlto()));
+					sprites[x,y].Mover((short)(x * sprites[x,y].Ancho),(short) (y * sprites[x,y].Alto));
 					cantidad--;
 				}
 				           
@@ -68,7 +68,7 @@ namespace Niveles
 			
 			PosicionarCasa();
 			
-			kibus = new Kibus(GetCasa().GetX(), GetCasa().GetY());
+			kibus = new Kibus(GetCasa().X, GetCasa().Y);
 			
 			
 			//usaurio parte
@@ -110,7 +110,7 @@ namespace Niveles
 			}
 
 	        if ((Hardware.TeclaPulsada(Sdl.SDLK_UP))
-	            && EsPosibleMover(kibus.GetX(), (short)(kibus.GetY() - kibus.GetVelocidadY()),
+	            && EsPosibleMover(kibus.X, (short)(kibus.Y - kibus.GetVelocidadY()),
 	                    kibus.GetXFinal(), (short)(kibus.GetYFinal() - kibus.GetVelocidadY())))
 			{
 				pasos.Push(Sdl.SDLK_DOWN);
@@ -118,7 +118,7 @@ namespace Niveles
 			}
 	
 	        if ((Hardware.TeclaPulsada(Sdl.SDLK_DOWN))
-	            && EsPosibleMover(kibus.GetX(),(short)(kibus.GetY() + kibus.GetVelocidadY()),
+	            && EsPosibleMover(kibus.X,(short)(kibus.Y + kibus.GetVelocidadY()),
 	                   kibus.GetXFinal(), (short)(kibus.GetYFinal() + kibus.GetVelocidadY())))
 				
 			{
@@ -127,7 +127,7 @@ namespace Niveles
 			}
 	
 	        if ((Hardware.TeclaPulsada(Sdl.SDLK_RIGHT))
-	            && EsPosibleMover((short)(kibus.GetX() + kibus.GetVelocidadX()), kibus.GetY(),
+	            && EsPosibleMover((short)(kibus.X + kibus.GetVelocidadX()), kibus.Y,
 	                   (short)(kibus.GetXFinal() + kibus.GetVelocidadX()), kibus.GetYFinal()))
 			{
 				pasos.Push(Sdl.SDLK_LEFT);
@@ -135,7 +135,7 @@ namespace Niveles
 			}
 	
 	        if ((Hardware.TeclaPulsada(Sdl.SDLK_LEFT) )
-	            && EsPosibleMover((short)(kibus.GetX() - kibus.GetVelocidadX()), kibus.GetY(),
+	            && EsPosibleMover((short)(kibus.X - kibus.GetVelocidadX()), kibus.Y,
 	                   (short)(kibus.GetXFinal() - kibus.GetVelocidadX()), kibus.GetYFinal()))
 			{
 				pasos.Push(Sdl.SDLK_RIGHT);

@@ -29,46 +29,91 @@ namespace Graficos
 {
 	public class Sprite
 	{
-	    //protected short x;
-	    //protected short y;
 	    protected short xInicial;
 	    protected short yInicial;
 	    protected short incremento_X;
 	    protected short incremento_Y;
-	    protected Imagen imagen;
 	    protected Imagen[] secuencia;
 	    protected byte fotogramaActual;
 	    protected bool animado = false;
 		protected bool visible = true;
 	    protected Sdl.SDL_Rect rectangulo;
-		
+
+		public Imagen ImagenActual
+		{
+			private set;
+			get;
+		}
+
+		public IntPtr ApuntadorImagen
+		{
+			get { return ImagenActual.ApuntadorImagen; }
+		}
+
 		public bool Visible
 		{
-			set 
-			{
-				visible = value;
-			}
-			
-			get
-			{
-				return visible;
+			set { visible = value; }
+			get { return visible; }
+		}
+
+		public short X
+		{
+			get { return rectangulo.x; }
+			protected set 
+			{ 
+				rectangulo.x = value;
+
+				if(rectangulo.x < 0) rectangulo.x = 0;
+				if(rectangulo.x > Hardware.Ancho) rectangulo.x = Hardware.Ancho;
 			}
 		}
+
+		public short Y
+		{
+			get { return rectangulo.y; }
+
+			protected set 
+			{ 
+				rectangulo.y = value; 
+				if(rectangulo.y < 0) rectangulo.y = 0;
+				if(rectangulo.y > Hardware.Alto) rectangulo.y = Hardware.Alto;
+			}
+		}
+
+		public short Alto
+		{
+			protected set { rectangulo.h = value; }
+			get { return rectangulo.h; }
+		}
+
+		public short Ancho
+		{
+			protected set { rectangulo.w = value; }
+			get { return rectangulo.w; }
+		}
+
+		public int OnToyX
+		{
+			get { return X / Ancho; }
+		}
 		
+		public int OnToyY
+		{
+			get { return Y / Alto; }
+		}
 		
 		public Sprite (string archivo)
 		{
-			imagen = new Imagen(archivo);
-			//Sdl.SDL_Surface superficie = (Sdl.SDL_Surface)Marshal.PtrToStructure(imagen.PunteroImagen(), typeof(Sdl.SDL_Surface));
-			
-			//Console.WriteLine(superficie.h);
+			ImagenActual = new Imagen(archivo);
+			Sdl.SDL_Surface superficie = (Sdl.SDL_Surface)Marshal.PtrToStructure(ImagenActual.ApuntadorImagen, typeof(Sdl.SDL_Surface));
+
 			
 			fotogramaActual = 0;
 			animado = false;
-			rectangulo.h = 64;//(short)superficie.h;
-			rectangulo.w = 64;//(short)superficie.;
-			incremento_X = 64;//superficie.w;
-			incremento_Y = 64;//superficie.h;
+			Alto = (short)superficie.h;
+			Ancho = Alto; // se supone que son graficos proporcion 1:1
+			incremento_X = Ancho;
+			incremento_Y = Alto;
 			
 		}
 		
@@ -101,7 +146,7 @@ namespace Graficos
 				fotogramaActual = 0;
 			}
 			
-			imagen = secuencia[fotogramaActual];
+			ImagenActual = secuencia[fotogramaActual];
 		}
 		
 		public void Dibujar()
@@ -114,38 +159,20 @@ namespace Graficos
 		
 		public bool ColisionCon(Sprite otro)
 		{
-			if((rectangulo.x + GetAncho() > otro.GetX()) 
-			   && (rectangulo.x < otro.GetX() + otro.GetAncho()) 
-			   && (rectangulo.y + GetAlto() > otro.GetY()) 
-			   && (rectangulo.y < otro.GetY() + otro.GetAlto()))
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			return ((X + Ancho > otro.X) 
+			   		&& (X < otro.X + otro.Ancho) 
+			   		&& (Y + Alto > otro.Y) 
+			        && (Y < otro.Y + otro.Alto));
 		}
 		
 		public bool ColisionCon(int nx, int ny, int nxmax, int nymax)
 	    {
-	        if ((nxmax > rectangulo.x)
-	            && (nymax > rectangulo.y)
-	            && (rectangulo.x + GetAncho() > nx)
-	            && (rectangulo.y + GetAlto() > ny))
-			{
-	            return true;
-			}
-	        else
-			{
-	            return false;
-			}
+	        return ((nxmax > X)
+	            	&& (nymax > Y)
+	            	&& (X + Ancho > nx)
+			        && (Y + Alto > ny));
 	    }
-		
-		public IntPtr GetImagen()
-		{
-			return imagen.PunteroImagen();
-		}
+
 		
 		public Sdl.SDL_Rect GetRectangulo()
 		{
@@ -154,24 +181,14 @@ namespace Graficos
 		
 		public void Mover(int x, int y)
 		{
-			rectangulo.x = (short)x;
-			rectangulo.y = (short)y;
+			X = (short)x;
+			Y = (short)y;
 		}
 		
 		public void Mover(Sdl.SDL_Rect rect)
 		{
-			rectangulo.x = rect.x;
-			rectangulo.y = rect.y;
-		}
-		
-		public short GetX()
-		{
-			return rectangulo.x;
-		}
-		
-		public short GetY()
-		{
-			return rectangulo.y;
+			X = rect.x;
+			Y = rect.y;
 		}
 		
 		public short GetVelocidadX()
@@ -184,24 +201,14 @@ namespace Graficos
 			return incremento_Y;
 		}
 		
-		public short GetAncho()
-		{
-			return rectangulo.w;
-		}
-		
-		public short GetAlto()
-		{
-			return rectangulo.h;
-		}
-		
 		public short GetXFinal()
 	    {
-	        return (short)(rectangulo.x+GetAncho());
+	        return (short)(X + Ancho);
 	    }
 	
 	    public short GetYFinal()
 	    {
-	        return (short)(rectangulo.y+GetAlto());
+	        return (short)(Y + Alto);
 	    }
 		
 	}

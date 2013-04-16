@@ -60,7 +60,7 @@ namespace Niveles
 					
 					if(sprites[i,j] != null)
 					{
-						sprites[i,j].Mover((short)(i * sprites[i,j].GetAncho()),(short) (j * sprites[i,j].GetAlto()));
+						sprites[i,j].Mover((short)(i * sprites[i,j].Ancho),(short) (j * sprites[i,j].Alto));
 					}
 				}
 			}
@@ -75,7 +75,7 @@ namespace Niveles
 			int[,] mapa = new int[10,10];
 			
 			Random random = new Random(System.DateTime.Now.Millisecond);
-			Queue<Direccion> cola = Algoritmo.CalculaLineaBresenham(kibus.GetX()/64, kibus.GetY ()/64, casa.GetX ()/64, casa.GetY()/64);
+			Queue<Direccion> cola = Algoritmo.CalculaLineaBresenham(kibus.OnToyX, kibus.OnToyY, casa.OnToyX, casa.OnToyY);
 			Direccion direccion;
 			
 			while(cola.Count != 0)
@@ -104,7 +104,7 @@ namespace Niveles
 					kibus.Mover(tmp);
 					
 					
-					cola = Algoritmo.CalculaLineaBresenham(kibus.GetX()/64, kibus.GetY ()/64, casa.GetX ()/64, casa.GetY()/64);
+					cola = Algoritmo.CalculaLineaBresenham(kibus.OnToyX, kibus.OnToyY, casa.OnToyX, casa.OnToyY);
 					
 					Console.WriteLine("Elegido nuevo camino");
 				}
@@ -128,57 +128,57 @@ namespace Niveles
 			{
 				case Direccion.ARRIBA:
 					return EsPosibleMover(
-										kibus.GetX(), 
-										(short)(kibus.GetY() - kibus.GetVelocidadY()),
+										kibus.X, 
+										(short)(kibus.Y - kibus.GetVelocidadY()),
 	                    				kibus.GetXFinal(), 
 										(short)(kibus.GetYFinal() - kibus.GetVelocidadY()));
 				
 				case Direccion.ABAJO:
 					return EsPosibleMover(
-										kibus.GetX(), 
-										(short)(kibus.GetY() + kibus.GetVelocidadY()),
+										kibus.X, 
+										(short)(kibus.Y + kibus.GetVelocidadY()),
 	                    				kibus.GetXFinal(), 
 										(short)(kibus.GetYFinal() + kibus.GetVelocidadY()));
 				
 				case Direccion.ABAJO_DER:
 					return EsPosibleMover(
-										(short)(kibus.GetX() + kibus.GetVelocidadX()), 
-										(short)(kibus.GetY() + kibus.GetVelocidadY()),
+										(short)(kibus.X + kibus.GetVelocidadX()), 
+										(short)(kibus.Y + kibus.GetVelocidadY()),
 	                   					(short)(kibus.GetXFinal() + kibus.GetVelocidadX()), 
 										(short)(kibus.GetYFinal() + kibus.GetVelocidadY()));
 				
 				case Direccion.ABAJO_IZQ:
 					return EsPosibleMover(
-										(short)(kibus.GetX() + kibus.GetVelocidadX()), 
-										(short)(kibus.GetY() - kibus.GetVelocidadY()),
+										(short)(kibus.X + kibus.GetVelocidadX()), 
+										(short)(kibus.Y - kibus.GetVelocidadY()),
 	                   					(short)(kibus.GetXFinal() + kibus.GetVelocidadX()), 
 										(short)(kibus.GetYFinal() - kibus.GetVelocidadY()));
 				
 				case Direccion.ARRIBA_DER:
 					return EsPosibleMover(
-										(short)(kibus.GetX() + kibus.GetVelocidadX()), 
-										(short)(kibus.GetY() - kibus.GetVelocidadY()),
+										(short)(kibus.X + kibus.GetVelocidadX()), 
+										(short)(kibus.Y - kibus.GetVelocidadY()),
 	                   					(short)(kibus.GetXFinal() + kibus.GetVelocidadX()), 
 										(short)(kibus.GetYFinal() - kibus.GetVelocidadY()));
 				
 				case Direccion.ARRIBA_IZQ:
 					return EsPosibleMover(
-										(short)(kibus.GetX() - kibus.GetVelocidadX()), 
-										(short)(kibus.GetY() - kibus.GetVelocidadY()),
+										(short)(kibus.X - kibus.GetVelocidadX()), 
+										(short)(kibus.Y - kibus.GetVelocidadY()),
 	                   					(short)(kibus.GetXFinal() - kibus.GetVelocidadX()), 
 										(short)(kibus.GetYFinal() - kibus.GetVelocidadY()));
 				
 				case Direccion.DERECHA:
 					return EsPosibleMover(
-										(short)(kibus.GetX() + kibus.GetVelocidadX()), 
-										kibus.GetY(),
+										(short)(kibus.X + kibus.GetVelocidadX()), 
+										kibus.Y,
 	                   					(short)(kibus.GetXFinal() + kibus.GetVelocidadX()), 
 										kibus.GetYFinal());
 				
 				case Direccion.IZQUIERDA:
 					return EsPosibleMover(
-										(short)(kibus.GetX() - kibus.GetVelocidadX()), 
-										kibus.GetY(),
+										(short)(kibus.X - kibus.GetVelocidadX()), 
+										kibus.Y,
 	                   					(short)(kibus.GetXFinal() - kibus.GetVelocidadX()), 
 										kibus.GetYFinal());
 				
@@ -282,8 +282,6 @@ namespace Niveles
 							{
 								if(sprites[rectangulo.x/64,rectangulo.y/64] == null)
 								{
-									//sprites[rectangulo.x/64,rectangulo.y/64] = casa;
-									//this.casa = casa;
 									puesto = true;
 								}
 							}

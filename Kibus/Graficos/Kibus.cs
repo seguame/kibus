@@ -28,23 +28,7 @@ namespace Graficos
 	{
 		
 		private Direccion ultimoMovimiento = Direccion.MISINGNO;
-		
-		public int OnToyX
-		{
-			get
-			{
-				return rectangulo.x / 64;
-			}
-		}
-		
-		public int OnToyY
-		{
-			get
-			{
-				return rectangulo.y / 64;
-			}
-		}
-		
+
 		public int OnTabaX
 		{
 			get
@@ -55,13 +39,17 @@ namespace Graficos
 				{
 					switch(ultimoMovimiento)
 					{
-						case Direccion.ARRIBA_DER: incremento = -1; break;
-						case Direccion.ABAJO_DER: incremento = -1; break;
-						case Direccion.DERECHA: incremento = -1; break;
+						case Direccion.ARRIBA_DER: 
+						case Direccion.ABAJO_DER: 
+						case Direccion.DERECHA: 
+							incremento = -1; 
+							break;
 							
-						case Direccion.IZQUIERDA: incremento = 1; break;
-						case Direccion.ABAJO_IZQ: incremento = 1; break;
-						case Direccion.ARRIBA_IZQ: incremento = 1; break;
+						case Direccion.IZQUIERDA: 
+						case Direccion.ABAJO_IZQ: 
+						case Direccion.ARRIBA_IZQ: 
+							incremento = 1;
+							break;
 					}
 				}
 				
@@ -79,13 +67,17 @@ namespace Graficos
 				{
 					switch(ultimoMovimiento)
 					{
-						case Direccion.ARRIBA_DER: incremento = -1; break;
-						case Direccion.ARRIBA_IZQ: incremento = -1; break;
-						case Direccion.ARRIBA: incremento = -1;  break;
+						case Direccion.ARRIBA_DER: 
+						case Direccion.ARRIBA_IZQ: 
+						case Direccion.ARRIBA: 
+							incremento = -1;  
+							break;
 						
-						case Direccion.ABAJO: incremento = 1; break;
-						case Direccion.ABAJO_IZQ: incremento = 1; break;
-						case Direccion.ABAJO_DER: incremento = 1; break;
+						case Direccion.ABAJO: 
+						case Direccion.ABAJO_IZQ:
+						case Direccion.ABAJO_DER: 
+							incremento = 1; 
+							break;
 					}
 				}
 				
@@ -94,16 +86,14 @@ namespace Graficos
 		}
 		public Kibus (short x, short y) :base ("Assets/GFX/personaje.png")
 		{
-			rectangulo.x = x;
-			rectangulo.y = y;
-			
+			X = x;
+			Y = y;
 		}
 		
 		public Kibus() : base ("Assets/GFX/personaje.png")
 		{
-			rectangulo.x = 0;
-			rectangulo.y = 0;
-			
+			X = 0;
+			Y = 0;
 		}
 		
 		public void Mover(Direccion direccion)
@@ -141,63 +131,46 @@ namespace Graficos
 		
 		private void MoverArriba()
 	    {
-	        rectangulo.y -= incremento_Y;
-			
-			if(rectangulo.y < 0) rectangulo.y = 0;
+	        Y -= incremento_Y;
 	    }
 	
 	    private void MoverAbajo()
 	    {
-	        rectangulo.y += incremento_Y;
-			if(rectangulo.y > 640) rectangulo.y = 640;
+	        Y += incremento_Y;
 	    }
 	
 	    private  void MoverDerecha()
 	    {
-	        rectangulo.x += incremento_X;
-			if(rectangulo.x > 640) rectangulo.x = 640;
+	        X += incremento_X;
 	    }
 
 	    private  void MoverIzquierda()
 	    {
-	        rectangulo.x -= incremento_X;
-			if(rectangulo.x < 0) rectangulo.x = 0;
+	        X -= incremento_X;
 	    }
 		
 		private void MoverArriba_Derecha()
 		{
-			rectangulo.y -= incremento_Y;
-			rectangulo.x += incremento_X;
-			
-			if(rectangulo.y < 0) rectangulo.y = 0;
-			if(rectangulo.x > 640) rectangulo.x = 640;
+			Y -= incremento_Y;
+			X += incremento_X;
 		}
 		
 		private void MoverArriba_Izquierda()
 		{
-			rectangulo.y -= incremento_Y;
-			rectangulo.x -= incremento_X;
-			
-			if(rectangulo.y < 0) rectangulo.y = 0;
-			if(rectangulo.x < 0) rectangulo.x = 0;
+			Y -= incremento_Y;
+			X -= incremento_X;
 		}
 		
 		private void MoverAbajo_Derecha()
 		{
-			rectangulo.y += incremento_Y;
-			rectangulo.x += incremento_X;
-			
-			if(rectangulo.y > 640) rectangulo.y = 640;
-			if(rectangulo.x > 640) rectangulo.x = 640;
+			Y += incremento_Y;
+			X += incremento_X;
 		}
 		
 		private void MoverAbajo_Izquierda()
 		{
-			rectangulo.y += incremento_Y;
-			rectangulo.x -= incremento_X;
-			
-			if(rectangulo.y > 640) rectangulo.y = 640;
-			if(rectangulo.x < 0) rectangulo.x = 0;
+			Y += incremento_Y;
+			X -= incremento_X;
 		}
 	}
 }

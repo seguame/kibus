@@ -27,21 +27,20 @@ namespace Graficos
 {
 	public class Imagen
 	{
-		private IntPtr apuntadorImagen;
+		public IntPtr ApuntadorImagen
+		{
+			private set;
+			get;
+		}
 		
 		public Imagen (string archivo)
 		{
-			apuntadorImagen = Hardware.CargarImagen(archivo);
-		}
-		
-		public IntPtr PunteroImagen()
-		{
-			return apuntadorImagen;
+			ApuntadorImagen = Hardware.CargarImagen(archivo);
 		}
 		
 		public void Dibujar(short x, short y)
 		{
-			Hardware.DibujarImagen(apuntadorImagen, x ,y);
+			Hardware.DibujarImagen(ApuntadorImagen, x ,y);
 		}
 	}
 }

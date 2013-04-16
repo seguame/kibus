@@ -294,7 +294,7 @@ namespace Esedelish
 		public static void DibujarSprite(Sprite sprite)
 		{
 			Sdl.SDL_Rect destino = sprite.GetRectangulo();
-			IntPtr imagen = sprite.GetImagen();
+			IntPtr imagen = sprite.ApuntadorImagen;
 			
 			Sdl.SDL_BlitSurface(imagen, ref origen, pantalla, ref destino);
 		}
@@ -306,14 +306,13 @@ namespace Esedelish
 				color = new Sdl.SDL_Color(255, 255, 255);
 			}
 			
-			IntPtr textoComoImagen = SdlTtf.TTF_RenderText_Solid(fuente.LeerPuntero(), texto, color);
+			IntPtr textoComoImagen = SdlTtf.TTF_RenderText_Solid(fuente.ApuntadorFuente, texto, color);
 			
 			if(textoComoImagen == IntPtr.Zero)
 			{
 				Console.WriteLine("Error al renderizar '{0}'", texto);
 			}
-			
-			//Sdl.SDL_Rect origen = new Sdl.SDL_Rect(0,0, ancho, alto);
+
 			Sdl.SDL_Rect destino = new Sdl.SDL_Rect((short)x,(short)y,ancho , alto);
 			
 			Sdl.SDL_BlitSurface(textoComoImagen, ref origen, pantalla, ref destino);
@@ -332,7 +331,7 @@ namespace Esedelish
 			{
 				for(int j = 0; j < 10; j++)
 				{
-					pasto.Mover(i * pasto.GetAncho(), j * pasto.GetAlto());
+					pasto.Mover(i * pasto.Ancho, j * pasto.Alto);
 					pasto.Dibujar();
 				}
 			}
