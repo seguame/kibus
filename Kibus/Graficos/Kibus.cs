@@ -26,6 +26,9 @@ namespace Graficos
 {
 	public class Kibus: Sprite
 	{
+		
+		private Direccion ultimoMovimiento = Direccion.MISINGNO;
+		
 		public int OnToyX
 		{
 			get
@@ -46,7 +49,23 @@ namespace Graficos
 		{
 			get
 			{
-				return OnToyX - 1;
+				int incremento = 0;
+				
+				if(ultimoMovimiento != Direccion.MISINGNO)
+				{
+					switch(ultimoMovimiento)
+					{
+						case Direccion.ARRIBA_DER: incremento = -1; break;
+						case Direccion.ABAJO_DER: incremento = -1; break;
+						case Direccion.DERECHA: incremento = -1; break;
+							
+						case Direccion.IZQUIERDA: incremento = 1; break;
+						case Direccion.ABAJO_IZQ: incremento = 1; break;
+						case Direccion.ARRIBA_IZQ: incremento = 1; break;
+					}
+				}
+				
+				return OnToyX + incremento;
 			}
 		}
 		
@@ -54,19 +73,37 @@ namespace Graficos
 		{
 			get
 			{
-				return OnToyY - 1;
+				int incremento = 0;
+				
+				if(ultimoMovimiento != Direccion.MISINGNO)
+				{
+					switch(ultimoMovimiento)
+					{
+						case Direccion.ARRIBA_DER: incremento = -1; break;
+						case Direccion.ARRIBA_IZQ: incremento = -1; break;
+						case Direccion.ARRIBA: incremento = -1;  break;
+						
+						case Direccion.ABAJO: incremento = 1; break;
+						case Direccion.ABAJO_IZQ: incremento = 1; break;
+						case Direccion.ABAJO_DER: incremento = 1; break;
+					}
+				}
+				
+				return OnToyY + incremento;
 			}
 		}
 		public Kibus (short x, short y) :base ("Assets/GFX/personaje.png")
 		{
 			rectangulo.x = x;
 			rectangulo.y = y;
+			
 		}
 		
 		public Kibus() : base ("Assets/GFX/personaje.png")
 		{
 			rectangulo.x = 0;
 			rectangulo.y = 0;
+			
 		}
 		
 		public void Mover(Direccion direccion)
@@ -105,45 +142,62 @@ namespace Graficos
 		private void MoverArriba()
 	    {
 	        rectangulo.y -= incremento_Y;
+			
+			if(rectangulo.y < 0) rectangulo.y = 0;
 	    }
 	
 	    private void MoverAbajo()
 	    {
 	        rectangulo.y += incremento_Y;
+			if(rectangulo.y > 640) rectangulo.y = 640;
 	    }
 	
 	    private  void MoverDerecha()
 	    {
 	        rectangulo.x += incremento_X;
+			if(rectangulo.x > 640) rectangulo.x = 640;
 	    }
 
 	    private  void MoverIzquierda()
 	    {
 	        rectangulo.x -= incremento_X;
+			if(rectangulo.x < 0) rectangulo.x = 0;
 	    }
 		
 		private void MoverArriba_Derecha()
 		{
 			rectangulo.y -= incremento_Y;
 			rectangulo.x += incremento_X;
+			
+			if(rectangulo.y < 0) rectangulo.y = 0;
+			if(rectangulo.x > 640) rectangulo.x = 640;
 		}
 		
 		private void MoverArriba_Izquierda()
 		{
 			rectangulo.y -= incremento_Y;
 			rectangulo.x -= incremento_X;
+			
+			if(rectangulo.y < 0) rectangulo.y = 0;
+			if(rectangulo.x < 0) rectangulo.x = 0;
 		}
 		
 		private void MoverAbajo_Derecha()
 		{
 			rectangulo.y += incremento_Y;
 			rectangulo.x += incremento_X;
+			
+			if(rectangulo.y > 640) rectangulo.y = 640;
+			if(rectangulo.x > 640) rectangulo.x = 640;
 		}
 		
 		private void MoverAbajo_Izquierda()
 		{
 			rectangulo.y += incremento_Y;
 			rectangulo.x -= incremento_X;
+			
+			if(rectangulo.y > 640) rectangulo.y = 640;
+			if(rectangulo.x < 0) rectangulo.x = 0;
 		}
 	}
 }

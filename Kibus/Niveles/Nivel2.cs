@@ -111,8 +111,11 @@ namespace Niveles
 				
 				if(++mapa[kibus.OnTabaX, kibus.OnTabaY] == 5)
 				{
-					sprites[kibus.OnTabaX, kibus.OnTabaY] = new Sprite("Assets/GFX/30.png");
-					sprites[kibus.OnTabaX, kibus.OnTabaY].Visible = false;
+					if(sprites[kibus.OnTabaX, kibus.OnTabaY] == null)
+					{
+						sprites[kibus.OnTabaX, kibus.OnTabaY] = new Sprite("Assets/GFX/30.png");
+						sprites[kibus.OnTabaX, kibus.OnTabaY].Visible = false;
+					}
 				}
 				
 				Hardware.Pausar(200);
