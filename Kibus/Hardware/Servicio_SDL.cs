@@ -69,7 +69,7 @@ namespace Esedelish
 			Console.WriteLine("Inicializando SDL");
 			
 			Hardware.Ancho = ancho;
-			Hardware.alto = alto;
+			Hardware.Alto = alto;
 			
 			if(pantalla_completa)
 			{
@@ -287,7 +287,7 @@ namespace Esedelish
 		
 		public static void DibujarImagen(IntPtr imagen, short x, short y)
 		{
-			Sdl.SDL_Rect destino = new Sdl.SDL_Rect(x,y, ancho, alto);
+			Sdl.SDL_Rect destino = new Sdl.SDL_Rect(x,y, Ancho, Alto);
 			Sdl.SDL_BlitSurface(imagen,ref origen, pantalla, ref destino);
 		}
 		
@@ -313,14 +313,14 @@ namespace Esedelish
 				Console.WriteLine("Error al renderizar '{0}'", texto);
 			}
 
-			Sdl.SDL_Rect destino = new Sdl.SDL_Rect((short)x,(short)y,ancho , alto);
+			Sdl.SDL_Rect destino = new Sdl.SDL_Rect((short)x,(short)y,Ancho , Alto);
 			
 			Sdl.SDL_BlitSurface(textoComoImagen, ref origen, pantalla, ref destino);
 		}
 		
 		public static void DibujarFondo(byte r, byte g, byte b)
 		{
-			SdlGfx.boxRGBA(pantalla, 0, 0, ancho, alto, r, g, b, 0xFF); 
+			SdlGfx.boxRGBA(pantalla, 0, 0, Ancho, Alto, r, g, b, 0xFF); 
 		}
 		
 		public static void DibujarFondo()
