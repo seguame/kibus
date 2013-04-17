@@ -70,13 +70,13 @@ namespace Graficos
 						case Direccion.ARRIBA_DER: 
 						case Direccion.ARRIBA_IZQ: 
 						case Direccion.ARRIBA: 
-							incremento = -1;  
+							incremento = 1;  
 							break;
 						
 						case Direccion.ABAJO: 
 						case Direccion.ABAJO_IZQ:
 						case Direccion.ABAJO_DER: 
-							incremento = 1; 
+							incremento = -1; 
 							break;
 					}
 				}
@@ -98,6 +98,7 @@ namespace Graficos
 		
 		public void Mover(Direccion direccion)
 		{
+			ultimoMovimiento = direccion;
 			switch(direccion)
 			{
 				case Direccion.ARRIBA:
