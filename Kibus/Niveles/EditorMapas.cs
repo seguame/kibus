@@ -66,20 +66,21 @@ namespace Niveles
 					switch(evento.type)
 					{
 						case Sdl.SDL_MOUSEMOTION:
-							if (evento.motion.x > 0 && evento.motion.y > 0)
+							if (evento.motion.x > 0 && evento.motion.y > 0 
+						    	&& evento.motion.x < Hardware.Ancho && evento.motion.y < Hardware.Alto)
 				            {
-				                rectangulo.x = (short)(((int)(10 - ((((Hardware.Ancho) - evento.motion.x) / (float)(Hardware.Ancho))) * 10)) * 64);
-				                rectangulo.y = (short)(((int)(10 - (((Hardware.Alto- evento.motion.y) / (float)Hardware.Alto)) * 10)) * 64);
+								rectangulo.x = /*(short)(evento.motion.x - 32);*/(short)(((int)(10 - ((((Hardware.Ancho) - evento.motion.x) / (float)(Hardware.Ancho))) * 10)) * 64);
+								rectangulo.y = /*(short)(evento.motion.y - 32);*/(short)(((int)(10 - (((Hardware.Alto- evento.motion.y) / (float)Hardware.Alto)) * 10)) * 64);
 								
-								try
-								{
+								//try
+								//{
 									if(sprites[rectangulo.x/64,rectangulo.y/64] == null)
 									{
 										obstaculo.Mover(rectangulo);
 									}
-								}
+								/*}
 								catch (IndexOutOfRangeException) 
-								{}
+								{}*/
 								
 				            }
 							break;
