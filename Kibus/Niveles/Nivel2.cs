@@ -72,6 +72,7 @@ namespace Niveles
 
 		private void BuscarCasa()
 		{
+			List<Direccion> usadas;
 			int[,] mapa = new int[10,10];
 			
 			Random random = new Random(System.DateTime.Now.Millisecond);
@@ -92,14 +93,25 @@ namespace Niveles
 				}
 				else
 				{
+					usadas = new List<Direccion>((int)Direccion.MISINGNO);
 					Console.WriteLine("Recalculando");
-					Direccion tmp = (Direccion)random.Next(0, (int)Direccion.MISINGNO);
+					Direccion tmp;
 					
-					while(tmp == direccion || !IntentarMover(tmp))
+					do
 					{
-						Console.WriteLine("{0} {1}", tmp, direccion);
 						tmp = (Direccion)random.Next(0, (int)Direccion.MISINGNO);
-					}
+						Console.WriteLine("{0} {1}", tmp, direccion);
+						
+						if(!usadas.Contains(tmp))
+						{
+							usadas.Add (tmp);
+						}
+						else if(usadas.Count == (int)Direccion.MISINGNO)
+						{
+							break;
+						}
+						
+					}while(tmp == direccion || !IntentarMover(tmp));
 					
 					kibus.Mover(tmp);
 					
@@ -109,16 +121,31 @@ namespace Niveles
 					Console.WriteLine("Elegido nuevo camino");
 				}
 				
+				Console.WriteLine("ONTABAN!  {0} {1}", kibus.OnTabaX, kibus.OnTabaY);
+				
 				if(++mapa[kibus.OnTabaX, kibus.OnTabaY] == 5)
 				{
 					if(sprites[kibus.OnTabaX, kibus.OnTabaY] == null)
 					{
 						sprites[kibus.OnTabaX, kibus.OnTabaY] = new Sprite("Assets/GFX/30.png");
 						sprites[kibus.OnTabaX, kibus.OnTabaY].Visible = false;
+						sprites[kibus.OnTabaX, kibus.OnTabaY].Mover((short)(kibus.OnTabaX * sprites[kibus.OnTabaX, kibus.OnTabaY].Ancho),(short) (kibus.OnTabaY * sprites[kibus.OnTabaX, kibus.OnTabaY].Alto));
 					}
+				}
+				else
+				{
+					Console.WriteLine("{0}", mapa[kibus.OnTabaX, kibus.OnTabaY]);
 				}
 				
 				Hardware.Pausar(200);
+			}
+			
+			DibujarTodo();
+			Hardware.EscribirTexto("KIBUS LLEGO! \\O/",(short)(Hardware.Alto/2), (short)(Hardware.Ancho/2));
+			Hardware.RefrescarPantalla();
+			while(!Hardware.TeclaPulsada(Sdl.SDLK_RETURN))
+			{
+				Hardware.Pausar(20);
 			}
 		}
 		
