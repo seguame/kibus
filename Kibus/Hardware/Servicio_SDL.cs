@@ -327,9 +327,9 @@ namespace Esedelish
 		{
 			Sprite pasto = new Sprite("Assets/GFX/pasto.jpg");
 			
-			for(int i = 0; i < 10; i++)
+			for(int i = 0; i < 20; i++)
 			{
-				for(int j = 0; j < 10; j++)
+				for(int j = 0; j < 20; j++)
 				{
 					pasto.Mover(i * pasto.Ancho, j * pasto.Alto);
 					pasto.Dibujar();

@@ -38,7 +38,7 @@ namespace Niveles
 		public Nivel1 (): base() 
 		{
 			Random random = new Random(System.DateTime.Now.Millisecond);
-			int cantidad = random.Next(20, 80);
+			int cantidad = random.Next(40, 160);
 			
 			Console.WriteLine(cantidad + "%");
 			int x;
@@ -47,8 +47,8 @@ namespace Niveles
 			
 			while(cantidad > 0)
 			{
-				x = random.Next(10);
-				y = random.Next(10);
+				x = random.Next(20);
+				y = random.Next(20);
 				elemento = random.Next(36,42);
 				if(sprites[x,y] == null)
 				{
@@ -178,14 +178,15 @@ namespace Niveles
 					switch(evento.type)
 					{
 						case Sdl.SDL_MOUSEMOTION:
-							if (evento.motion.x > 0 && evento.motion.y > 0)
+							if (evento.motion.x > 0 && evento.motion.y > 0
+						    	&& evento.motion.x < Hardware.Ancho && evento.motion.y < Hardware.Alto)
 				            {
-				                rectangulo.x = (short)(((int)(10 - ((((Hardware.Ancho) - evento.motion.x) / (float)(Hardware.Ancho))) * 10)) * 64);
-				                rectangulo.y = (short)(((int)(10 - (((Hardware.Alto- evento.motion.y) / (float)Hardware.Alto)) * 10)) * 64);
+				                rectangulo.x = /*(short)(evento.motion.x - 16);*/(short)(((int)(20 - (((Hardware.Ancho - evento.motion.x) / (float)Hardware.Ancho)) * 20)) * 32);
+				                rectangulo.y = /*(short)(evento.motion.y - 16);*/(short)(((int)(20 - (((Hardware.Alto- evento.motion.y) / (float)Hardware.Alto)) * 20)) * 32);
 								
 								try
 								{
-									if(sprites[rectangulo.x/64,rectangulo.y/64] == null)
+									if(sprites[rectangulo.x/32,rectangulo.y/32] == null)
 									{
 										casa.Mover(rectangulo);
 									}
@@ -199,9 +200,9 @@ namespace Niveles
 						case Sdl.SDL_MOUSEBUTTONDOWN:
 							try
 							{
-								if(sprites[rectangulo.x/64,rectangulo.y/64] == null)
+								if(sprites[rectangulo.x/32,rectangulo.y/32] == null)
 								{
-									sprites[rectangulo.x/64,rectangulo.y/64] = casa;
+									sprites[rectangulo.x/32,rectangulo.y/32] = casa;
 									this.casa = casa;
 									puesta = true;
 								}

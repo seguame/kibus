@@ -33,7 +33,7 @@ namespace Niveles
 {
 	internal class EditorMapas : Nivel
 	{
-		private int[,] matriz = new int[10,10];
+		private int[,] matriz = new int[20,20];
 		public EditorMapas() : base(){}
 		
 		public static int CASA
@@ -69,12 +69,12 @@ namespace Niveles
 							if (evento.motion.x > 0 && evento.motion.y > 0 
 						    	&& evento.motion.x < Hardware.Ancho && evento.motion.y < Hardware.Alto)
 				            {
-								rectangulo.x = /*(short)(evento.motion.x - 32);*/(short)(((int)(10 - ((((Hardware.Ancho) - evento.motion.x) / (float)(Hardware.Ancho))) * 10)) * 64);
-								rectangulo.y = /*(short)(evento.motion.y - 32);*/(short)(((int)(10 - (((Hardware.Alto- evento.motion.y) / (float)Hardware.Alto)) * 10)) * 64);
+								rectangulo.x = /*(short)(evento.motion.x - 16);*/(short)(((int)(20 - (((Hardware.Ancho - evento.motion.x) / (float)Hardware.Ancho)) * 20)) * 32);
+				                rectangulo.y = /*(short)(evento.motion.y - 16);*/(short)(((int)(20 - (((Hardware.Alto- evento.motion.y) / (float)Hardware.Alto)) * 20)) * 32);
 								
 								//try
 								//{
-									if(sprites[rectangulo.x/64,rectangulo.y/64] == null)
+									if(sprites[rectangulo.x/32,rectangulo.y/32] == null)
 									{
 										obstaculo.Mover(rectangulo);
 									}
@@ -88,19 +88,19 @@ namespace Niveles
 						case Sdl.SDL_MOUSEBUTTONDOWN:
 							try
 							{
-								if(sprites[rectangulo.x/64,rectangulo.y/64] == null)
+								if(sprites[rectangulo.x/32,rectangulo.y/32] == null)
 								{
 								
-									sprites[rectangulo.x/64,rectangulo.y/64] = obstaculo;
+									sprites[rectangulo.x/32,rectangulo.y/32] = obstaculo;
 								
 									if(casaTaim)
 									{
-										matriz[rectangulo.x/64,rectangulo.y/64] = EditorMapas.CASA;
+										matriz[rectangulo.x/32,rectangulo.y/32] = EditorMapas.CASA;
 										terminado = true;
 									}
 									else
 									{
-										matriz[rectangulo.x/64,rectangulo.y/64] = elemento;
+										matriz[rectangulo.x/32,rectangulo.y/32] = elemento;
 										elemento = random.Next(36,42);
 										obstaculo = new Sprite("Assets/GFX/"+ elemento+".png");
 									}
@@ -162,14 +162,14 @@ namespace Niveles
 			
 
             List<string> lineasArreglo = new List<string>();
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < 20; i++)
             {
                 StringBuilder linea = new StringBuilder();
-                for(int j = 0; j < 10; j++)
+                for(int j = 0; j < 20; j++)
 				{
                     linea.Append(matriz[i, j]);
 					
-					if(j != 9)
+					if(j != 19)
 					{
 						linea.Append(",");
 					}

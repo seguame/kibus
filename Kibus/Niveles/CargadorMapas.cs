@@ -137,13 +137,13 @@ namespace Niveles
 			catch (IndexOutOfRangeException)
 			{
 				Random random = new Random(System.DateTime.Now.Millisecond);
-				int cantidad = 50;
+				int cantidad = 100;
 				
-				int[][] mapa = new int[10][];
+				int[][] mapa = new int[20][];
 				
-				for(int i = 0; i < 10; i++)
+				for(int i = 0; i < 20; i++)
 				{
-					mapa[i] = new int[10];
+					mapa[i] = new int[20];
 				}
 				
 				int x;
@@ -152,8 +152,8 @@ namespace Niveles
 				
 				while(cantidad > 0)
 				{
-					x = random.Next(10);
-					y = random.Next(10);
+					x = random.Next(20);
+					y = random.Next(20);
 					elemento = random.Next(36,42);
 					if(mapa[x][y] == 0)
 					{

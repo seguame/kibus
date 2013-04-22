@@ -43,9 +43,9 @@ namespace Niveles
 			
 			//TODO:
 			//Quitar de todos el tamaño fijo
-			for(int i = 0; i < 10; i++)
+			for(int i = 0; i < 20; i++)
 			{
-				for(int j = 0; j < 10; j++)
+				for(int j = 0; j < 20; j++)
 				{
 					if(mapa[i][j] == EditorMapas.CASA)
 					{
@@ -69,11 +69,11 @@ namespace Niveles
 
 			BuscarCasa();
 		}
-
+		
 		private void BuscarCasa()
 		{
-			List<Direccion> usadas;
-			int[,] mapa = new int[10,10];
+			List<Direccion> usadas = new List<Direccion>((int)Direccion.MISINGNO);
+			int[,] mapa = new int[20,20];
 			
 			Random random = new Random(System.DateTime.Now.Millisecond);
 			Queue<Direccion> cola = Algoritmo.CalculaLineaBresenham(kibus.OnToyX, kibus.OnToyY, casa.OnToyX, casa.OnToyY);
@@ -93,7 +93,7 @@ namespace Niveles
 				}
 				else
 				{
-					usadas = new List<Direccion>((int)Direccion.MISINGNO);
+					usadas.Clear();
 					Console.WriteLine("Recalculando");
 					Direccion tmp;
 					
@@ -127,8 +127,8 @@ namespace Niveles
 				{
 					if(sprites[kibus.OnTabaX, kibus.OnTabaY] == null)
 					{
-						sprites[kibus.OnTabaX, kibus.OnTabaY] = new Sprite("Assets/GFX/30.png");
-						sprites[kibus.OnTabaX, kibus.OnTabaY].Visible = false;
+						sprites[kibus.OnTabaX, kibus.OnTabaY] = new Sprite("Assets/GFX/12.png");
+						sprites[kibus.OnTabaX, kibus.OnTabaY].Visible = true;
 						sprites[kibus.OnTabaX, kibus.OnTabaY].Mover((short)(kibus.OnTabaX * sprites[kibus.OnTabaX, kibus.OnTabaY].Ancho),(short) (kibus.OnTabaY * sprites[kibus.OnTabaX, kibus.OnTabaY].Alto));
 					}
 				}
@@ -137,7 +137,7 @@ namespace Niveles
 					Console.WriteLine("{0}", mapa[kibus.OnTabaX, kibus.OnTabaY]);
 				}
 				
-				Hardware.Pausar(200);
+				Hardware.Pausar(150);
 			}
 			
 			DibujarTodo();
@@ -151,6 +151,7 @@ namespace Niveles
 		
 		private bool IntentarMover(Direccion direccion)
 		{
+			
 			switch(direccion)
 			{
 				case Direccion.ARRIBA:
@@ -176,10 +177,10 @@ namespace Niveles
 				
 				case Direccion.ABAJO_IZQ:
 					return EsPosibleMover(
-										(short)(kibus.X + kibus.GetVelocidadX()), 
-										(short)(kibus.Y - kibus.GetVelocidadY()),
-	                   					(short)(kibus.GetXFinal() + kibus.GetVelocidadX()), 
-										(short)(kibus.GetYFinal() - kibus.GetVelocidadY()));
+										(short)(kibus.X - kibus.GetVelocidadX()), 
+										(short)(kibus.Y + kibus.GetVelocidadY()),
+	                   					(short)(kibus.GetXFinal() - kibus.GetVelocidadX()), 
+										(short)(kibus.GetYFinal() + kibus.GetVelocidadY()));
 				
 				case Direccion.ARRIBA_DER:
 					return EsPosibleMover(
@@ -210,7 +211,7 @@ namespace Niveles
 										kibus.GetYFinal());
 				
 				default:
-					Console.WriteLine("Movimiento no definido");
+					//Console.WriteLine("Movimiento no definido");
 					return false;
 			}
 		}
@@ -234,14 +235,15 @@ namespace Niveles
 						switch(evento.type)
 						{
 							case Sdl.SDL_MOUSEMOTION:
-								if (evento.motion.x > 0 && evento.motion.y > 0)
+								if (evento.motion.x > 0 && evento.motion.y > 0
+							    	&& evento.motion.x < Hardware.Ancho && evento.motion.y < Hardware.Alto)
 					            {
-					                rectangulo.x = (short)(((int)(10 - ((((Hardware.Ancho) - evento.motion.x) / (float)(Hardware.Ancho))) * 10)) * 64);
-					                rectangulo.y = (short)(((int)(10 - (((Hardware.Alto- evento.motion.y) / (float)Hardware.Alto)) * 10)) * 64);
+					                rectangulo.x = /*(short)(evento.motion.x - 16);*/(short)(((int)(20 - (((Hardware.Ancho - evento.motion.x) / (float)Hardware.Ancho)) * 20)) * 32);
+				                	rectangulo.y = /*(short)(evento.motion.y - 16);*/(short)(((int)(20 - (((Hardware.Alto- evento.motion.y) / (float)Hardware.Alto)) * 20)) * 32);
 									
 									try
 									{
-										if(sprites[rectangulo.x/64,rectangulo.y/64] == null)
+										if(sprites[rectangulo.x/32,rectangulo.y/32] == null)
 										{
 											casa.Mover(rectangulo);
 										}
@@ -255,9 +257,9 @@ namespace Niveles
 							case Sdl.SDL_MOUSEBUTTONDOWN:
 								try
 								{
-									if(sprites[rectangulo.x/64,rectangulo.y/64] == null)
+									if(sprites[rectangulo.x/32,rectangulo.y/32] == null)
 									{
-										sprites[rectangulo.x/64,rectangulo.y/64] = casa;
+										sprites[rectangulo.x/32,rectangulo.y/32] = casa;
 										this.casa = casa;
 										puesto = true;
 									}
@@ -286,14 +288,15 @@ namespace Niveles
 					switch(evento.type)
 					{
 						case Sdl.SDL_MOUSEMOTION:
-							if (evento.motion.x > 0 && evento.motion.y > 0)
+							if (evento.motion.x > 0 && evento.motion.y > 0
+						    	&& evento.motion.x < Hardware.Ancho && evento.motion.y < Hardware.Alto)
 				            {
-				                rectangulo.x = (short)(((int)(10 - ((((Hardware.Ancho) - evento.motion.x) / (float)(Hardware.Ancho))) * 10)) * 64);
-				                rectangulo.y = (short)(((int)(10 - (((Hardware.Alto- evento.motion.y) / (float)Hardware.Alto)) * 10)) * 64);
+				                rectangulo.x = /*(short)(evento.motion.x - 16);*/(short)(((int)(20 - (((Hardware.Ancho - evento.motion.x) / (float)Hardware.Ancho)) * 20)) * 32);
+				                rectangulo.y = /*(short)(evento.motion.y - 16);*/(short)(((int)(20 - (((Hardware.Alto- evento.motion.y) / (float)Hardware.Alto)) * 20)) * 32);
 								
 								try
 								{
-									if(sprites[rectangulo.x/64,rectangulo.y/64] == null)
+									if(sprites[rectangulo.x/32,rectangulo.y/32] == null)
 									{
 										kibus.Mover(rectangulo);
 									}
@@ -307,7 +310,7 @@ namespace Niveles
 						case Sdl.SDL_MOUSEBUTTONDOWN:
 							try
 							{
-								if(sprites[rectangulo.x/64,rectangulo.y/64] == null)
+								if(sprites[rectangulo.x/32,rectangulo.y/32] == null)
 								{
 									puesto = true;
 								}
