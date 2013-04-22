@@ -123,21 +123,26 @@ namespace Niveles
 				
 				Console.WriteLine("ONTABAN!  {0} {1}", kibus.OnTabaX, kibus.OnTabaY);
 				
-				if(++mapa[kibus.OnTabaX, kibus.OnTabaY] == 5)
+				try
 				{
-					if(sprites[kibus.OnTabaX, kibus.OnTabaY] == null)
+					if(++mapa[kibus.OnTabaX, kibus.OnTabaY] == 10)
 					{
-						sprites[kibus.OnTabaX, kibus.OnTabaY] = new Sprite("Assets/GFX/12.png");
-						sprites[kibus.OnTabaX, kibus.OnTabaY].Visible = true;
-						sprites[kibus.OnTabaX, kibus.OnTabaY].Mover((short)(kibus.OnTabaX * sprites[kibus.OnTabaX, kibus.OnTabaY].Ancho),(short) (kibus.OnTabaY * sprites[kibus.OnTabaX, kibus.OnTabaY].Alto));
+						if(sprites[kibus.OnTabaX, kibus.OnTabaY] == null)
+						{
+							sprites[kibus.OnTabaX, kibus.OnTabaY] = new Sprite("Assets/GFX/12.png");
+							sprites[kibus.OnTabaX, kibus.OnTabaY].Visible = true;
+							sprites[kibus.OnTabaX, kibus.OnTabaY].Bandera = true;
+							sprites[kibus.OnTabaX, kibus.OnTabaY].Mover((short)(kibus.OnTabaX * sprites[kibus.OnTabaX, kibus.OnTabaY].Ancho),(short) (kibus.OnTabaY * sprites[kibus.OnTabaX, kibus.OnTabaY].Alto));
+						}
+					}
+					else
+					{
+						Console.WriteLine("{0}", mapa[kibus.OnTabaX, kibus.OnTabaY]);
 					}
 				}
-				else
-				{
-					Console.WriteLine("{0}", mapa[kibus.OnTabaX, kibus.OnTabaY]);
-				}
+				catch{}
 				
-				Hardware.Pausar(150);
+				Hardware.Pausar(10);
 			}
 			
 			DibujarTodo();

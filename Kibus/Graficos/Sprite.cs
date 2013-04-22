@@ -55,6 +55,12 @@ namespace Graficos
 			set { visible = value; }
 			get { return visible; }
 		}
+		
+		public bool Bandera
+		{
+			set;
+			get;
+		}
 
 		public short X
 		{
