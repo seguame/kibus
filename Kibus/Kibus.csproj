@@ -241,5 +241,17 @@
     <Folder Include="Graficos\" />
     <Folder Include="Assets\" />
     <Folder Include="Algoritmos\" />
+    <Folder Include="Mapas\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Mapas\murallas.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mapas\intestino.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mapas\fortaleza.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
