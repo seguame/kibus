@@ -108,6 +108,7 @@ namespace Niveles
 						}
 						else if(usadas.Count == (int)Direccion.MISINGNO)
 						{
+							tmp = BrincaBandera(random);
 							break;
 						}
 						
@@ -125,12 +126,12 @@ namespace Niveles
 				
 				try
 				{
-					if(++mapa[kibus.OnTabaX, kibus.OnTabaY] == 10)
+					if(++mapa[kibus.OnTabaX, kibus.OnTabaY] == 5)
 					{
 						if(sprites[kibus.OnTabaX, kibus.OnTabaY] == null)
 						{
 							sprites[kibus.OnTabaX, kibus.OnTabaY] = new Sprite("Assets/GFX/12.png");
-							sprites[kibus.OnTabaX, kibus.OnTabaY].Visible = true;
+							sprites[kibus.OnTabaX, kibus.OnTabaY].Visible = false;
 							sprites[kibus.OnTabaX, kibus.OnTabaY].Bandera = true;
 							sprites[kibus.OnTabaX, kibus.OnTabaY].Mover((short)(kibus.OnTabaX * sprites[kibus.OnTabaX, kibus.OnTabaY].Ancho),(short) (kibus.OnTabaY * sprites[kibus.OnTabaX, kibus.OnTabaY].Alto));
 						}
@@ -142,7 +143,7 @@ namespace Niveles
 				}
 				catch{}
 				
-				Hardware.Pausar(10);
+				Hardware.Pausar(50);
 			}
 			
 			DibujarTodo();
@@ -152,6 +153,18 @@ namespace Niveles
 			{
 				Hardware.Pausar(20);
 			}
+		}
+
+		private Direccion BrincaBandera(Random random)
+		{
+			Direccion direccion = Direccion.MISINGNO;
+
+			do
+			{
+				direccion = (Direccion)random.Next(0, (int)Direccion.MISINGNO);
+			}while(!IntentarMoverConBandera(direccion));
+
+			return direccion;
 		}
 		
 		private bool IntentarMover(Direccion direccion)
@@ -218,6 +231,73 @@ namespace Niveles
 				default:
 					//Console.WriteLine("Movimiento no definido");
 					return false;
+			}
+		}
+
+		private bool IntentarMoverConBandera(Direccion direccion)
+		{
+			
+			switch(direccion)
+			{
+			case Direccion.ARRIBA:
+				return EsPosibleMoverConBandera(
+					kibus.X, 
+					(short)(kibus.Y - kibus.GetVelocidadY()),
+					kibus.GetXFinal(), 
+					(short)(kibus.GetYFinal() - kibus.GetVelocidadY()));
+				
+			case Direccion.ABAJO:
+				return EsPosibleMoverConBandera(
+					kibus.X, 
+					(short)(kibus.Y + kibus.GetVelocidadY()),
+					kibus.GetXFinal(), 
+					(short)(kibus.GetYFinal() + kibus.GetVelocidadY()));
+				
+			case Direccion.ABAJO_DER:
+				return EsPosibleMoverConBandera(
+					(short)(kibus.X + kibus.GetVelocidadX()), 
+					(short)(kibus.Y + kibus.GetVelocidadY()),
+					(short)(kibus.GetXFinal() + kibus.GetVelocidadX()), 
+					(short)(kibus.GetYFinal() + kibus.GetVelocidadY()));
+				
+			case Direccion.ABAJO_IZQ:
+				return EsPosibleMoverConBandera(
+					(short)(kibus.X - kibus.GetVelocidadX()), 
+					(short)(kibus.Y + kibus.GetVelocidadY()),
+					(short)(kibus.GetXFinal() - kibus.GetVelocidadX()), 
+					(short)(kibus.GetYFinal() + kibus.GetVelocidadY()));
+				
+			case Direccion.ARRIBA_DER:
+				return EsPosibleMoverConBandera(
+					(short)(kibus.X + kibus.GetVelocidadX()), 
+					(short)(kibus.Y - kibus.GetVelocidadY()),
+					(short)(kibus.GetXFinal() + kibus.GetVelocidadX()), 
+					(short)(kibus.GetYFinal() - kibus.GetVelocidadY()));
+				
+			case Direccion.ARRIBA_IZQ:
+				return EsPosibleMoverConBandera(
+					(short)(kibus.X - kibus.GetVelocidadX()), 
+					(short)(kibus.Y - kibus.GetVelocidadY()),
+					(short)(kibus.GetXFinal() - kibus.GetVelocidadX()), 
+					(short)(kibus.GetYFinal() - kibus.GetVelocidadY()));
+				
+			case Direccion.DERECHA:
+				return EsPosibleMoverConBandera(
+					(short)(kibus.X + kibus.GetVelocidadX()), 
+					kibus.Y,
+					(short)(kibus.GetXFinal() + kibus.GetVelocidadX()), 
+					kibus.GetYFinal());
+				
+			case Direccion.IZQUIERDA:
+				return EsPosibleMoverConBandera(
+					(short)(kibus.X - kibus.GetVelocidadX()), 
+					kibus.Y,
+					(short)(kibus.GetXFinal() - kibus.GetVelocidadX()), 
+					kibus.GetYFinal());
+				
+			default:
+				//Console.WriteLine("Movimiento no definido");
+				return false;
 			}
 		}
 		

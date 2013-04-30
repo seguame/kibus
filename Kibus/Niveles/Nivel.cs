@@ -55,6 +55,31 @@ namespace Niveles
 			
 			return false;
 		}
+
+		public bool EsPosibleMoverConBandera(short x, short y, short xFin, short yFin)
+		{
+			if(xFin < Hardware.Ancho + 31 && yFin < Hardware.Alto + 32 && xFin > 0 && yFin > 0)
+			{
+				foreach(Sprite sprite in sprites)
+				{
+					if(sprite != null &&  sprite != casa && sprite.ColisionCon(x, y, xFin, yFin))
+					{
+						if(sprite.Bandera)
+						{
+							return true;
+						}
+						else
+						{
+							return false;
+						}
+					}
+				}
+				
+				return true;
+			}
+			
+			return false;
+		}
 		
 		protected void DibujarTodo()
 		{
