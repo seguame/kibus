@@ -111,7 +111,7 @@ namespace Niveles
 
 	        if ((Hardware.TeclaPulsada(Sdl.SDLK_UP))
 	            && EsPosibleMover(kibus.X, (short)(kibus.Y - kibus.GetVelocidadY()),
-	                    kibus.GetXFinal(), (short)(kibus.GetYFinal() - kibus.GetVelocidadY())))
+	                    kibus.GetXFinal(), (short)(kibus.GetYFinal() - kibus.GetVelocidadY()), false))
 			{
 				pasos.Push(Sdl.SDLK_DOWN);
 	            kibus.Mover(Direccion.ARRIBA);
@@ -119,7 +119,7 @@ namespace Niveles
 	
 	        if ((Hardware.TeclaPulsada(Sdl.SDLK_DOWN))
 	            && EsPosibleMover(kibus.X,(short)(kibus.Y + kibus.GetVelocidadY()),
-	                   kibus.GetXFinal(), (short)(kibus.GetYFinal() + kibus.GetVelocidadY())))
+	                   kibus.GetXFinal(), (short)(kibus.GetYFinal() + kibus.GetVelocidadY()), false))
 				
 			{
 				pasos.Push(Sdl.SDLK_UP);
@@ -128,7 +128,7 @@ namespace Niveles
 	
 	        if ((Hardware.TeclaPulsada(Sdl.SDLK_RIGHT))
 	            && EsPosibleMover((short)(kibus.X + kibus.GetVelocidadX()), kibus.Y,
-	                   (short)(kibus.GetXFinal() + kibus.GetVelocidadX()), kibus.GetYFinal()))
+	                   (short)(kibus.GetXFinal() + kibus.GetVelocidadX()), kibus.GetYFinal(), false))
 			{
 				pasos.Push(Sdl.SDLK_LEFT);
 	            kibus.Mover(Direccion.DERECHA);
@@ -136,10 +136,10 @@ namespace Niveles
 	
 	        if ((Hardware.TeclaPulsada(Sdl.SDLK_LEFT) )
 	            && EsPosibleMover((short)(kibus.X - kibus.GetVelocidadX()), kibus.Y,
-	                   (short)(kibus.GetXFinal() - kibus.GetVelocidadX()), kibus.GetYFinal()))
+	                   (short)(kibus.GetXFinal() - kibus.GetVelocidadX()), kibus.GetYFinal(), false))
 			{
 				pasos.Push(Sdl.SDLK_RIGHT);
-	           kibus.Mover(Direccion.IZQUIERDA);
+	            kibus.Mover(Direccion.IZQUIERDA);
 			}
 
 		}

@@ -38,7 +38,7 @@ namespace Niveles
 			sprites = new Sprite[20,20];
 		}
 		
-		public bool EsPosibleMover(short x, short y, short xFin, short yFin)
+		public bool EsPosibleMover(short x, short y, short xFin, short yFin, bool usandoBandera)
 		{
 			if(xFin < Hardware.Ancho + 31 && yFin < Hardware.Alto + 32 && xFin > 0 && yFin > 0)
 			{
@@ -46,32 +46,15 @@ namespace Niveles
 				{
 					if(sprite != null &&  sprite != casa && sprite.ColisionCon(x, y, xFin, yFin))
 					{
+						if(usandoBandera)
+						{
+							if(sprite.Bandera)
+							{
+								return true;
+							}
+						}
+						
 						return false;
-					}
-				}
-				
-				return true;
-			}
-			
-			return false;
-		}
-
-		public bool EsPosibleMoverConBandera(short x, short y, short xFin, short yFin)
-		{
-			if(xFin < Hardware.Ancho + 31 && yFin < Hardware.Alto + 32 && xFin > 0 && yFin > 0)
-			{
-				foreach(Sprite sprite in sprites)
-				{
-					if(sprite != null &&  sprite != casa && sprite.ColisionCon(x, y, xFin, yFin))
-					{
-						if(sprite.Bandera)
-						{
-							return true;
-						}
-						else
-						{
-							return false;
-						}
 					}
 				}
 				
