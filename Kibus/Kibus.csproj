@@ -57,6 +57,7 @@
     <Compile Include="Niveles\EditorMapas.cs" />
     <Compile Include="Algoritmos\Algoritmos.cs" />
     <Compile Include="Utileria.cs" />
+    <Compile Include="Niveles\Nivel3.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
