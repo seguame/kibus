@@ -52,12 +52,13 @@
     <Compile Include="Hardware\Servicio_SDL.cs" />
     <Compile Include="Graficos\Fuente.cs" />
     <Compile Include="Graficos\Imagen.cs" />
-    <Compile Include="Graficos\Kibus.cs" />
     <Compile Include="Graficos\Sprite.cs" />
     <Compile Include="Niveles\EditorMapas.cs" />
     <Compile Include="Algoritmos\Algoritmos.cs" />
     <Compile Include="Utileria.cs" />
     <Compile Include="Niveles\Nivel3.cs" />
+    <Compile Include="Graficos\Abeja.cs" />
+    <Compile Include="Graficos\Personaje.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
