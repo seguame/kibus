@@ -24,6 +24,7 @@ using Tao.Sdl;
 
 using Graficos;
 using Esedelish;
+using Utileria;
 
 namespace Niveles
 {
@@ -209,6 +210,81 @@ namespace Niveles
 				Hardware.RefrescarPantalla();
 				
 			}while(!puesto);
+		}
+		
+		protected bool IntentarMover(Personaje personaje, Direccion direccion, bool usandoBandera)
+		{
+			
+			switch(direccion)
+			{
+				case Direccion.ARRIBA:
+					return EsPosibleMover(
+										personaje.X, 
+										(short)(personaje.Y - personaje.GetVelocidadY()),
+	                    				personaje.GetXFinal(), 
+										(short)(personaje.GetYFinal() - personaje.GetVelocidadY()), 
+										usandoBandera);
+				
+				case Direccion.ABAJO:
+					return EsPosibleMover(
+										personaje.X, 
+										(short)(personaje.Y + personaje.GetVelocidadY()),
+	                    				personaje.GetXFinal(), 
+										(short)(personaje.GetYFinal() + personaje.GetVelocidadY()), 
+										usandoBandera);
+				
+				case Direccion.ABAJO_DER:
+					return EsPosibleMover(
+										(short)(personaje.X + personaje.GetVelocidadX()), 
+										(short)(personaje.Y + personaje.GetVelocidadY()),
+	                   					(short)(personaje.GetXFinal() + personaje.GetVelocidadX()), 
+										(short)(personaje.GetYFinal() + personaje.GetVelocidadY()), 
+										usandoBandera);
+				
+				case Direccion.ABAJO_IZQ:
+					return EsPosibleMover(
+										(short)(personaje.X - personaje.GetVelocidadX()), 
+										(short)(personaje.Y + personaje.GetVelocidadY()),
+	                   					(short)(personaje.GetXFinal() - personaje.GetVelocidadX()), 
+										(short)(personaje.GetYFinal() + personaje.GetVelocidadY()), 
+										usandoBandera);
+				
+				case Direccion.ARRIBA_DER:
+					return EsPosibleMover(
+										(short)(personaje.X + personaje.GetVelocidadX()), 
+										(short)(personaje.Y - personaje.GetVelocidadY()),
+	                   					(short)(personaje.GetXFinal() + personaje.GetVelocidadX()), 
+										(short)(personaje.GetYFinal() - personaje.GetVelocidadY()), 
+										usandoBandera);
+				
+				case Direccion.ARRIBA_IZQ:
+					return EsPosibleMover(
+										(short)(personaje.X - personaje.GetVelocidadX()), 
+										(short)(personaje.Y - personaje.GetVelocidadY()),
+	                   					(short)(personaje.GetXFinal() - personaje.GetVelocidadX()), 
+										(short)(personaje.GetYFinal() - personaje.GetVelocidadY()), 
+										usandoBandera);
+				
+				case Direccion.DERECHA:
+					return EsPosibleMover(
+										(short)(personaje.X + personaje.GetVelocidadX()), 
+										personaje.Y,
+	                   					(short)(personaje.GetXFinal() + personaje.GetVelocidadX()), 
+										personaje.GetYFinal(), 
+										usandoBandera);
+				
+				case Direccion.IZQUIERDA:
+					return EsPosibleMover(
+										(short)(personaje.X - personaje.GetVelocidadX()), 
+										personaje.Y,
+	                   					(short)(personaje.GetXFinal() - personaje.GetVelocidadX()), 
+										personaje.GetYFinal(),
+										usandoBandera);
+				
+				default:
+					//Console.WriteLine("Movimiento no definido");
+					return false;
+			}
 		}
 		
 		public abstract void Iniciar();
