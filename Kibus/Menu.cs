@@ -32,12 +32,12 @@ public class Menu
 	{
 		PRACTICA_1,
 		PRACTICA_2,
+		PRACTICA_3,
 		CREAR_NIVEL,
 		SALIR
 	};
 		
 	private Imagen imagenDeFondo;
-	private Opcion opcionEscogida;
 		
 		
 	public Menu ()
@@ -59,12 +59,15 @@ public class Menu
 				
 			Hardware.EscribirTexto("2.- Practica 2",
 	                     250, 410);
+			
+			Hardware.EscribirTexto("3.- Practica 3",
+	                     250, 430);
 				
 			Hardware.EscribirTexto("C.- Crear Nivel",
-	                     250, 430);
+	                     250, 450);
 	
 	        Hardware.EscribirTexto("S.- Salir",
-	                     250, 450);
+	                     250, 470);
 	
 	        Hardware.RefrescarPantalla();
 				
@@ -72,22 +75,22 @@ public class Menu
 	
 	    } while (!Hardware.TeclaPulsada(Sdl.SDLK_1)
 			     && !Hardware.TeclaPulsada(Sdl.SDLK_2)
+		         && !Hardware.TeclaPulsada(Sdl.SDLK_3)
 			     && !Hardware.TeclaPulsada(Sdl.SDLK_c)
 	             && !Hardware.TeclaPulsada(Sdl.SDLK_s));
 			
 			
-		if(Hardware.TeclaPulsada(Sdl.SDLK_1))opcionEscogida = Opcion.PRACTICA_1;
-		else if(Hardware.TeclaPulsada(Sdl.SDLK_2)) opcionEscogida = Opcion.PRACTICA_2;
-		else if(Hardware.TeclaPulsada(Sdl.SDLK_c)) opcionEscogida = Opcion.CREAR_NIVEL;
-	    else if (Hardware.TeclaPulsada(Sdl.SDLK_s)) opcionEscogida = Opcion.SALIR;
+		if(Hardware.TeclaPulsada(Sdl.SDLK_1)) OpcionElegida = Opcion.PRACTICA_1;
+		else if(Hardware.TeclaPulsada(Sdl.SDLK_2)) OpcionElegida = Opcion.PRACTICA_2;
+		else if(Hardware.TeclaPulsada(Sdl.SDLK_3)) OpcionElegida = Opcion.PRACTICA_3;
+		else if(Hardware.TeclaPulsada(Sdl.SDLK_c)) OpcionElegida = Opcion.CREAR_NIVEL;
+	    else if (Hardware.TeclaPulsada(Sdl.SDLK_s)) OpcionElegida = Opcion.SALIR;
 	}
 		
 	public Opcion OpcionElegida
 	{
-		get
-		{
-			return opcionEscogida;
-		}
+		private set;
+		get;
 	}
 	
 }
