@@ -24,7 +24,7 @@ using Utileria;
 
 namespace Graficos
 {
-	public class Kibus: Sprite
+	public class Personaje: Sprite
 	{
 		
 		private Direccion ultimoMovimiento = Direccion.MISINGNO;
@@ -84,13 +84,13 @@ namespace Graficos
 				return OnToyY + incremento;
 			}
 		}
-		public Kibus (short x, short y) :base ("Assets/GFX/personaje.png")
+		public Personaje (short x, short y) :base ("Assets/GFX/personaje.png")
 		{
 			X = x;
 			Y = y;
 		}
 		
-		public Kibus() : base ("Assets/GFX/personaje.png")
+		public Personaje() : base ("Assets/GFX/personaje.png")
 		{
 			X = 0;
 			Y = 0;

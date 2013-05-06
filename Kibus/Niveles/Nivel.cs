@@ -31,7 +31,7 @@ namespace Niveles
 	{
 		protected Sprite[,] sprites;
 		protected Sprite casa;
-		protected Kibus kibus;
+		protected Personaje kibus;
 		
 		protected Nivel()
 		{
@@ -101,7 +101,7 @@ namespace Niveles
 		{
 			Sdl.SDL_Event evento;
 			Sdl.SDL_Rect rectangulo;
-			kibus  = new Kibus();
+			kibus  = new Personaje();
 			bool puesto;
 			
 			if(this.casa == null)

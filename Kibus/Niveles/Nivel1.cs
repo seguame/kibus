@@ -68,7 +68,7 @@ namespace Niveles
 			
 			PosicionarCasa();
 			
-			kibus = new Kibus(GetCasa().X, GetCasa().Y);
+			kibus = new Personaje(GetCasa().X, GetCasa().Y);
 			
 			
 			//usaurio parte
