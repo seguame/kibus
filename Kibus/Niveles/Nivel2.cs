@@ -87,7 +87,7 @@ namespace Niveles
 				
 				direccion = cola.Dequeue();
 				
-				if(IntentarMover(direccion, false))
+				if(IntentarMover(kibus, direccion, false))
 				{
 					kibus.Mover(direccion);
 				}
@@ -112,7 +112,7 @@ namespace Niveles
 							break;
 						}
 						
-					}while(tmp == direccion || !IntentarMover(tmp, false));
+					}while(tmp == direccion || !IntentarMover(kibus, tmp, false));
 					
 					kibus.Mover(tmp);
 					
@@ -162,78 +162,78 @@ namespace Niveles
 			do
 			{
 				direccion = (Direccion)random.Next(0, (int)Direccion.MISINGNO);
-			}while(!IntentarMover(direccion, true));
+			}while(!IntentarMover(kibus, direccion, true));
 
 			return direccion;
 		}
 		
-		private bool IntentarMover(Direccion direccion, bool usandoBandera)
+		private bool IntentarMover(Personaje personaje, Direccion direccion, bool usandoBandera)
 		{
 			
 			switch(direccion)
 			{
 				case Direccion.ARRIBA:
 					return EsPosibleMover(
-										kibus.X, 
-										(short)(kibus.Y - kibus.GetVelocidadY()),
-	                    				kibus.GetXFinal(), 
-										(short)(kibus.GetYFinal() - kibus.GetVelocidadY()), 
+										personaje.X, 
+										(short)(personaje.Y - personaje.GetVelocidadY()),
+	                    				personaje.GetXFinal(), 
+										(short)(personaje.GetYFinal() - personaje.GetVelocidadY()), 
 										usandoBandera);
 				
 				case Direccion.ABAJO:
 					return EsPosibleMover(
-										kibus.X, 
-										(short)(kibus.Y + kibus.GetVelocidadY()),
-	                    				kibus.GetXFinal(), 
-										(short)(kibus.GetYFinal() + kibus.GetVelocidadY()), 
+										personaje.X, 
+										(short)(personaje.Y + personaje.GetVelocidadY()),
+	                    				personaje.GetXFinal(), 
+										(short)(personaje.GetYFinal() + personaje.GetVelocidadY()), 
 										usandoBandera);
 				
 				case Direccion.ABAJO_DER:
 					return EsPosibleMover(
-										(short)(kibus.X + kibus.GetVelocidadX()), 
-										(short)(kibus.Y + kibus.GetVelocidadY()),
-	                   					(short)(kibus.GetXFinal() + kibus.GetVelocidadX()), 
-										(short)(kibus.GetYFinal() + kibus.GetVelocidadY()), 
+										(short)(personaje.X + personaje.GetVelocidadX()), 
+										(short)(personaje.Y + personaje.GetVelocidadY()),
+	                   					(short)(personaje.GetXFinal() + personaje.GetVelocidadX()), 
+										(short)(personaje.GetYFinal() + personaje.GetVelocidadY()), 
 										usandoBandera);
 				
 				case Direccion.ABAJO_IZQ:
 					return EsPosibleMover(
-										(short)(kibus.X - kibus.GetVelocidadX()), 
-										(short)(kibus.Y + kibus.GetVelocidadY()),
-	                   					(short)(kibus.GetXFinal() - kibus.GetVelocidadX()), 
-										(short)(kibus.GetYFinal() + kibus.GetVelocidadY()), 
+										(short)(personaje.X - personaje.GetVelocidadX()), 
+										(short)(personaje.Y + personaje.GetVelocidadY()),
+	                   					(short)(personaje.GetXFinal() - personaje.GetVelocidadX()), 
+										(short)(personaje.GetYFinal() + personaje.GetVelocidadY()), 
 										usandoBandera);
 				
 				case Direccion.ARRIBA_DER:
 					return EsPosibleMover(
-										(short)(kibus.X + kibus.GetVelocidadX()), 
-										(short)(kibus.Y - kibus.GetVelocidadY()),
-	                   					(short)(kibus.GetXFinal() + kibus.GetVelocidadX()), 
-										(short)(kibus.GetYFinal() - kibus.GetVelocidadY()), 
+										(short)(personaje.X + personaje.GetVelocidadX()), 
+										(short)(personaje.Y - personaje.GetVelocidadY()),
+	                   					(short)(personaje.GetXFinal() + personaje.GetVelocidadX()), 
+										(short)(personaje.GetYFinal() - personaje.GetVelocidadY()), 
 										usandoBandera);
 				
 				case Direccion.ARRIBA_IZQ:
 					return EsPosibleMover(
-										(short)(kibus.X - kibus.GetVelocidadX()), 
-										(short)(kibus.Y - kibus.GetVelocidadY()),
-	                   					(short)(kibus.GetXFinal() - kibus.GetVelocidadX()), 
-										(short)(kibus.GetYFinal() - kibus.GetVelocidadY()), 
+										(short)(personaje.X - personaje.GetVelocidadX()), 
+										(short)(personaje.Y - personaje.GetVelocidadY()),
+	                   					(short)(personaje.GetXFinal() - personaje.GetVelocidadX()), 
+										(short)(personaje.GetYFinal() - personaje.GetVelocidadY()), 
 										usandoBandera);
 				
 				case Direccion.DERECHA:
 					return EsPosibleMover(
-										(short)(kibus.X + kibus.GetVelocidadX()), 
-										kibus.Y,
-	                   					(short)(kibus.GetXFinal() + kibus.GetVelocidadX()), 
-										kibus.GetYFinal(), 
+										(short)(personaje.X + personaje.GetVelocidadX()), 
+										personaje.Y,
+	                   					(short)(personaje.GetXFinal() + personaje.GetVelocidadX()), 
+										personaje.GetYFinal(), 
 										usandoBandera);
 				
 				case Direccion.IZQUIERDA:
 					return EsPosibleMover(
-										(short)(kibus.X - kibus.GetVelocidadX()), 
-										kibus.Y,
-	                   					(short)(kibus.GetXFinal() - kibus.GetVelocidadX()), 
-										kibus.GetYFinal(),
+										(short)(personaje.X - personaje.GetVelocidadX()), 
+										personaje.Y,
+	                   					(short)(personaje.GetXFinal() - personaje.GetVelocidadX()), 
+										personaje.GetYFinal(),
 										usandoBandera);
 				
 				default:
