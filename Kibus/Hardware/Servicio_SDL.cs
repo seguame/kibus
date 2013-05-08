@@ -323,6 +323,12 @@ namespace Esedelish
 			SdlGfx.boxRGBA(pantalla, 0, 0, Ancho, Alto, r, g, b, 0xFF); 
 		}
 		
+		public static void DibujarCuadroColor(Sprite sprite, byte r, byte g, byte b)
+		{
+			SdlGfx.boxRGBA(pantalla, sprite.X, sprite.Y, sprite.Ancho, sprite.Alto, r, g, b, 0xFF); 
+		}
+		
+		
 		public static void DibujarFondo()
 		{
 			Sprite pasto = new Sprite("Assets/GFX/pasto.jpg");

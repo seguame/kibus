@@ -96,6 +96,18 @@ namespace Graficos
 			Y = 0;
 		}
 		
+		protected Personaje(string rutaImg) : base (rutaImg)
+		{
+			X = 0;
+			Y = 0;
+		}
+		
+		protected Personaje(string rutaImg, short x, short y) : base (rutaImg)
+		{
+			X = x;
+			Y = y;
+		}
+		
 		public void Mover(Direccion direccion)
 		{
 			ultimoMovimiento = direccion;
