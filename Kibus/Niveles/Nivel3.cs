@@ -73,14 +73,56 @@ namespace Niveles
 			PosicionarKibus();
 			
 			CalentarCeldas();
+			
+			BuscarCasa();
 		}
 		
 		private void BuscarCasa()
 		{
-			foreach(Abeja abejini in abejinis)
+			Random random = new Random(System.DateTime.Now.Millisecond);
+			Direccion direccion;
+			
+			//Inicializar abejas
+			for(int i = 0; i < 5; i++)
 			{
-				
+				abejinis[i] = new Abeja(kibus.X, kibus.Y);
 			}
+			
+			do
+			{
+				//Mover a las abejas donde está kibus
+				foreach(Abeja abejini in abejinis)
+				{
+					abejini.Mover(kibus.X, kibus.Y);
+				}
+				
+				DibujarTodo();
+				Hardware.EscribirTexto("Buscando Casa", 641, 10); 
+				Hardware.RefrescarPantalla();
+				
+				//Que cada una intente moverse 5 veces para encontrar lo mas calido
+				foreach(Abeja abejini in abejinis)
+				{
+					
+					for(int i = 0; i < 5; i++)
+					{
+						direccion = (Direccion)random.Next(0, (int)Direccion.MISINGNO);
+						
+						while(!IntentarMover(abejini, direccion, false))
+						{
+							direccion = (Direccion)random.Next(0, (int)Direccion.MISINGNO);
+						}
+						
+						abejini.Mover(direccion);
+						DibujarTodo();
+						Hardware.RefrescarPantalla();
+						Hardware.Pausar(100);
+					}
+				}
+				
+				if(kibus.OnToyX == casa.OnToyX && kibus.OnToyY == casa.OnToyY)
+					break;
+			}while(true);
 		}
 		
 		private void CalentarCeldas()
@@ -132,6 +174,26 @@ namespace Niveles
 			
 			if (y + 1 < 20) {
 				if (temperatura[x][y + 1] == 0) Amplitud (x, y + 1, temperatura[x][y]);
+			}
+		}
+		
+		protected override void DibujarTodo()
+		{
+			Hardware.DibujarFondo();
+			
+			DibujarObstaculos();
+			kibus.Dibujar();
+			DibujarAbejinis();
+			casa.Dibujar();
+			
+			Hardware.RefrescarPantalla();
+		}
+		
+		private void DibujarAbejinis()
+		{
+			foreach(Abeja abejini in abejinis)
+			{
+				abejini.Dibujar();
 			}
 		}
 	}
