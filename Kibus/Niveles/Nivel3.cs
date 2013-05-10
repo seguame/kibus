@@ -116,7 +116,7 @@ namespace Niveles
 						abejini.Mover(direccion);
 						DibujarTodo();
 						Hardware.RefrescarPantalla();
-						Hardware.Pausar(100);
+						Hardware.Pausar(10);
 					}
 				}
 				
@@ -134,7 +134,7 @@ namespace Niveles
 				temperatura[i] = new int[20];
 			}
 			
-			temperatura[this.casa.OnToyX][ this.casa.OnToyY] = 255;
+			temperatura[this.casa.OnToyX][ this.casa.OnToyY] = 300;
 			
 			Amplitud(this.casa.OnToyX, this.casa.OnToyY + 1, temperatura[this.casa.OnToyX][this.casa.OnToyY]);
 			
@@ -146,7 +146,8 @@ namespace Niveles
 					/*Sprite sprite = new Sprite("Assets/GFX/32.png");
 					sprite.Mover((short)(i * sprite.Ancho),(short) (j * sprite.Alto));
 					Hardware.DibujarCuadroColor(sprite, (byte) temperatura[i][j], 0, 0);
-					Hardware.RefrescarPantalla();*/
+					Hardware.RefrescarPantalla();
+					Hardware.Pausar(20);*/
 					Console.Write("{0}, ", temperatura[i][j]);
 				}
 				Console.WriteLine("");
@@ -157,7 +158,6 @@ namespace Niveles
 		{
 			if (mapa [x][y] == -1) return;
 			temperatura[x][y] = tempActual - 1;
-			//mapa[x][y] = 1;
 			
 			if (x > 0) 
 			{
@@ -198,4 +198,3 @@ namespace Niveles
 		}
 	}
 }
-

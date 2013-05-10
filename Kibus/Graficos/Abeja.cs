@@ -30,9 +30,45 @@ namespace Graficos
 		private Queue<Direccion> propagacion;
 		private Stack<Direccion> retropropagacion;
 		
-		public Abeja (short x, short y) : base ("Assets/GFX/Bee.png", x ,y){}
-		
-		
+		public Abeja (short x, short y) : base ("Assets/GFX/Bee.png", x ,y)
+		{
+			retropropagacion = new Stack<Direccion>();
+		}
+
+		public void Mover(Direccion direccion, int temperatura)
+		{
+			//Reiniciar la cola de movimientos local que se puede copiar
+			if(propagacion.Count != 0)
+			{
+				propagacion.Clear();
+			}
+
+			base.Mover(direccion);
+			retropropagacion.Push(direccion);
+			TemperaturaAlcanzada = temperatura;
+		}
+
+		public int TemperaturaAlcanzada
+		{
+			get;
+			private set;
+		}
+
+
+		public Queue<Direccion> CopiarTrayectoria()
+		{
+			if(propagacion == null)
+			{
+				propagacion = new Queue<Direccion>();
+			}
+
+			while(retropropagacion.Count != 0)
+			{
+				propagacion.Enqueue(retropropagacion.Pop());
+			}
+
+			return propagacion;
+		}
 	}
 }
 
