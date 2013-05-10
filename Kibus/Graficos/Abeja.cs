@@ -30,7 +30,7 @@ namespace Graficos
 		private Queue<Direccion> propagacion;
 		private Stack<Direccion> retropropagacion;
 		
-		public Abeja (short x, short y) : base ("Assets/GFX/bee.png", x ,y){}
+		public Abeja (short x, short y) : base ("Assets/GFX/Bee.png", x ,y){}
 		
 		
 	}
