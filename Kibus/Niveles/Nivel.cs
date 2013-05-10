@@ -65,7 +65,7 @@ namespace Niveles
 			return false;
 		}
 		
-		protected void DibujarTodo()
+		protected virtual void DibujarTodo()
 		{
 			Hardware.DibujarFondo();
 			
