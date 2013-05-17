@@ -31,13 +31,15 @@ namespace Niveles
 {
 	internal class Nivel3 : Nivel
 	{
+		private const int ABEJAS = 5;
+		private const int RITUALES = 5;
 		private Abeja[] abejinis;
 		private int[][] temperatura;
 		private int[][] mapa;
 		
 		public Nivel3 ()
 		{
-			abejinis = new Abeja[5];
+			abejinis = new Abeja[ABEJAS];
 			new CargadorMapas().SeleccionarArchivo();
 		}
 		
@@ -81,12 +83,16 @@ namespace Niveles
 		{
 			Random random = new Random(System.DateTime.Now.Millisecond);
 			Direccion direccion;
+			Abeja elegible;
 			
 			//Inicializar abejas
-			for(int i = 0; i < 5; i++)
+			for(int i = 0; i < ABEJAS; i++)
 			{
 				abejinis[i] = new Abeja(kibus.X, kibus.Y);
 			}
+			
+			elegible = new Abeja(0,0);
+			elegible.Visible = false;
 			
 			do
 			{
@@ -101,10 +107,9 @@ namespace Niveles
 				Hardware.RefrescarPantalla();
 				
 				//Que cada una intente moverse 5 veces para encontrar lo mas calido
-				foreach(Abeja abejini in abejinis)
+				for(int i = 0; i < RITUALES; i++)
 				{
-					
-					for(int i = 0; i < 5; i++)
+					foreach(Abeja abejini in abejinis)
 					{
 						direccion = (Direccion)random.Next(0, (int)Direccion.MISINGNO);
 						
@@ -113,15 +118,43 @@ namespace Niveles
 							direccion = (Direccion)random.Next(0, (int)Direccion.MISINGNO);
 						}
 						
-						abejini.Mover(direccion);
-						DibujarTodo();
-						Hardware.RefrescarPantalla();
-						Hardware.Pausar(10);
+						//TODO: elegir la temperatura 
+						abejini.Mover(direccion, temperatura[abejini.OnToyX][abejini.OnToyY]);
+					}
+					DibujarTodo();
+					Hardware.RefrescarPantalla();
+					Hardware.Pausar(10);
+				}
+				
+				//Iterar entre todas las abejas y elegir la que alcanzó mayor temperatura.
+				foreach(Abeja abejini in abejinis)
+				{
+					if(abejini.TemperaturaAlcanzada > elegible.TemperaturaAlcanzada)
+					{
+						elegible = abejini;
 					}
 				}
 				
+				elegible.GenerarTrayectoria();
+				
+				while(elegible.Propagacion.Count != 0)
+				{
+					kibus.Mover(elegible.Propagacion.Dequeue());
+					DibujarTodo();
+					Hardware.RefrescarPantalla();
+					Hardware.Pausar(50);
+				}
+				
+				//reiniciar recorridos
+				foreach(Abeja abejini in abejinis)
+				{
+					abejini.reiniciarRetropropagacion();
+				}
+				
+				
 				if(kibus.OnToyX == casa.OnToyX && kibus.OnToyY == casa.OnToyY)
 					break;
+				Console.WriteLine("Repetir");
 			}while(true);
 		}
 		
