@@ -32,18 +32,16 @@ namespace Graficos
 			private set;
 			get;
 		}
-		private Stack<Direccion> retropropagacion;
 		
 		public Abeja (short x, short y) : base ("Assets/GFX/Bee.png", x ,y)
 		{
-			retropropagacion = new Stack<Direccion>();
 			Propagacion = new Queue<Direccion>();
 		}
 
 		public void Mover(Direccion direccion, int temperatura)
 		{
 			base.Mover(direccion);
-			retropropagacion.Push(direccion);
+			Propagacion.Enqueue(direccion);
 			TemperaturaAlcanzada = temperatura;
 		}
 
@@ -52,23 +50,10 @@ namespace Graficos
 			get;
 			private set;
 		}
-
-
-		public void GenerarTrayectoria()
-		{
-			//Reiniciar la cola de movimientos local que se puede copiar
-			Propagacion.Clear();
-			
-			while(retropropagacion.Count != 0)
-			{
-				Propagacion.Enqueue(retropropagacion.Pop());
-			}
-			Console.WriteLine("{0}", Propagacion.Count);
-		}
 		
-		public void reiniciarRetropropagacion()
+		public void reiniciarPropagacion()
 		{
-			retropropagacion.Clear();
+			Propagacion.Clear();
 		}
 	}
 }

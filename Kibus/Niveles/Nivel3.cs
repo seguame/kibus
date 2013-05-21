@@ -84,6 +84,7 @@ namespace Niveles
 			Random random = new Random(System.DateTime.Now.Millisecond);
 			Direccion direccion;
 			Abeja elegible;
+			bool casaEncontrada = false;
 			
 			//Inicializar abejas
 			for(int i = 0; i < ABEJAS; i++)
@@ -135,7 +136,6 @@ namespace Niveles
 					}
 				}
 				
-				elegible.GenerarTrayectoria();
 				
 				while(elegible.Propagacion.Count != 0)
 				{
@@ -143,19 +143,20 @@ namespace Niveles
 					DibujarTodo();
 					Hardware.RefrescarPantalla();
 					Hardware.Pausar(50);
+					
+					if(kibus.OnToyX == casa.OnToyX && kibus.OnToyY == casa.OnToyY)
+					{
+						casaEncontrada = true;
+						break;
+					}
 				}
 				
 				//reiniciar recorridos
 				foreach(Abeja abejini in abejinis)
 				{
-					abejini.reiniciarRetropropagacion();
+					abejini.reiniciarPropagacion();
 				}
-				
-				
-				if(kibus.OnToyX == casa.OnToyX && kibus.OnToyY == casa.OnToyY)
-					break;
-				Console.WriteLine("Repetir");
-			}while(true);
+			}while(!casaEncontrada);
 		}
 		
 		private void CalentarCeldas()
