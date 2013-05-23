@@ -36,6 +36,8 @@ namespace Niveles
 		private Abeja[] abejinis;
 		private int[][] temperatura;
 		private int[][] mapa;
+		private List<Temperatura> temperaturas;
+		private bool colorearTemperatura;
 		
 		public Nivel3 ()
 		{
@@ -97,6 +99,8 @@ namespace Niveles
 			
 			do
 			{
+				colorearTemperatura = Hardware.TeclaPulsada(Sdl.SDLK_t);
+
 				//Mover a las abejas donde está kibus
 				foreach(Abeja abejini in abejinis)
 				{
@@ -124,7 +128,7 @@ namespace Niveles
 					}
 					DibujarTodo();
 					Hardware.RefrescarPantalla();
-					Hardware.Pausar(10);
+					Hardware.Pausar(40);
 				}
 				
 				//Iterar entre todas las abejas y elegir la que alcanzó mayor temperatura.
@@ -140,9 +144,10 @@ namespace Niveles
 				while(elegible.Propagacion.Count != 0)
 				{
 					kibus.Mover(elegible.Propagacion.Dequeue());
+
 					DibujarTodo();
 					Hardware.RefrescarPantalla();
-					Hardware.Pausar(50);
+					Hardware.Pausar(60);
 					
 					if(kibus.OnToyX == casa.OnToyX && kibus.OnToyY == casa.OnToyY)
 					{
@@ -150,7 +155,9 @@ namespace Niveles
 						break;
 					}
 				}
-				
+
+				//temperaturas[kibus.OnToyX * kibus.OnToyY].Calor = 500; 
+				//temperaturas[kibus.OnToyX * kibus.OnToyY].ActualizarTemperatura();
 				//reiniciar recorridos
 				foreach(Abeja abejini in abejinis)
 				{
@@ -162,37 +169,41 @@ namespace Niveles
 		private void CalentarCeldas()
 		{
 			temperatura = new int[20][];
-				
+			
 			for(int i = 0; i < 20; i++)
 			{
 				temperatura[i] = new int[20];
 			}
 			
 			temperatura[this.casa.OnToyX][ this.casa.OnToyY] = 300;
-			
-			Amplitud(this.casa.OnToyX, this.casa.OnToyY + 1, temperatura[this.casa.OnToyX][this.casa.OnToyY]);
-			
-			
+
+			if(this.casa.OnToyY + 1 < 20)
+				Amplitud(this.casa.OnToyX, this.casa.OnToyY + 1, temperatura[this.casa.OnToyX][this.casa.OnToyY]);
+			if(this.casa.OnToyY - 1 >= 0)
+				Amplitud(this.casa.OnToyX, this.casa.OnToyY - 1, temperatura[this.casa.OnToyX][this.casa.OnToyY]);
+			if(this.casa.OnToyX + 1 < 20)
+				Amplitud(this.casa.OnToyX + 1, this.casa.OnToyY, temperatura[this.casa.OnToyX][this.casa.OnToyY]);
+			if(this.casa.OnToyX - 1 >= 0)
+				Amplitud(this.casa.OnToyX - 1, this.casa.OnToyY, temperatura[this.casa.OnToyX][this.casa.OnToyY]);
+
+
+			temperaturas = new List<Temperatura>();
+
 			for(int i = 0; i < 20; i++)
 			{
 				for(int j = 0; j < 20; j++)
 				{
-					/*Sprite sprite = new Sprite("Assets/GFX/32.png");
-					sprite.Mover((short)(i * sprite.Ancho),(short) (j * sprite.Alto));
-					Hardware.DibujarCuadroColor(sprite, (byte) temperatura[i][j], 0, 0);
-					Hardware.RefrescarPantalla();
-					Hardware.Pausar(20);*/
-					Console.Write("{0}, ", temperatura[i][j]);
+					temperaturas.Add(new Temperatura(i, j, temperatura[i][j]));
 				}
-				Console.WriteLine("");
 			}
 		}
 		
 		private void Amplitud (int x, int y, int tempActual)
 		{
+			if(tempActual < 0) tempActual = 1;
 			if (mapa [x][y] == -1) return;
 			temperatura[x][y] = tempActual - 1;
-			
+
 			if (x > 0) 
 			{
 				if (temperatura[x - 1][y] == 0) Amplitud (x - 1, y, temperatura[x][y]);
@@ -216,6 +227,7 @@ namespace Niveles
 			Hardware.DibujarFondo();
 			
 			DibujarObstaculos();
+			if(colorearTemperatura) Hardware.DibujarTemperaturas(temperaturas);
 			kibus.Dibujar();
 			DibujarAbejinis();
 			casa.Dibujar();
