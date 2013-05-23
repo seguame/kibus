@@ -23,6 +23,7 @@ using System;
 using Tao.Sdl;
 
 using Graficos;
+using System.Collections.Generic;
 
 namespace Esedelish
 {
@@ -322,12 +323,7 @@ namespace Esedelish
 		{
 			SdlGfx.boxRGBA(pantalla, 0, 0, Ancho, Alto, r, g, b, 0xFF); 
 		}
-		
-		public static void DibujarCuadroColor(Sprite sprite, byte r, byte g, byte b)
-		{
-			SdlGfx.boxRGBA(pantalla, sprite.X, sprite.Y, sprite.Ancho, sprite.Alto, r, g, b, 0xFF); 
-		}
-		
+
 		
 		public static void DibujarFondo()
 		{
@@ -340,6 +336,16 @@ namespace Esedelish
 					pasto.Mover(i * pasto.Ancho, j * pasto.Alto);
 					pasto.Dibujar();
 				}
+			}
+		}
+
+
+
+		public static void DibujarTemperaturas(List<Temperatura> temperaturas)
+		{
+			foreach(Temperatura temperatura in temperaturas)
+			{
+				Sdl.SDL_FillRect(pantalla,ref  temperatura.Rectangulo, temperatura.RGB);
 			}
 		}
 		
