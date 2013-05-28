@@ -45,6 +45,10 @@ namespace Niveles
 					nivel = new Nivel3();
 					break;
 				
+				case Menu.Opcion.PRACTICA_4:
+					nivel = new Nivel4();
+					break;
+				
 				case Menu.Opcion.CREAR_NIVEL:
 					nivel = new EditorMapas();
 					break;
