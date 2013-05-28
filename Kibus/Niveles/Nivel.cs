@@ -30,6 +30,7 @@ namespace Niveles
 {
 	internal abstract class Nivel
 	{
+		protected bool requierePosicionarCasa = true;
 		protected Sprite[,] sprites;
 		protected Sprite casa;
 		protected Personaje kibus;
@@ -105,7 +106,8 @@ namespace Niveles
 			kibus  = new Personaje();
 			bool puesto;
 			
-			if(this.casa == null)
+			//if(this.casa == null)
+			if(requierePosicionarCasa)
 			{
 				Sprite casa = new Sprite("Assets/GFX/casini.png");
 				puesto = false;
