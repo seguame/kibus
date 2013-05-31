@@ -129,13 +129,13 @@ namespace Niveles
 					}
 					DibujarTodo();
 					Hardware.RefrescarPantalla();
-					Hardware.Pausar(40);
+					Hardware.Pausar(1);
 				}
 				
 				//Iterar entre todas las abejas y elegir la que alcanzó mayor temperatura.
 				foreach(Abeja abejini in abejinis)
 				{
-					if(abejini.TemperaturaAlcanzada > elegible.TemperaturaAlcanzada)
+					if(abejini.TemperaturaAlcanzada >= elegible.TemperaturaAlcanzada)
 					{
 						elegible = abejini;
 					}
@@ -148,7 +148,7 @@ namespace Niveles
 
 					DibujarTodo();
 					Hardware.RefrescarPantalla();
-					Hardware.Pausar(60);
+					Hardware.Pausar(1);
 					
 					if(kibus.OnToyX == casa.OnToyX && kibus.OnToyY == casa.OnToyY)
 					{
@@ -156,9 +156,10 @@ namespace Niveles
 						break;
 					}
 				}
-
-				//temperaturas[kibus.OnToyX * kibus.OnToyY].Calor = 500; 
-				//temperaturas[kibus.OnToyX * kibus.OnToyY].ActualizarTemperatura();
+				
+				temperatura[kibus.OnToyX][kibus.OnToyY] -= 30;
+				temperaturas[kibus.OnToyY + kibus.OnToyX * 20].Calor -= 30; 
+				temperaturas[kibus.OnToyY + kibus.OnToyX * 20].ActualizarTemperatura();
 				//reiniciar recorridos
 				foreach(Abeja abejini in abejinis)
 				{
@@ -176,16 +177,18 @@ namespace Niveles
 				temperatura[i] = new int[20];
 			}
 			
-			temperatura[this.casa.OnToyX][ this.casa.OnToyY] = 300;
-
-			if(this.casa.OnToyY + 1 < 20)
+			temperatura[this.casa.OnToyX][ this.casa.OnToyY] = 500;
+			
+			calentarEnOnda(this.casa.OnToyX, this.casa.OnToyY, temperatura[this.casa.OnToyX][ this.casa.OnToyY]);
+			
+			/*if(this.casa.OnToyY + 1 < 20)
 				Amplitud(this.casa.OnToyX, this.casa.OnToyY + 1, temperatura[this.casa.OnToyX][this.casa.OnToyY]);
 			if(this.casa.OnToyY - 1 >= 0)
 				Amplitud(this.casa.OnToyX, this.casa.OnToyY - 1, temperatura[this.casa.OnToyX][this.casa.OnToyY]);
 			if(this.casa.OnToyX + 1 < 20)
 				Amplitud(this.casa.OnToyX + 1, this.casa.OnToyY, temperatura[this.casa.OnToyX][this.casa.OnToyY]);
 			if(this.casa.OnToyX - 1 >= 0)
-				Amplitud(this.casa.OnToyX - 1, this.casa.OnToyY, temperatura[this.casa.OnToyX][this.casa.OnToyY]);
+				Amplitud(this.casa.OnToyX - 1, this.casa.OnToyY, temperatura[this.casa.OnToyX][this.casa.OnToyY]);*/
 
 
 			temperaturas = new List<Temperatura>();
@@ -243,5 +246,129 @@ namespace Niveles
 				abejini.Dibujar();
 			}
 		}
+		
+		private void calentarEnOnda(int x, int y, int temperatura)
+		{
+			int x1;
+			int x2;
+			int y1;
+			int y2;
+			
+			x1 = x2 = x;
+			y1 = y2 = y;
+			
+			do
+			{
+				x1 = (x1 > 0) ? x1 - 1 : 0 ; // Se reduce x si no sale de matriz
+				y1 = (y1 > 0) ? y1 - 1 : 0 ; // Se reduce y si no sale de matriz
+                x2 = (x2 < 20) ? x2 + 1 : 20 ; // Se aumenta x si no sale de matriz
+                y2 = (y2 < 20) ? y2 + 1 : 20 ; // Se aumenta y si no sale de matriz
+				
+				if(x1 >= 0)
+				{
+                	rellenaX(temperatura, y1, y2, x1);
+                }
+				
+                if(x2 != 20)
+				{
+                	rellenaX(temperatura, y1, y2, x2);
+                }
+				
+                if(y1 >= 0)
+				{
+                	rellenaY(temperatura, x1, x2, y1);
+                }
+				
+                if(y2 != 20)
+				{
+                	rellenaY(temperatura, x1, x2, y2);
+                }
+				
+                temperatura -= 10;
+				
+			}while(x1 > 0 || x2 < 20 || y1 > 0 || y2 < 20);
+			
+		}
+		
+		private void rellenaX(int tempActual, int y1, int y2, int x)
+		{
+			while(y1 <= y2 && y2 != 20)
+			{
+            	if(mapa [x][y1] != -1 && temperatura[x][y1] < tempActual)
+				{
+                	temperatura[x][y1] = tempActual;
+                }
+                y1++;
+            }
+		}
+		
+		private void rellenaY(int tempActual, int x1, int x2, int y)
+		{
+			while(x1 < x2 )
+			{
+            	if(mapa [x1][y] != -1 && temperatura[x1][y] < tempActual)
+				{
+                	temperatura[x1][y] = tempActual;
+                }
+                x1++;
+            }
+		}
+		
+		/*public void fillExpand(int x, int y){
+                System.out.println("Llenando en expansión");
+                int x1, x2, y1, y2, calor = 100;
+                x1 = x2 = x;
+                y1 = y2 = y;
+                //boolean fill = false;
+                do{
+                        x1 = (x1 > 0) ? x1 - 1: 0 ; // Se reduce x si no sale de matriz
+                        x2 = (x2 < X-1) ? x2 + 1: X-1 ; // Se aumenta x si no sale de matriz
+                        y1 = (y1 > 0) ? y1 - 1: 0 ; // Se reduce y si no sale de matriz
+                        y2 = (y2 < Y-1) ? y2 + 1: Y-1 ; // Se aumenta y si no sale de matriz
+                        System.out.println("X: "+x+" x1: "+x1+" x2: "+x2);
+                        System.out.println("Y: "+y+" y1: "+y1+" y2: "+y2);
+                        if(x1 >= 0){
+                                System.out.println("Llenado 1");
+                                fillX(calor, y1, y2, x1);
+                        }
+                        if(x2 != X){
+                                System.out.println("Llenado 2");
+                                fillX(calor, y1, y2, x2);
+                        }
+                        if(y1 >= 0){
+                                System.out.println("Llenado 3");
+                                fillY(calor, x1, x2, y1);
+                        }
+                        if(y2 != Y){
+                                System.out.println("Llenado 4");
+                                fillY(calor, x1, x2, y2);
+                        }
+                        calor-=1;
+                        /*for(int i = 0; i < Y; i++){
+                                for(int j = 0; j < X; j++){
+                                        System.out.print(MAT[j][i]+" ");
+                                }
+                                System.out.println();
+                        }*/
+                /*}while(x1 > 0 || x2 < X-1 || y1 > 0 || y2 < Y-1);
+        }
+
+        public void fillX(int value, int y1, int y2, int x){
+                while(y1 <= y2){
+                        if(canMoveTo(x, y1) && MAT[x][y1] < value){
+                                MAT[x][y1] = value;
+                        }
+                        y1++;
+                }
+        }
+        
+        public void fillY(int value, int x1, int x2, int y){
+                while(x1 <= x2){
+                        if(canMoveTo(x1, y) && MAT[x1][y] < value){
+                                MAT[x1][y] = value;
+                        }
+                        x1++;
+                }
+        }*/
 	}
 }
