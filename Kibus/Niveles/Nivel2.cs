@@ -51,6 +51,7 @@ namespace Niveles
 					{
 						Console.WriteLine("Casa en {0},{1}", i, j);
 						this.casa = sprites[i,j] = new Sprite("Assets/GFX/casini.png");
+						requierePosicionarCasa = false;
 					}
 					else if(mapa[i][j] != 0)
 					{
