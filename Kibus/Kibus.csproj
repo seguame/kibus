@@ -61,6 +61,7 @@
     <Compile Include="Graficos\Personaje.cs" />
     <Compile Include="Graficos\Temperatura.cs" />
     <Compile Include="Niveles\Nivel4.cs" />
+    <Compile Include="Algoritmos\Estructuras\Nodo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -243,6 +244,7 @@
     <Folder Include="Assets\" />
     <Folder Include="Algoritmos\" />
     <Folder Include="Mapas\" />
+    <Folder Include="Algoritmos\Estructuras\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapas\murallas.txt">
