@@ -140,7 +140,7 @@ namespace Niveles
 				
 				destino.NodoConexion = arregloNodosTotal[actual];
 				
-				//TODO:quitar el throws
+				//Verificacion chafa a falta de la instruccion Assert.
 				if(arregloNodosTotal[anterior] == null)
 				{
 					throw new Exception("Esto no debe pasar");
