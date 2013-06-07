@@ -23,17 +23,35 @@ using Graficos;
 using Utileria;
 using Esedelish;
 using Tao.Sdl;
+using Algoritmos.Estructuras;
 
 namespace Niveles
 {
 	internal class Nivel4 : Nivel
 	{
+		private int minimo = Int32.MaxValue;
+		private int maximo = Int32.MinValue;
+		private int mediaHistorica;
+		private int mediaHistoricaAnterior;
+		private int castigo;
+		//private ArregloNodosMapa nodosMapa;
+		private Nodo[] arregloNodosTotal;
+		
+		private Nodo[] nodosVisitados;
+		private Conexion[] conexionesVisitadas;
+		
+		private bool pimeraVuelta = true;
+		
+		
 		private int[][] mapa;
 		bool modoGrafico;
 		
 		public Nivel4 ()
 		{
 			new CargadorMapas().SeleccionarArchivo();
+			
+			//nodosMapa = new ArregloNodosMapa();
+			arregloNodosTotal = new Nodo[20*20];
 		}
 		
 		public override void Iniciar()
@@ -54,7 +72,7 @@ namespace Niveles
 					}
 					else if(mapa[i][j] != 0)
 					{
-						Console.WriteLine("{2} en {0},{1}", i, j, mapa[i][j]);
+						//Console.WriteLine("{2} en {0},{1}", i, j, mapa[i][j]);
 						sprites[i,j] = new Sprite("Assets/GFX/"+mapa[i][j]+".png");
 						mapa[i][j] = -1;
 					}
@@ -68,11 +86,21 @@ namespace Niveles
 			
 			PosicionarKibus();
 			
+			//Setear los 2 nodos iniciales, origen y destino
+			arregloNodosTotal[kibus.OnToyY + kibus.OnToyX * 20] = new Nodo();
+			arregloNodosTotal[casa.OnToyY + casa.OnToyX * 20] = new Nodo();
+			
+			//El entrenamiento puesun
 			ConfeccionarCamino();
 		}
 		
 		private void ConfeccionarCamino()
 		{
+			//Volver a iniciar los valores;
+			nodosVisitados = new Nodo[20*20];
+			conexionesVisitadas = new Conexion[20*20];
+			Nodo.CantidadNodosVisitados = 0;
+			
 			Direccion direccion;
 			Random random = new Random(System.DateTime.Now.Millisecond);
 			
@@ -97,11 +125,36 @@ namespace Niveles
 					
 				}while(!IntentarMover(kibus, direccion, false));
 				
+				int anterior = kibus.OnToyY + kibus.OnToyX * 20;
+				
+				Conexion destino = new Conexion();
+				
 				kibus.Mover(direccion);
+				
+				int actual = kibus.OnToyY + kibus.OnToyX * 20;
+				
+				if(arregloNodosTotal[actual] == null)
+				{
+					arregloNodosTotal[actual] = new Nodo();
+				}
+				
+				destino.NodoConexion = arregloNodosTotal[actual];
+				
+				//TODO:quitar el throws
+				if(arregloNodosTotal[anterior] == null)
+				{
+					throw new Exception("Esto no debe pasar");
+					//arregloNodosTotal[anterior] = new Nodo();
+				}
+				
+				
+				arregloNodosTotal[anterior].conexion = destino;
+				
+				
 				
 				if(modoGrafico)
 				{
-					Hardware.Pausar(25);
+					Hardware.Pausar(2);
 				}
 				else
 				{
@@ -111,6 +164,23 @@ namespace Niveles
 			
 			Console.WriteLine("CASA: {0},{1}", casa.OnToyX,casa.OnToyY);
 			Console.WriteLine("KIBU: {0},{1}", kibus.OnToyX,kibus.OnToyY);
+			
+			Console.WriteLine("Nodos visitados: {0}", Nodo.CantidadNodosVisitados);
+			
+			
+			//Seteo de los valores minimos y máximos
+			if(Nodo.CantidadNodosVisitados > maximo) maximo = Nodo.CantidadNodosVisitados;
+			if(Nodo.CantidadNodosVisitados < minimo) minimo = Nodo.CantidadNodosVisitados;
+			
+			mediaHistorica = (maximo + minimo)/2;
+			
+			if(pimeraVuelta)
+			{
+				mediaHistoricaAnterior = mediaHistorica;
+				pimeraVuelta = false;
+			}
+			
+			castigo = Math.Abs(mediaHistorica - mediaHistoricaAnterior);
 		}
 	}
 }
