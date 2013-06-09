@@ -19,6 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.Text;
 
 namespace Algoritmos.Estructuras
 {
@@ -54,23 +55,75 @@ namespace Algoritmos.Estructuras
 	{
 		public static int CantidadNodosVisitados = 0;
 		
-		public Conexion conexion
-		{
-			set;
-			get;
-		}
+		public Conexion[] conexion;
+		public int numeroDeNodo;
 		
 		public Nodo()
 		{
-			CantidadNodosVisitados++;
+			conexion = new Conexion[8];
+			numeroDeNodo = ++CantidadNodosVisitados;
+		}
+		
+		public override string ToString()
+		{
+			StringBuilder salida = new StringBuilder("");
+			
+			switch(numeroDeNodo)
+			{
+			case 1:
+				salida.AppendLine("Nodo CASA");
+				break;
+			case 2:
+				salida.AppendLine("Nodo Salida");
+				break;
+			default:
+				salida.AppendLine(string.Format("Nodo {0}",numeroDeNodo));
+				break;
+			}
+			
+			foreach(Conexion cnx in conexion)
+			{
+				//salida.Append("\t");
+				if(cnx == null)
+				{
+					//salida.AppendLine("[Conexion: NodoConexion = null, Peso = -1]");
+				}
+				else
+				{
+					salida.AppendLine("\t"+cnx.ToString());
+				}
+			}
+			
+			return salida.ToString();
 		}
 	}
 	
 	
 	public class Conexion
 	{
+		public static int conexionesUsadas = 0;
 		public Nodo NodoConexion {get; set;}
 		public int Peso {get; set;}
+		
+		public Conexion()
+		{
+			Peso = (Int32.MaxValue / 2);
+			conexionesUsadas++;
+		}
+		
+		public override string ToString ()
+		{
+			switch(NodoConexion.numeroDeNodo)
+			{
+			case 1:
+				return string.Format ("[Conexion: NodoConexion = CASA\t, Peso = {0}]", Peso);
+			case 2:
+				return string.Format ("[Conexion: NodoConexion = SALIDA, Peso = {0}]", Peso);
+			default:
+				return string.Format ("[Conexion: NodoConexion = {0}\t, Peso = {1}]", NodoConexion.numeroDeNodo, Peso);
+			}
+			
+		}
 	}
 }
 
