@@ -20,6 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.Text;
+using Utileria;
 
 namespace Algoritmos.Estructuras
 {
@@ -55,12 +56,14 @@ namespace Algoritmos.Estructuras
 	{
 		public static int CantidadNodosVisitados = 0;
 		
-		public Conexion[] conexion;
+		public Conexion[] conexiones;
 		public int numeroDeNodo;
+		public bool Visitado {get; set;}
 		
 		public Nodo()
 		{
-			conexion = new Conexion[8];
+			Visitado = false;
+			conexiones = new Conexion[8];
 			numeroDeNodo = ++CantidadNodosVisitados;
 		}
 		
@@ -81,20 +84,30 @@ namespace Algoritmos.Estructuras
 				break;
 			}
 			
-			foreach(Conexion cnx in conexion)
+			foreach(Conexion cnx in conexiones)
 			{
-				//salida.Append("\t");
+				salida.Append("\t");
 				if(cnx == null)
 				{
-					//salida.AppendLine("[Conexion: NodoConexion = null, Peso = -1]");
+					salida.AppendLine("[Conexion: NodoConexion = null\t Peso = -1\tVisitado = ???]");
 				}
 				else
 				{
-					salida.AppendLine("\t"+cnx.ToString());
+					salida.AppendLine(cnx.ToString());
 				}
 			}
 			
 			return salida.ToString();
+		}
+		
+		public override bool Equals(object otro)
+		{
+			return ((Nodo)otro).numeroDeNodo == this.numeroDeNodo;
+		}
+		
+		public override int GetHashCode ()
+		{
+			return (numeroDeNodo * numeroDeNodo);
 		}
 	}
 	
@@ -104,6 +117,7 @@ namespace Algoritmos.Estructuras
 		public static int conexionesUsadas = 0;
 		public Nodo NodoConexion {get; set;}
 		public int Peso {get; set;}
+		public Direccion direccionUsada;
 		
 		public Conexion()
 		{
@@ -116,11 +130,11 @@ namespace Algoritmos.Estructuras
 			switch(NodoConexion.numeroDeNodo)
 			{
 			case 1:
-				return string.Format ("[Conexion: NodoConexion = CASA\t, Peso = {0}]", Peso);
+				return string.Format ("[Conexion: NodoConexion = CASA\t Peso = {0}\tVisitado = {1}]", Peso, NodoConexion.Visitado);
 			case 2:
-				return string.Format ("[Conexion: NodoConexion = SALIDA, Peso = {0}]", Peso);
+				return string.Format ("[Conexion: NodoConexion = SALIDA Peso = {0}\tVisitado = {1}]", Peso, NodoConexion.Visitado);
 			default:
-				return string.Format ("[Conexion: NodoConexion = {0}\t, Peso = {1}]", NodoConexion.numeroDeNodo, Peso);
+				return string.Format ("[Conexion: NodoConexion = {0}\t Peso = {1}\tVisitado = {2}]", NodoConexion.numeroDeNodo, Peso, NodoConexion.Visitado);
 			}
 			
 		}
