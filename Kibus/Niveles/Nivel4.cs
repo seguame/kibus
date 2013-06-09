@@ -24,6 +24,8 @@ using Utileria;
 using Esedelish;
 using Tao.Sdl;
 using Algoritmos.Estructuras;
+using System.Collections.Generic;
+using Algoritmos;
 
 namespace Niveles
 {
@@ -36,15 +38,20 @@ namespace Niveles
 		
 		private Nodo[] nodosVisitados;
 		
+		private Sdl.SDL_Rect rectanguloOrigen;
 		
 		private int[][] mapa;
 		bool modoGrafico;
+		
+		ComparadorNodos comparadorDeNodos;
 		
 		public Nivel4 ()
 		{
 			new CargadorMapas().SeleccionarArchivo();
 			
 			arregloNodosTotal = new Nodo[20*20];
+			
+			comparadorDeNodos = new ComparadorNodos();
 		}
 		
 		public override void Iniciar()
@@ -81,33 +88,73 @@ namespace Niveles
 			//El entrenamiento puesun
 			ConfeccionarCamino();
 			
-			foreach(Nodo n in arregloNodosTotal)
+			
+			
+			kibus.Mover(rectanguloOrigen);
+			
+			List<Nodo> configuracionDeMapa = new List<Nodo>(arregloNodosTotal);
+			
+			
+			#region activar para ver ordenada la configuracion
+			for(int i = 0; i < configuracionDeMapa.Count;i++) 
 			{
-				if(n != null)
+				if(configuracionDeMapa[i] == null)
+				{
+					configuracionDeMapa[i] = new Nodo();
+					configuracionDeMapa[i].numeroDeNodo = Int32.MaxValue;
+				}
+			}
+			configuracionDeMapa.Sort(comparadorDeNodos);
+			#endregion
+			
+			Console.WriteLine("Inicia el Confeccionado con \"Primero el Mejor\"");
+			
+			Queue<Direccion> movimientosASeguir = Algoritmo.PrimeroElMejor(configuracionDeMapa[1], configuracionDeMapa[0]);
+			
+			Console.WriteLine("Termina el Confeccionado con \"Primero el Mejor\"");
+			
+			while(movimientosASeguir.Count != 0)
+			{
+				kibus.Mover(movimientosASeguir.Dequeue());
+				DibujarTodo();
+				Hardware.EscribirTexto("Llendo a Casa", 641, 10); 
+				Hardware.RefrescarPantalla();
+				Hardware.Pausar(100);
+			}
+			
+			Hardware.EscribirTexto("KIBUS LLEGO! \\O/",(short)(Hardware.Alto/2), (short)(Hardware.Ancho/2));
+			Hardware.RefrescarPantalla();
+			while(!Hardware.TeclaPulsada(Sdl.SDLK_RETURN))
+			{
+				Hardware.Pausar(20);
+			}
+			
+			foreach(Nodo n in configuracionDeMapa)
+			{
+				if(n.numeroDeNodo != Int32.MaxValue)
 					Console.WriteLine(n.ToString());
 			}
+			
 		}
 		
 		private void ConfeccionarCamino()
 		{
-			int repeticiones = 1000;
+			int intentos;
+			int repeticiones = 2000;
 			int castigo;
 			
 			Direccion direccion;
 			Random random = new Random(System.DateTime.Now.Millisecond);
 			
-			Console.WriteLine("CASA: {0},{1}", casa.OnToyX,casa.OnToyY);
-			Console.WriteLine("KIBU: {0},{1}", kibus.OnToyX,kibus.OnToyY);
-			
 			int origen = kibus.OnToyY + kibus.OnToyX * 20;
 			int destino = casa.OnToyY + casa.OnToyX * 20;
 			//Setear los 2 nodos iniciales, origen y destino
 			
-			Sdl.SDL_Rect rectanguloOrigen = kibus.GetRectangulo();
+			rectanguloOrigen = kibus.GetRectangulo();
 			
 			while(repeticiones-->0)
 			{
-				Console.WriteLine(repeticiones);
+				Console.WriteLine("Iteracion #" + (1999 - repeticiones));
 				//Volver a iniciar los valores;
 				nodosVisitados = new Nodo[20*20];
 				Nodo.CantidadNodosVisitados = 0;
@@ -129,47 +176,50 @@ namespace Niveles
 						Hardware.RefrescarPantalla();
 					}
 					
+					int anterior;
+					int actual;
+					intentos = 0;
+					Sdl.SDL_Rect rectTemp = kibus.GetRectangulo();
 					do
 					{
+						kibus.Mover(rectTemp);
+						do
+						{
+							
+							direccion = (Direccion)random.Next(0, (int)Direccion.MISINGNO);
+							intentos++;
+							
+						}while(!IntentarMover(kibus, direccion, false));
 						
-						direccion = (Direccion)random.Next(0, (int)Direccion.MISINGNO);
+						anterior = kibus.OnToyY + kibus.OnToyX * 20;
 						
-					}while(!IntentarMover(kibus, direccion, false));
-					
-					int anterior = kibus.OnToyY + kibus.OnToyX * 20;
-					
-					kibus.Mover(direccion);
-					
-					int actual = kibus.OnToyY + kibus.OnToyX * 20;
-					
-					if(nodosVisitados[actual] == null)
-					{
-						nodosVisitados[actual] = new Nodo();
-					}
+						kibus.Mover(direccion);
+						
+						actual = kibus.OnToyY + kibus.OnToyX * 20;
+						
+						if(nodosVisitados[actual] == null)
+						{
+							nodosVisitados[actual] = new Nodo();
+							break;
+						}
+						
+					}while(intentos < 8);
 					
 					Conexion cnxDestino;
 					
-					if(nodosVisitados[anterior].conexion[(int)direccion] == null)
+					if(nodosVisitados[anterior].conexiones[(int)direccion] == null)
 					{
 						cnxDestino = new Conexion();
+						cnxDestino.direccionUsada = direccion;
 					}
 					else
 					{
-						cnxDestino = nodosVisitados[anterior].conexion[(int)direccion];
+						cnxDestino = nodosVisitados[anterior].conexiones[(int)direccion];
 					}
 					                                     
 					cnxDestino.NodoConexion = nodosVisitados[actual];
 					
-					//Verificacion chafa a falta de la instruccion Assert.
-					if(nodosVisitados[anterior] == null)
-					{
-						throw new Exception("Esto no debe pasar");
-					}
-					
-					
-					nodosVisitados[anterior].conexion[(int)direccion] = cnxDestino;
-					
-					
+					nodosVisitados[anterior].conexiones[(int)direccion] = cnxDestino;
 					
 					if(modoGrafico)
 					{
@@ -192,11 +242,11 @@ namespace Niveles
 				castigo = /*Math.Abs(*/Conexion.conexionesUsadas - mediaHistorica/*)*/;
 				
 				
-				Console.WriteLine("Maximo :" + maximo);
-				Console.WriteLine("Minimo :" + minimo);
-				Console.WriteLine("Media  :" + mediaHistorica);
-				Console.WriteLine("Conexiones: " + Conexion.conexionesUsadas);
-				Console.WriteLine("Castigo: " + castigo);
+				Console.WriteLine("Maximo :\t" + maximo);
+				Console.WriteLine("Minimo :\t" + minimo);
+				Console.WriteLine("Media  :\t" + mediaHistorica);
+				Console.WriteLine("Conexiones:\t" + Conexion.conexionesUsadas);
+				Console.WriteLine("Castigo:\t" + castigo);
 				Console.WriteLine(".------------------.");
 				actualizarMundoValorifico(nodosVisitados, castigo);
 			}
@@ -215,18 +265,18 @@ namespace Niveles
 					else
 					{
 						//Checar las 8 conexiones del nodo y ver que fueron usadas, para aplicarles el castigop puesun.
-						for(int j = 0; j < nodosVisitados[i].conexion.Length; j++)
+						for(int j = 0; j < nodosVisitados[i].conexiones.Length; j++)
 						{
 							
-							if(nodosVisitados[i].conexion[j] != null) //Si la conexion se generó se verá actualizado su valor en el mapa
+							if(nodosVisitados[i].conexiones[j] != null) //Si la conexion se generó se verá actualizado su valor en el mapa
 							{
-								if(arregloNodosTotal[i].conexion[j] == null) //si esto ocurre, se asignal la conexion tal cual, pues es nueva
+								if(arregloNodosTotal[i].conexiones[j] == null) //si esto ocurre, se asignal la conexion tal cual, pues es nueva
 								{
-									arregloNodosTotal[i].conexion[j] = nodosVisitados[i].conexion[j];
+									arregloNodosTotal[i].conexiones[j] = nodosVisitados[i].conexiones[j];
 								}
 								else //se actualizara el valor dependiendo del castigo
 								{
-									arregloNodosTotal[i].conexion[j].Peso += castigo;
+									arregloNodosTotal[i].conexiones[j].Peso += castigo;
 								}
 							}
 							//else, si no se utilizo la conexion, no tenemos que actualizar su situacion en el mapa
