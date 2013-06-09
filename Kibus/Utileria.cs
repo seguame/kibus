@@ -19,6 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.Collections.Generic;
+using Algoritmos.Estructuras;
 
 
 namespace Utileria
@@ -56,70 +58,15 @@ namespace Utileria
 		}
 	}
 	
-	/*
-	 * private void testingManual()
+	
+	public class ComparadorNodos : Comparer<Nodo>
+	{
+		#region implemented abstract members of System.Collections.Generic.Comparer
+		public override int Compare (Nodo x, Nodo y)
 		{
-			Direccion dir = Direccion.MISINGNO;
-			
-			while(true)
-			{
-				DibujarTodo();
-				if(Hardware.TeclaPulsada(Sdl.SDLK_RETURN))
-				{
-					break;
-				}
-	
-		        if (Hardware.TeclaPulsada(Sdl.SDLK_UP))
-				{
-					dir = Direccion.ARRIBA;
-				}
-		
-		        if (Hardware.TeclaPulsada(Sdl.SDLK_DOWN))
-				{
-					dir = Direccion.ABAJO;
-				}
-				
-				if (Hardware.TeclaPulsada(Sdl.SDLK_RIGHT))
-				{
-					dir = Direccion.DERECHA;
-				}
-		
-		        if (Hardware.TeclaPulsada(Sdl.SDLK_LEFT))
-				{
-					dir = Direccion.IZQUIERDA;
-				}
-				
-				if (Hardware.TeclaPulsada(Sdl.SDLK_q))
-				{
-					dir = Direccion.ARRIBA_IZQ;
-				}
-		
-		        if (Hardware.TeclaPulsada(Sdl.SDLK_e))
-				{
-					dir = Direccion.ARRIBA_DER;
-				}
-				
-				if (Hardware.TeclaPulsada(Sdl.SDLK_a))
-				{
-					dir = Direccion.ABAJO_IZQ;
-				}
-		
-		        if (Hardware.TeclaPulsada(Sdl.SDLK_d))
-				{
-					dir = Direccion.ABAJO_DER;
-				}
-		
-		        if(IntentarMover(dir))
-				{
-					Console.WriteLine(dir);
-					kibus.Mover(dir);
-					dir = Direccion.MISINGNO;
-				}
-				
-				MoverElementos();
-				Hardware.Pausar(100);
-			}
-		}*/
-	
+			return x.numeroDeNodo - y.numeroDeNodo;
+		}
+		#endregion
+	}
 }
 
