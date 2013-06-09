@@ -137,7 +137,7 @@ namespace Niveles
 			catch (IndexOutOfRangeException)
 			{
 				Random random = new Random(System.DateTime.Now.Millisecond);
-				int cantidad = 100;
+				int cantidad = 180;
 				
 				int[][] mapa = new int[20][];
 				
