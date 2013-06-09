@@ -169,25 +169,20 @@ namespace Algoritmos
 		{
 			Conexion[] conexiones = actual.conexiones;
 			Conexion menor = null;
-			//int visitados = 0;
-    	
-			for(int i = 0; i < conexiones.Length; i++)
+			
+			foreach(Conexion cnx in conexiones)
 			{
-	    		if(conexiones[i] != null && !conexiones[i].NodoConexion.Visitado) 
+				if(cnx != null && !cnx.NodoConexion.Visitado) 
 	    		{
-					if(menor == null)
+					if(menor == null || cnx.NodoConexion.numeroDeNodo == 1)
 					{
-						menor = conexiones[i];
-					}
-					else if(conexiones[i].NodoConexion.numeroDeNodo == 1)
-					{
-						menor = conexiones[i];
+						menor = cnx;
 					}
 					else
 					{
-						if(menor.Peso > conexiones[i].Peso)
+						if(menor.Peso > cnx.Peso)
 						{
-							menor = conexiones[i];
+							menor = cnx;
 						}
 					}
 					
@@ -195,8 +190,10 @@ namespace Algoritmos
 						break;
 	    		}
 			}
+			
 			if(menor == null)
 			{
+				//Se elimina la ultima adicion pues nos lleva a un camino cíclico. 
 				listaMovimientos.RemoveAt(listaMovimientos.Count - 1);
 				menor = BuscarConexionMenor(anteriores.Pop());
 			}
@@ -204,6 +201,7 @@ namespace Algoritmos
 			{
 				menor.NodoConexion.Visitado = true;
 			}
+			
 			return menor;
 		}
 	}
