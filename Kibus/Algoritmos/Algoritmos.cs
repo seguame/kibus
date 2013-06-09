@@ -22,6 +22,8 @@ using System;
 using System.Collections.Generic;
 
 using Utileria;
+using Algoritmos.Estructuras;
+using Esedelish;
 
 
 namespace Algoritmos
@@ -140,6 +142,69 @@ namespace Algoritmos
 			cola.Dequeue();// El primero no nos sirve
 			
 			return cola;
+		}
+		
+		private static Stack<Nodo> anteriores;
+		private static List<Direccion> listaMovimientos;
+		
+		public static Queue<Direccion> PrimeroElMejor(Nodo origen, Nodo destino)
+		{
+			anteriores = new Stack<Nodo>();
+			listaMovimientos = new List<Direccion>();
+			Nodo actual = origen;
+			
+			do
+			{
+				Conexion tmp = BuscarConexionMenor( actual );
+				
+				anteriores.Push(actual); // pila de anteriores
+				actual = tmp.NodoConexion;
+				listaMovimientos.Add(tmp.direccionUsada);
+			}while(actual.numeroDeNodo != destino.numeroDeNodo);
+			
+			return new Queue<Direccion>(listaMovimientos);
+		}
+		
+		private static Conexion BuscarConexionMenor( Nodo actual)
+		{
+			Conexion[] conexiones = actual.conexiones;
+			Conexion menor = null;
+			//int visitados = 0;
+    	
+			for(int i = 0; i < conexiones.Length; i++)
+			{
+	    		if(conexiones[i] != null && !conexiones[i].NodoConexion.Visitado) 
+	    		{
+					if(menor == null)
+					{
+						menor = conexiones[i];
+					}
+					else if(conexiones[i].NodoConexion.numeroDeNodo == 1)
+					{
+						menor = conexiones[i];
+					}
+					else
+					{
+						if(menor.Peso > conexiones[i].Peso)
+						{
+							menor = conexiones[i];
+						}
+					}
+					
+					if(menor.NodoConexion.numeroDeNodo == 1) //es el destino
+						break;
+	    		}
+			}
+			if(menor == null)
+			{
+				listaMovimientos.RemoveAt(listaMovimientos.Count - 1);
+				menor = BuscarConexionMenor(anteriores.Pop());
+			}
+			else
+			{
+				menor.NodoConexion.Visitado = true;
+			}
+			return menor;
 		}
 	}
 }
