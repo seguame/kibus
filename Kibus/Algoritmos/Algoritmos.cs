@@ -204,6 +204,115 @@ namespace Algoritmos
 			
 			return menor;
 		}
+		
+		
+		private static Queue<Direccion> movimientos;
+		
+		public static Queue<Direccion> Dijkstra(Nodo[] mapa, Nodo origen, Nodo destino)
+		{
+			movimientos = new Queue<Direccion>();
+			
+			HacerDijkstra(mapa, origen, destino, 0);
+			Console.WriteLine("Distancia a recorrer :" + destino.distancia);
+			return movimientos;
+		}
+		/*
+	     * Recorremos los distintos nodos que vamos visitando
+	     * El primer valor es posición del nodo origen (el nodo origen se va modificando
+	     * conforme vamos avanzando en la busqueda)
+	     * El segundo valor es posición del nodo destino final.
+	     * Distancia del nodo examinado. Este valor lo sumaremos al del valor modificable obteniendo 
+	     * la distancia real entre el nodo origen y los nodos examinados
+	     */
+	    private static void HacerDijkstra(Nodo[] mapa, Nodo origen, Nodo destino, int pesoAcumulado)
+	    {
+			
+			
+	        foreach(Nodo n in mapa)
+	        {
+				if(n  != null)
+				{
+					foreach(Conexion cnx in n.conexiones)
+					{
+						if(cnx != null)
+						{
+							/* Si el nodo origen tiene alguna conexión con 
+		                 	* el nodo examinado Y El nodo examinado en la 
+		                 	* tabla Dijkstra no tiene un valor todavía 
+		                 	* o Si el nodo examinado en la tabla Dijkstra 
+		                 	* tiene valor pero es superior al que obtendremos. */
+							if(cnx.NodoConexion.numeroDeNodo == origen.numeroDeNodo && 
+							  (n.distancia == -1 || (pesoAcumulado + cnx.Peso) < n.distancia))
+							{
+								n.distancia = pesoAcumulado + cnx.Peso;
+							}
+								
+						}
+					}
+				}
+	        }
+			
+			Console.WriteLine("Origen " + origen.ToString());
+			origen.Visitado = true;
+	        Nodo nodo = BuscarNodoDeMenorPeso(mapa);
+	        if (nodo != null)
+	        {
+				int pos =  ObtenerPosicionNodo(mapa, nodo);
+				Console.WriteLine(pos);
+	            HacerDijkstra(mapa, nodo, destino, mapa[ pos ].distancia);
+	        }
+	    }
+		
+		/**
+	     * Obtenemos la posición del nodo que dispone de la menor distancia.
+	     * La obtenemos entre los nodos no visitados y accesibles.
+	     * Devolvemos la posición del nodo con el peso mas bajo
+	     */
+		private static Nodo BuscarNodoDeMenorPeso(Nodo[] mapa)
+		{
+			Int32 pesoMinimo = Int32.MaxValue;
+	        Nodo nodoCorto = null;
+	        foreach(Nodo n in mapa)
+	        {
+				if(n != null)
+				{
+					foreach(Conexion cnx in n.conexiones)
+					{
+						if(cnx != null)
+						{
+							/* Si el nodo de la tabla Dijkstra no es de los 
+				             * ya visitados, se le ha asignado ya alguna distancia 
+				             * y o todavía no hemos designado el nodo de peso mínimo
+				             * o ya habiéndolo designado el examinado es inferior 
+				             * al ya propuesto */
+				            if (!cnx.NodoConexion.Visitado && cnx.Peso < pesoMinimo)
+				            {
+				                pesoMinimo = cnx.Peso;
+				                nodoCorto = cnx.NodoConexion;
+				            }
+						}
+					}
+				}
+	        }
+	        return nodoCorto;
+		}
+		
+		/**
+	     * Obtenemos la posición del nodo en función del numero de nodo
+	     */ 
+	    private static int ObtenerPosicionNodo(Nodo[] mapa, Nodo nodo)
+	    {
+			return nodo.numeroDeNodo -1;
+			/*Console.WriteLine("Buscando nodo " + nodo.numeroDeNodo);
+			for(int i = 0;i < mapa.Length; i++)
+			{
+				if(mapa[i] != null && mapa[i].numeroDeNodo == nodo.numeroDeNodo)
+					return i;
+			}
+			
+			Console.WriteLine("No existe");
+	        return -1;*/
+	    }     
 	}
 }
 

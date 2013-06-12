@@ -59,9 +59,11 @@ namespace Algoritmos.Estructuras
 		public Conexion[] conexiones;
 		public int numeroDeNodo;
 		public bool Visitado {get; set;}
+		public int distancia;
 		
 		public Nodo()
 		{
+			distancia = -1;
 			Visitado = false;
 			conexiones = new Conexion[8];
 			numeroDeNodo = ++CantidadNodosVisitados;
