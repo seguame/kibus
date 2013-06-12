@@ -31,6 +31,7 @@ namespace Niveles
 {
 	internal class Nivel4 : Nivel
 	{
+		private const int ITERACIONES = 1000;
 		private int minimo = Int32.MaxValue;
 		private int maximo = Int32.MinValue;
 		private int mediaHistorica;
@@ -85,14 +86,67 @@ namespace Niveles
 			}
 			
 			PosicionarKibus();
+			requierePosicionarCasa = false;
 			//El entrenamiento puesun
 			ConfeccionarCamino();
 			
 			
-			
 			kibus.Mover(rectanguloOrigen);
 			
-			List<Nodo> configuracionDeMapa = new List<Nodo>(arregloNodosTotal);
+			//Algoritmo.Dijkstra(arregloNodosTotal, arregloNodosTotal[kibus.OnToyY + kibus.OnToyX * 20], arregloNodosTotal[casa.OnToyY + casa.OnToyX * 20]);
+			do
+			{
+				try
+				{
+					if(arregloNodosTotal[kibus.OnToyY + kibus.OnToyX * 20] != null)
+					{
+						Queue<Direccion> movimientosASeguir = Algoritmo.PrimeroElMejor(arregloNodosTotal[kibus.OnToyY + kibus.OnToyX * 20], arregloNodosTotal[casa.OnToyY + casa.OnToyX * 20]);
+						
+						while(movimientosASeguir.Count != 0)
+						{
+							kibus.Mover(movimientosASeguir.Dequeue());
+							DibujarTodo();
+							Hardware.EscribirTexto("Llendo a Casa", 641, 10); 
+							Hardware.RefrescarPantalla();
+							Hardware.Pausar(100);
+						}
+					}
+					else
+					{
+						Hardware.EscribirTexto("No hay informacion suficiente desde este nodo", 2, Hardware.Alto/4);
+					}
+				}
+				catch(ArgumentOutOfRangeException)
+				{
+					Hardware.EscribirTexto("No hay informacion suficiente desde este nodo", 2, Hardware.Alto/4);
+				}
+				
+				
+				Hardware.EscribirTexto("Presiona enter para poner a kibus en otro lugar, esc para terminar", 2, Hardware.Alto/2);
+				Hardware.RefrescarPantalla();
+				while(!Hardware.TeclaPulsada(Sdl.SDLK_RETURN) && !Hardware.TeclaPulsada(Sdl.SDLK_ESCAPE))
+				{
+					Hardware.Pausar(20);
+				}
+				
+				if(Hardware.TeclaPulsada(Sdl.SDLK_RETURN))
+				{
+					//reiniciar valores de las banderas
+					foreach(Nodo nodini in arregloNodosTotal)
+					{
+						if(nodini != null)
+							nodini.Visitado = false;
+					}
+					
+					PosicionarKibus();
+				}
+				else if(Hardware.TeclaPulsada(Sdl.SDLK_ESCAPE))
+					break;
+			}while(true);
+			
+			
+			
+			/*List<Nodo> configuracionDeMapa = new List<Nodo>(arregloNodosTotal);
 			
 			
 			#region activar para ver ordenada la configuracion
@@ -106,32 +160,11 @@ namespace Niveles
 			}
 			configuracionDeMapa.Sort(comparadorDeNodos);
 			#endregion
+			*/
 			
-			Console.WriteLine("Inicia el Confeccionado con \"Primero el Mejor\"");
-			
-			Queue<Direccion> movimientosASeguir = Algoritmo.PrimeroElMejor(configuracionDeMapa[1], configuracionDeMapa[0]);
-			
-			Console.WriteLine("Termina el Confeccionado con \"Primero el Mejor\"");
-			
-			while(movimientosASeguir.Count != 0)
+			foreach(Nodo n in arregloNodosTotal)
 			{
-				kibus.Mover(movimientosASeguir.Dequeue());
-				DibujarTodo();
-				Hardware.EscribirTexto("Llendo a Casa", 641, 10); 
-				Hardware.RefrescarPantalla();
-				Hardware.Pausar(100);
-			}
-			
-			Hardware.EscribirTexto("KIBUS LLEGO! \\O/",(short)(Hardware.Alto/2), (short)(Hardware.Ancho/2));
-			Hardware.RefrescarPantalla();
-			while(!Hardware.TeclaPulsada(Sdl.SDLK_RETURN))
-			{
-				Hardware.Pausar(20);
-			}
-			
-			foreach(Nodo n in configuracionDeMapa)
-			{
-				if(n.numeroDeNodo != Int32.MaxValue)
+				if(n != null)
 					Console.WriteLine(n.ToString());
 			}
 			
@@ -140,7 +173,7 @@ namespace Niveles
 		private void ConfeccionarCamino()
 		{
 			int intentos;
-			int repeticiones = 2000;
+			int repeticiones = ITERACIONES;
 			int castigo;
 			
 			Direccion direccion;
@@ -154,7 +187,7 @@ namespace Niveles
 			
 			while(repeticiones-->0)
 			{
-				Console.WriteLine("Iteracion #" + (1999 - repeticiones));
+				Console.WriteLine("Iteracion #" + (ITERACIONES - repeticiones));
 				//Volver a iniciar los valores;
 				nodosVisitados = new Nodo[20*20];
 				Nodo.CantidadNodosVisitados = 0;
